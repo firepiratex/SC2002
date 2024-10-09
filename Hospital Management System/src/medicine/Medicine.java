@@ -1,0 +1,37 @@
+package medicine;
+
+public class Medicine {
+	private String medicineName;
+	private int stock;
+	private int lowStockAlert;
+	
+	public Medicine(String medicineName, int stock, int lowStockAlert) {
+		this.medicineName = medicineName;
+		this.stock = stock;
+		this.lowStockAlert = lowStockAlert;
+	}
+
+	public String getMedicineName() {
+		return medicineName;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public int getLowStockAlert() {
+		return lowStockAlert;
+	}
+	
+	public void minusStock() {
+		this.stock--;
+	}
+	
+	public void minusStock(int quantity) {
+		this.stock -= quantity;
+	}
+	
+	public String toString() {
+		return getMedicineName() + " " + getStock() + " " + getLowStockAlert(); 
+	}
+}
