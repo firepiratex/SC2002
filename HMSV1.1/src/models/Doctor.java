@@ -20,6 +20,10 @@ public class Doctor extends User {
     public void viewUpcomingAppointments() {
         appointmentManagement.viewAppointments(this.getId());  // Call viewAppointments method
     }
+    
+    public int getAge() {
+    	return age;
+    }
 
     // Recording the outcome of the appointment
     public void recordAppointmentOutcome(Appointment appointment, String notes, List<String> prescriptions) {

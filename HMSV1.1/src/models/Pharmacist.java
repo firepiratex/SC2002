@@ -27,7 +27,11 @@ public class Pharmacist extends User {
     public void submitReplenishmentRequest(InventoryManagement inventoryManagement, String medicineName) {
         inventoryManagement.submitReplenishmentRequest(medicineName);
     }
-
+    
+    public int getAge() {
+    	return age;
+    }
+    
     // Managing prescriptions (ensure Prescription is imported)
     public void dispensePrescription(List<Prescription> prescriptions) {
         for (Prescription prescription : prescriptions) {
