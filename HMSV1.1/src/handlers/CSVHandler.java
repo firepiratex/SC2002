@@ -23,7 +23,8 @@ public class CSVHandler {
     // Method to write CSV data back to a file (if needed)
     public static void writeCSV(String filePath, List<String[]> data) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
-            for (String[] row : data) {
+            pw.println("Staff ID,Name,Role,Gender,Age");
+        	for (String[] row : data) {
                 pw.println(String.join(",", row));
             }
         } catch (IOException e) {
