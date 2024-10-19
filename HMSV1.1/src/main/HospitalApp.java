@@ -119,7 +119,7 @@ public class HospitalApp {
     }
 
 
-    /*private static void manageStaff(Administrator admin, Scanner scanner) {
+    private static void manageStaff(Administrator admin, Scanner scanner) {
         boolean exit = false;
         while (!exit) {
             System.out.println("Manage Hospital Staff:");
@@ -139,19 +139,23 @@ public class HospitalApp {
                     String name = scanner.nextLine();
                     System.out.print("Enter staff password: ");
                     String password = scanner.nextLine();
+                    System.out.print("Enter staff gender: ");
+                    String gender = scanner.nextLine();
+                    System.out.print("Enter staff age: ");
+                    int age = scanner.nextInt();
                     System.out.print("Enter staff role (Doctor, Pharmacist, Administrator): ");
                     String role = scanner.nextLine();
     
                     User newStaff = null;  // Declare a User variable to hold the new staff member
                     switch (role) {
                         case "Doctor":
-                            newStaff = new Doctor(id, name, password);
+                            newStaff = new Doctor(id, name, password,gender,age);
                             break;
                         case "Pharmacist":
-                            newStaff = new Pharmacist(id, name, password);
+                            newStaff = new Pharmacist(id, name, password,gender,age);
                             break;
                         case "Administrator":
-                            newStaff = new Administrator(id, name, password);
+                            newStaff = new Administrator(id, name, password,gender,age);
                             break;
                         default:
                             System.out.println("Invalid role! Please enter Doctor, Pharmacist, or Administrator.");
@@ -177,5 +181,5 @@ public class HospitalApp {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-    }*/
+    }
 }
