@@ -13,10 +13,20 @@ public class LoginHandler {
         User user = null;
 
         while (true) {
+        	 System.out.println(
+ 	                "██╗  ██╗███╗   ███╗███████╗\r\n" +
+ 	                "██║  ██║████╗ ████║██╔════╝\r\n" +
+ 	                "███████║██╔████╔██║███████╗\r\n" +
+ 	                "██╔══██║██║╚██╔╝██║╚════██║\r\n" +
+ 	                "██║  ██║██║ ╚═╝ ██║███████║\r\n" +
+ 	                "╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝"
+ 	            );
+ 			System.out.println("----Hospital Management System----");
             System.out.print("Enter User ID: ");
             String id = sc.nextLine();
             System.out.print("Enter Password: ");
             String password = sc.nextLine();
+            
 
             // Authenticate the user with the provided credentials
             user = authenticate(id, password);
