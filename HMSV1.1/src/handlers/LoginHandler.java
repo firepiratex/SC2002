@@ -69,9 +69,9 @@ public class LoginHandler {
 			}
 		}
 		if (user.getRole().equals("Patient")) {
-			patientHandler.savePatients();
+			patientHandler.saveAccount();
 		} else {
-			staffManagement.saveStaffs();
+			staffManagement.saveAccount();
 		}
 		scanner.nextLine();
     }

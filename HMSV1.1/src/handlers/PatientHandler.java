@@ -1,9 +1,11 @@
 package handlers;
 
 import java.util.*;
+
+import interfaces.AccountSaver;
 import models.Patient;
 
-public class PatientHandler {
+public class PatientHandler implements AccountSaver{
     private List<Patient> patients;
     private final String patientFile = "src/data/Patient_List.csv";
     private final String patientTXTFile = "src/data/Patient_Account.txt";
@@ -36,9 +38,9 @@ public class PatientHandler {
         }
         System.out.println(patients);
     }
-
-    public void savePatients() {
-        List<String[]> data = new ArrayList<>();
+    
+    public void saveAccount() {
+    	List<String[]> data = new ArrayList<>();
         for (Patient patient : patients) {
             String[] row = {patient.getId(), patient.getPassword()};
             data.add(row);

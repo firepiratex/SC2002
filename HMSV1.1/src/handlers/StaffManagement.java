@@ -2,13 +2,14 @@ package handlers;
 
 import java.util.*;
 
+import interfaces.AccountSaver;
 import models.Administrator;
 import models.Doctor;
 import models.Patient;
 import models.Pharmacist;
 import models.User;
 
-public class StaffManagement {
+public class StaffManagement implements AccountSaver{
     private List<User> staff;
     private final String staffFile = "src/data/Staff_List.csv";
     private final String staffTXTFile = "src/data/Staff_Account.txt";
@@ -57,10 +58,8 @@ public class StaffManagement {
         System.out.println(staff);
     }
 
-
-    
-    public void saveStaffsAccount() {
-        List<String[]> data = new ArrayList<>();
+    public void saveAccount() {
+    	List<String[]> data = new ArrayList<>();
         for (User staff : staff) {
             String[] row = {staff.getId(), staff.getPassword()};
             data.add(row);
