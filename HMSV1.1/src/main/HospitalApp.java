@@ -2,6 +2,7 @@ package main;
 
 import handlers.LoginHandler;
 import java.util.Scanner;
+import management.InventoryManagement;
 import management.StaffManager;
 import models.Administrator;  // Import the new StaffManager class
 import models.Doctor;
@@ -10,10 +11,11 @@ import models.Pharmacist;
 import models.User;
 
 public class HospitalApp {
+
     public static void main(String[] args) {
         LoginHandler loginHandler = new LoginHandler();
         User user = loginHandler.login();
-        
+
         if (user != null) {
             handleUserInput(user);  // Removed the extra call to displayMenu() here
         } else {
@@ -97,6 +99,7 @@ public class HospitalApp {
 
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
         StaffManager staffManager = new StaffManager(admin);
+        InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
                 staffManager.manageStaff(sc);  // Option 1: Manage Hospital Staff
@@ -105,7 +108,7 @@ public class HospitalApp {
                 admin.viewAppointments();  // Option 2: View Appointments
                 break;
             case 3:
-                admin.manageInventory();  // Option 3: Manage Medication Inventory
+                inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
                 break;
             case 4:
                 System.out.print("Enter medicine name for replenishment approval: ");
