@@ -30,22 +30,22 @@ public class LoginHandler {
         return user;
     }
 
-    private User authenticate(String id, String password) {
-        // First, check if the user is a patient
-        Patient patient = patientHandler.findPatientById(id);
-        if (patient != null && patient.validatePassword(password)) {
-            return patient;
-        }
-
-        // Then check if the user is staff (doctor, pharmacist, or administrator)
-        User staff = staffManagement.findStaffById(id);
-        if (staff != null && staff.validatePassword(password)) {
-            return staff;
-        }
-
-        // If no match found, return null
-        return null;
-    }
+	private User authenticate(String id, String password) {
+		// First, check if the user is a patient
+		Patient patient = patientHandler.findPatientById(id);
+		if (patient != null && patient.validatePassword(password)) {
+			return patient;
+		}
+	
+		// Then check if the user is staff (doctor, pharmacist, or administrator)
+		User staff = staffManagement.findStaffById(id);  // Corrected method call
+		if (staff != null && staff.validatePassword(password)) {
+			return staff;
+		}
+	
+		// If no match found, return null
+		return null;
+	}
     
     private void initialLogin(User user, Scanner scanner) {
     	System.out.println("This is your first time logging in so you need "

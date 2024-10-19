@@ -42,6 +42,9 @@ public abstract class User {
     public String toString() {
     	return getId();
     }
-    
+    public String getGender() {
+        return gender;
+    }
+
     public abstract void displayMenu();
 }
