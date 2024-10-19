@@ -10,17 +10,27 @@ import models.Pharmacist;
 import models.User;
 
 public class StaffManagement implements AccountSaver{
-    private List<User> staff;
+    private static StaffManagement instance;
+	private List<User> staff;
+    private List<User> doctor;
     private final String staffFile = "src/data/Staff_List.csv";
     private final String staffTXTFile = "src/data/Staff_Account.txt";
 
-    public StaffManagement() {
+    private StaffManagement() {
         this.staff = new ArrayList<>();
+        this.doctor = new ArrayList<>();
         loadStaff();  // Load staff data when initializing
+    }
+    
+    public static StaffManagement getInstance() {
+        if (instance == null) {
+            instance = new StaffManagement();  // Initialize only when needed
+        }
+        return instance;
     }
 
     // Load staff from CSV
-    public void loadStaff() {
+    private void loadStaff() {
         List<String[]> data = CSVHandler.readCSV(staffFile);
         List<String[]> data2 = TextHandler.readTXT(staffTXTFile);
         for(int index = 0; index < data.size(); index++) {
@@ -42,6 +52,7 @@ public class StaffManagement implements AccountSaver{
             switch (role) {
             case "Doctor":
                 staffMember = new Doctor(id, name, password, gender, age);
+                doctor.add(staffMember);
                 break;
             case "Pharmacist":
                 staffMember = new Pharmacist(id, name, password, gender, age);
@@ -55,7 +66,6 @@ public class StaffManagement implements AccountSaver{
 	            staff.add(staffMember);
 	        }
         }
-        System.out.println(staff);
     }
 
     public void saveAccount() {
@@ -69,6 +79,7 @@ public class StaffManagement implements AccountSaver{
     
     public void saveStaffsList() {
         List<String[]> data = new ArrayList<>();
+        data.add(new String[] {"Staff ID", "Name", "Role", "Gender", "Age"});
         for (User staff : staff) {
         	if (staff.getRole().equals("Administrator")) {
         		Administrator admin  = (Administrator) staff;
@@ -86,6 +97,7 @@ public class StaffManagement implements AccountSaver{
         		data.add(row);
         	}
         }
+        saveAccount();
         CSVHandler.writeCSV(staffFile, data);
     }
 
@@ -110,9 +122,27 @@ public class StaffManagement implements AccountSaver{
 
     // Display all staff members
     public void displayStaff() {
-        System.out.println("Hospital Staff:");
         for (User user : staff) {
-            System.out.println("ID: " + user.getId() + ", Name: " + user.getName() + ", Role: " + user.getRole());
+            //System.out.println("ID: " + user.getId() + ", Name: " + user.getName() + ", Role: " + user.getRole());
+        	System.out.print(user.getId() + " ");
         }
+        System.out.println();
     }
+    
+    public int displayDoctor() {
+    	System.out.println("----Available Doctors----");
+    	for(int index = 0; index < doctor.size(); index++) {
+    		System.out.println((index+1) + ". " + doctor.get(index).getName());
+    	}
+    	return doctor.size();
+    }
+    
+    public User getStaff(int choice) {
+    	if (doctor.get(choice) == null) {
+    		return null;
+    	}
+    	return doctor.get(choice);
+    }
+    
+    
 }

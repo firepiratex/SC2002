@@ -5,9 +5,8 @@ import management.AppointmentOutcomeRecord;
 import management.InventoryManagement;
 
 public class Pharmacist extends User {
-
-    private int age;
-
+	private int age;
+	
     public Pharmacist(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Pharmacist", gender);
         this.age = age;
@@ -22,17 +21,17 @@ public class Pharmacist extends User {
     }
 
     public void viewInventory(InventoryManagement inventoryManagement) {
-        inventoryManagement.viewInventory();
+        inventoryManagement.displayInventory();
     }
 
     public void submitReplenishmentRequest(InventoryManagement inventoryManagement, String medicineName) {
-        //inventoryManagement.submitReplenishmentRequest(medicineName);
+        inventoryManagement.submitReplenishmentRequest(medicineName);
     }
-
+    
     public int getAge() {
-        return age;
+    	return age;
     }
-
+    
     // Managing prescriptions (ensure Prescription is imported)
     public void dispensePrescription(List<Prescription> prescriptions) {
         for (Prescription prescription : prescriptions) {

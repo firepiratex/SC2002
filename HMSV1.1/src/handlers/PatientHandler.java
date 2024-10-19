@@ -6,17 +6,32 @@ import interfaces.AccountSaver;
 import models.Patient;
 
 public class PatientHandler implements AccountSaver{
+	private static PatientHandler instance;
     private List<Patient> patients;
     private final String patientFile = "src/data/Patient_List.csv";
     private final String patientTXTFile = "src/data/Patient_Account.txt";
 
-    public PatientHandler() {
+    private PatientHandler() {
         this.patients = new ArrayList<>();
         loadPatients();
     }
-
+    
+    public static PatientHandler getInstance() {
+        if (instance == null) {
+            instance = new PatientHandler();  // Initialize only when needed
+        }
+        return instance;
+    }
+    
+    public void displayPatient() {
+    	for(Patient eachPatient : patients) {
+    		System.out.print(eachPatient + " ");
+    	}
+    	System.out.println();
+    }
+    
     // Load patient data from the CSV file
-    public void loadPatients() {
+    private void loadPatients() {
         List<String[]> data = CSVHandler.readCSV(patientFile);
         List<String[]> data2 = TextHandler.readTXT(patientTXTFile);
         for(int index = 0; index < data.size(); index++) {
@@ -36,7 +51,6 @@ public class PatientHandler implements AccountSaver{
             String contactInfo = data.get(index)[5];       // Contact Information
             patients.add(new Patient(id, name, password, dateOfBirth, gender, bloodType, contactInfo));
         }
-        System.out.println(patients);
     }
     
     public void saveAccount() {

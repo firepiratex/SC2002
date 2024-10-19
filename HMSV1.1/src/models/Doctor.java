@@ -14,11 +14,11 @@ public class Doctor extends User {
     }
 
     public void setAvailability(String date, String time) {
-        appointmentManagement.setDoctorAvailability(this.getId(), date, time);  // Call setDoctorAvailability method
+        //appointmentManagement.setDoctorAvailability(this.getId(), date, time);  // Call setDoctorAvailability method
     }
 
     public void viewUpcomingAppointments() {
-        appointmentManagement.viewAppointments(this.getId());  // Call viewAppointments method
+        //appointmentManagement.viewAppointments(this.getId());  // Call viewAppointments method
     }
     
     public int getAge() {
@@ -36,9 +36,13 @@ public class Doctor extends User {
     @Override
     public void displayMenu() {
         System.out.println("Doctor Menu:");
-        System.out.println("1. Set Availability");
-        System.out.println("2. View Upcoming Appointments");
-        System.out.println("3. Record Appointment Outcome");
-        System.out.println("4. Logout");
+        System.out.println("\n1. View Patient Medical Records\n"
+				+ "2. Update Patient Medical Records\n"
+				+ "3. View Personal Schedule\n"
+				+ "4. Set Availability for Appointments\n"
+				+ "5. Accept or Decline Appointment Requests\n"
+				+ "6. View Upcoming Appointments\n"
+				+ "7. Record Appointment Outcome\n"
+				+ "8. Logout\n");
     }
 }

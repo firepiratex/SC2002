@@ -1,8 +1,11 @@
 package main;
 
 import handlers.LoginHandler;
+import handlers.PatientHandler;
+
 import java.util.Scanner;
-import management.InventoryManagement;
+
+import management.AppointmentManagement;
 import management.StaffManager;
 import models.Administrator;  // Import the new StaffManager class
 import models.Doctor;
@@ -11,11 +14,10 @@ import models.Pharmacist;
 import models.User;
 
 public class HospitalApp {
-
     public static void main(String[] args) {
         LoginHandler loginHandler = new LoginHandler();
         User user = loginHandler.login();
-
+        
         if (user != null) {
             handleUserInput(user);  // Removed the extra call to displayMenu() here
         } else {
@@ -64,7 +66,7 @@ public class HospitalApp {
                 patient.updatePersonalInfo(contactNo);
                 break;
             case 3:
-                // Code to view available appointments
+                AppointmentManagement.viewAvailableAppointment(sc);
                 break;
             case 4:
                 // Code to schedule an appointment
@@ -89,7 +91,34 @@ public class HospitalApp {
 
     // Implement doctor-specific actions
     public static void handleDoctorActions(Doctor doctor, int choice) {
-        // Similar logic for doctor actions
+    	Scanner sc = new Scanner(System.in);
+        switch (choice) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                // Code to schedule an appointment
+            	AppointmentManagement.setDoctorAvailability(sc, doctor);
+                break;
+            case 5:
+                // Code to reschedule an appointment
+                break;
+            case 6:
+                // Code to cancel an appointment
+                break;
+            case 7:
+                // Code to view past appointment outcomes
+                break;
+            case 8:
+                System.out.println("Returning to login...");
+                boolean running = false;
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
     }
 
     // Implement pharmacist-specific actions
@@ -99,7 +128,6 @@ public class HospitalApp {
 
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
         StaffManager staffManager = new StaffManager(admin);
-        InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
                 staffManager.manageStaff(sc);  // Option 1: Manage Hospital Staff
@@ -108,7 +136,7 @@ public class HospitalApp {
                 admin.viewAppointments();  // Option 2: View Appointments
                 break;
             case 3:
-                inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
+                admin.manageInventory();  // Option 3: Manage Medication Inventory
                 break;
             case 4:
                 System.out.print("Enter medicine name for replenishment approval: ");

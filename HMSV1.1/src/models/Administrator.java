@@ -1,12 +1,11 @@
 package models;
 
-import handlers.AppointmentManagement;
+import management.AppointmentManagement;
+import handlers.InventoryManagement;
 import handlers.StaffManagement;
 import interfaces.Manageable;
-import management.InventoryManagement;
 
 public class Administrator extends User implements Manageable {
-
     private StaffManagement staffManagement;
     private AppointmentManagement appointmentManagement;
     private InventoryManagement inventoryManagement;
@@ -23,13 +22,13 @@ public class Administrator extends User implements Manageable {
     // Lazy initialization for staffManagement
     public StaffManagement getStaffManagement() {
         if (this.staffManagement == null) {
-            this.staffManagement = new StaffManagement();  // Initialize when needed
+            this.staffManagement = StaffManagement.getInstance();  // Initialize when needed
         }
         return this.staffManagement;
     }
-
+    
     public int getAge() {
-        return age;
+    	return age;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class Administrator extends User implements Manageable {
         System.out.println("Administrator Menu:");
         System.out.println("1. Manage Hospital Staff");
         System.out.println("2. View Appointments");
-        System.out.println("3. View and Manage Medication Inventory");
+        System.out.println("3. Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Logout");
     }
@@ -59,34 +58,19 @@ public class Administrator extends User implements Manageable {
     }
 
     // New Functions
+
     // View all appointments
     public void viewAppointments() {
-        appointmentManagement.viewAllAppointments();
+        //appointmentManagement.viewAllAppointments();
     }
 
-    /* 
     // Manage medication inventory
     public void manageInventory() {
         inventoryManagement.displayInventory();
     }
-     */
+
     // Approve replenishment requests for specific medications
     public void approveReplenishmentRequest(String medicineName) {
-        //inventoryManagement.approveReplenishmentRequest(medicineName);
+        inventoryManagement.approveReplenishmentRequest(medicineName);
     }
-
-    // Manage Medicine Inventory
-    public void viewMedicineInventory() {
-        //inventoryManagement.displayInventory();
-    }
-
-    public void manageMedicineInventory() {
-        // inventoryManagement.manageInventory();
-    }
-
-    public void updateMedicineStockAlert(String medicineName, int alertLevel) {
-        // inventoryManagement.manageStockLevelAlert(new Scanner(System.in));
-        System.out.println("Updated stock alert for " + medicineName + " to " + alertLevel);
-    }
-
 }
