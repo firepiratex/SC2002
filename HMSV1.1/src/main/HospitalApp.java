@@ -97,18 +97,18 @@ public class HospitalApp {
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
         switch (choice) {
             case 1:
-                admin.manageStaff(sc);  // Option 1: Manage Hospital Staff
+                manageStaff(admin, sc);  // Option 1: Manage Hospital Staff
                 break;
             case 2:
-                //admin.viewAppointments();  // Option 2: View Appointments
+                admin.viewAppointments();  // Option 2: View Appointments
                 break;
             case 3:
-                //admin.manageInventory();  // Option 3: Manage Medication Inventory
+                admin.manageInventory();  // Option 3: Manage Medication Inventory
                 break;
             case 4:
                 System.out.print("Enter medicine name for replenishment approval: ");
                 String medicineName = sc.nextLine();
-                //admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests
+                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests
                 break;
             case 5:
                 System.out.println("Returning to login...");
@@ -119,5 +119,68 @@ public class HospitalApp {
     }
 
 
+    private static void manageStaff(Administrator admin, Scanner scanner) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Manage Hospital Staff:");
+            System.out.println("1. Add Staff");
+            System.out.println("2. Remove Staff");
+            System.out.println("3. View All Staff");
+            System.out.println("4. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
     
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter staff ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Enter staff name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter staff password: ");
+                    String password = scanner.nextLine();
+                    System.out.print("Enter staff gender: ");
+                    String gender = scanner.nextLine();
+                    System.out.print("Enter staff age: ");
+                    int age = scanner.nextInt();
+                    System.out.print("Enter staff role (Doctor, Pharmacist, Administrator): ");
+                    scanner.nextLine();
+                    String role = scanner.nextLine();
+    
+                    User newStaff = null;  // Declare a User variable to hold the new staff member
+                    switch (role) {
+                        case "Doctor":
+                            newStaff = new Doctor(id, name, password,gender,age);
+                            break;
+                        case "Pharmacist":
+                            newStaff = new Pharmacist(id, name, password,gender,age);
+                            break;
+                        case "Administrator":
+                            newStaff = new Administrator(id, name, password,gender,age);
+                            break;
+                        default:
+                            System.out.println("Invalid role! Please enter Doctor, Pharmacist, or Administrator.");
+                            continue;
+                    }
+    
+                    if (newStaff != null) {
+                        admin.addStaff(newStaff);  // Add the new staff member
+                    }
+                    break;
+                case 2:
+                    System.out.print("Enter staff ID to remove: ");
+                    String staffId = scanner.nextLine();
+                    admin.removeStaff(staffId);  // Remove a staff member
+                    break;
+                case 3:
+                    admin.viewAllStaff();  // View all staff members
+                    break;
+                case 4:
+                    exit = true;  // Back to the main menu
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
 }
