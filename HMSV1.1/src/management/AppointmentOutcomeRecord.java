@@ -1,4 +1,4 @@
-package handlers;
+package management;
 
 public class AppointmentOutcomeRecord {
 

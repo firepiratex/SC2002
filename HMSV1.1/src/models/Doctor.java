@@ -5,9 +5,11 @@ import management.AppointmentManagement;
 
 public class Doctor extends User {
     private AppointmentManagement appointmentManagement;
+    private int age;
 
-    public Doctor(String id, String name, String password) {
-        super(id, name, password, "Doctor");
+    public Doctor(String id, String name, String password, String gender, int age) {
+        super(id, name, password, "Doctor", gender);
+        this.age = age;
         this.appointmentManagement = new AppointmentManagement();  // Initialize appointment management
     }
 

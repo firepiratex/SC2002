@@ -12,7 +12,7 @@ public class HospitalApp {
     public static void main(String[] args) {
         LoginHandler loginHandler = new LoginHandler();
         User user = loginHandler.login();
-
+        
         if (user != null) {
             handleUserInput(user);  // Removed the extra call to displayMenu() here
         } else {

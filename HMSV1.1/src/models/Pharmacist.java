@@ -5,17 +5,19 @@ import management.AppointmentOutcomeRecord;
 import management.InventoryManagement;
 
 public class Pharmacist extends User {
-
-    public Pharmacist(String id, String name, String password) {
-        super(id, name, password, "Pharmacist");
+	private int age;
+	
+    public Pharmacist(String id, String name, String password, String gender, int age) {
+        super(id, name, password, "Pharmacist", gender);
+        this.age = age;
     }
 
     public void viewAppointmentOutcome(AppointmentOutcomeRecord appointmentOutcomeRecord, String appointmentId) {
-        appointmentOutcomeRecord.displayOutcome(appointmentId);
+        //appointmentOutcomeRecord.displayOutcome(appointmentId);
     }
 
     public void updatePrescriptionStatus(AppointmentOutcomeRecord appointmentOutcomeRecord, String appointmentId, String status) {
-        appointmentOutcomeRecord.updatePrescriptionStatus(appointmentId, status);
+        //appointmentOutcomeRecord.updatePrescriptionStatus(appointmentId, status);
     }
 
     public void viewInventory(InventoryManagement inventoryManagement) {

@@ -5,12 +5,14 @@ public abstract class User {
     protected String name;
     protected String password;
     protected String role;
+    protected String gender;
 
-    public User(String id, String name, String password, String role) {
+    public User(String id, String name, String password, String role, String gender) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.role = role;
+        this.gender = gender;
     }
 
     public String getId() {
@@ -37,6 +39,9 @@ public abstract class User {
         return password;
     }
     
-
+    public String toString() {
+    	return getId();
+    }
+    
     public abstract void displayMenu();
 }

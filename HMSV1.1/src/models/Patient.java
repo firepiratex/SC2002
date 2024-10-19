@@ -1,17 +1,15 @@
 package models;
 
 public class Patient extends User {
-    private String medicalRecord;
+	private String dateOfBirth;
+    private String bloodType;
     private String contactInfo;
 
-    public Patient(String id, String name, String password, String medicalRecord, String contactInfo) {
-        super(id, name, password, "Patient");
-        this.medicalRecord = medicalRecord;
+    public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo) {
+        super(id, name, password, "Patient", gender);
+        this.dateOfBirth = dateOfBirth;
+        this.bloodType = bloodType;
         this.contactInfo = contactInfo;
-    }
-
-    public String getMedicalRecord() {
-        return medicalRecord;
     }
 
     public String getContactInfo() {
@@ -27,7 +25,6 @@ public class Patient extends User {
         System.out.println("Medical Record for Patient ID: " + getId());
         System.out.println("Name: " + getName());
         System.out.println("Contact Info: " + getContactInfo());
-        System.out.println("Medical Record: " + getMedicalRecord());
     }
 
     @Override

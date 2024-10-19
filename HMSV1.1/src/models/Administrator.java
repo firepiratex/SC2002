@@ -4,10 +4,12 @@ import handlers.StaffManagement;
 
 public class Administrator extends User {
     private StaffManagement staffManagement;
+    private int age;
 
-    public Administrator(String id, String name, String password) {
-        super(id, name, password, "Administrator");
-        this.staffManagement = new StaffManagement();  // Initialize staff management
+    public Administrator(String id, String name, String password, String gender, int age) {
+        super(id, name, password, "Administrator", gender);
+        this.age = age;
+        //this.staffManagement = new StaffManagement();  // Initialize staff management
     }
 
     // Implement displayMenu() for the Administrator
