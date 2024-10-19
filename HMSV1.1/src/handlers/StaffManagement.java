@@ -57,11 +57,7 @@ public class StaffManagement {
         System.out.println(staff);
     }
 
-    // Add new staff member
-    public void addStaff(User newStaff) {
-        staff.add(newStaff);
-        System.out.println("Staff member added successfully.");
-    }
+
     
     public void saveStaffs() {
         List<String[]> data = new ArrayList<>();
@@ -72,18 +68,12 @@ public class StaffManagement {
         TextHandler.writeTXT(staffTXTFile, data);
     }
 
-    // Remove staff member by ID
+    public void addStaff(User newStaff) {
+        staff.add(newStaff);
+    }
+
     public void removeStaff(String staffId) {
-        Iterator<User> iterator = staff.iterator();
-        while (iterator.hasNext()) {
-            User user = iterator.next();
-            if (user.getId().equals(staffId)) {
-                iterator.remove();  // Use iterator.remove() to properly remove from a list during iteration
-                System.out.println("Staff member removed successfully.");
-                return;
-            }
-        }
-        System.out.println("Staff member not found.");
+        staff.removeIf(user -> user.getId().equals(staffId));
     }
 
     // Find a staff member by ID

@@ -1,18 +1,32 @@
 package models;
 
+import handlers.AppointmentManagement;
+import handlers.InventoryManagement;
 import handlers.StaffManagement;
+import interfaces.Manageable;
 
-public class Administrator extends User {
+public class Administrator extends User implements Manageable {
     private StaffManagement staffManagement;
+    private AppointmentManagement appointmentManagement;
+    private InventoryManagement inventoryManagement;
     private int age;
 
     public Administrator(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Administrator", gender);
         this.age = age;
-        //this.staffManagement = new StaffManagement();  // Initialize staff management
+        this.appointmentManagement = new AppointmentManagement();
+        this.inventoryManagement = new InventoryManagement();
+        // Do not initialize staffManagement here to avoid recursion
     }
 
-    // Implement displayMenu() for the Administrator
+    // Lazy initialization for staffManagement
+    public StaffManagement getStaffManagement() {
+        if (this.staffManagement == null) {
+            this.staffManagement = new StaffManagement();  // Initialize when needed
+        }
+        return this.staffManagement;
+    }
+
     @Override
     public void displayMenu() {
         System.out.println("Administrator Menu:");
@@ -23,22 +37,36 @@ public class Administrator extends User {
         System.out.println("5. Logout");
     }
 
-    public void addStaffMember(User newStaff) {
-        staffManagement.addStaff(newStaff);  // Use the StaffManagement class to add staff
-        System.out.println("New staff member added successfully.");
+    // Implement the methods from Manageable interface
+    @Override
+    public void addStaff(User newStaff) {
+        getStaffManagement().addStaff(newStaff);  // Use lazy initialization
     }
 
-    public void removeStaffMember(String staffId) {
-        User staff = staffManagement.findStaffById(staffId);  // Use the StaffManagement class to find staff
-        if (staff != null) {
-            staffManagement.removeStaff(staffId);
-            System.out.println("Staff member removed successfully.");
-        } else {
-            System.out.println("Staff member not found.");
-        }
+    @Override
+    public void removeStaff(String staffId) {
+        getStaffManagement().removeStaff(staffId);  // Use lazy initialization
     }
 
-    public void displayStaff() {
-        staffManagement.displayStaff();  // Display all staff members using StaffManagement
+    @Override
+    public void viewAllStaff() {
+        getStaffManagement().displayStaff();  // Use lazy initialization
+    }
+
+    // New Functions
+
+    // View all appointments
+    public void viewAppointments() {
+        appointmentManagement.viewAllAppointments();
+    }
+
+    // Manage medication inventory
+    public void manageInventory() {
+        inventoryManagement.displayInventory();
+    }
+
+    // Approve replenishment requests for specific medications
+    public void approveReplenishmentRequest(String medicineName) {
+        inventoryManagement.approveReplenishmentRequest(medicineName);
     }
 }

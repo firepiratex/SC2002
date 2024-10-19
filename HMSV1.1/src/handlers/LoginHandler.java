@@ -76,4 +76,3 @@ public class LoginHandler {
 		scanner.nextLine();
     }
 }
-

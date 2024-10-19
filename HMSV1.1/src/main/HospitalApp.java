@@ -38,7 +38,7 @@ public class HospitalApp {
             } else if (user instanceof Pharmacist) {
                 handlePharmacistActions((Pharmacist) user, choice);
             } else if (user instanceof Administrator) {
-                handleAdminActions((Administrator) user, choice);
+                handleAdminActions((Administrator) user, choice, sc);  // Pass Scanner as well
             }
 
             // If the user selects option 8, log them out and exit the loop
@@ -77,6 +77,7 @@ public class HospitalApp {
                 break;
             case 8:
                 System.out.println("Returning to login...");
+                boolean running = false;
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
@@ -93,8 +94,88 @@ public class HospitalApp {
         // Similar logic for pharmacist actions
     }
 
-    // Implement administrator-specific actions
-    public static void handleAdminActions(Administrator admin, int choice) {
-        // Similar logic for administrator actions
+    public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
+        switch (choice) {
+            case 1:
+                //manageStaff(admin, sc);  // Option 1: Manage Hospital Staff
+                break;
+            case 2:
+                admin.viewAppointments();  // Option 2: View Appointments
+                break;
+            case 3:
+                admin.manageInventory();  // Option 3: Manage Medication Inventory
+                break;
+            case 4:
+                System.out.print("Enter medicine name for replenishment approval: ");
+                String medicineName = sc.nextLine();
+                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests
+                break;
+            case 5:
+                System.out.println("Returning to login...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+        }
     }
+
+
+    /*private static void manageStaff(Administrator admin, Scanner scanner) {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Manage Hospital Staff:");
+            System.out.println("1. Add Staff");
+            System.out.println("2. Remove Staff");
+            System.out.println("3. View All Staff");
+            System.out.println("4. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // consume newline
+    
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter staff ID: ");
+                    String id = scanner.nextLine();
+                    System.out.print("Enter staff name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter staff password: ");
+                    String password = scanner.nextLine();
+                    System.out.print("Enter staff role (Doctor, Pharmacist, Administrator): ");
+                    String role = scanner.nextLine();
+    
+                    User newStaff = null;  // Declare a User variable to hold the new staff member
+                    switch (role) {
+                        case "Doctor":
+                            newStaff = new Doctor(id, name, password);
+                            break;
+                        case "Pharmacist":
+                            newStaff = new Pharmacist(id, name, password);
+                            break;
+                        case "Administrator":
+                            newStaff = new Administrator(id, name, password);
+                            break;
+                        default:
+                            System.out.println("Invalid role! Please enter Doctor, Pharmacist, or Administrator.");
+                            continue;
+                    }
+    
+                    if (newStaff != null) {
+                        admin.addStaff(newStaff);  // Add the new staff member
+                    }
+                    break;
+                case 2:
+                    System.out.print("Enter staff ID to remove: ");
+                    String staffId = scanner.nextLine();
+                    admin.removeStaff(staffId);  // Remove a staff member
+                    break;
+                case 3:
+                    admin.viewAllStaff();  // View all staff members
+                    break;
+                case 4:
+                    exit = true;  // Back to the main menu
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }*/
 }
