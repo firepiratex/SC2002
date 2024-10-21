@@ -1,23 +1,22 @@
 package main;
 
 import handlers.LoginHandler;
-import handlers.PatientHandler;
-
 import java.util.Scanner;
-
 import management.AppointmentManagement;
+import management.InventoryManagement;
 import management.StaffManager;
-import models.Administrator;  // Import the new StaffManager class
-import models.Doctor;
+import models.Administrator;
+import models.Doctor;  // Import the new StaffManager class
 import models.Patient;
 import models.Pharmacist;
 import models.User;
 
 public class HospitalApp {
+
     public static void main(String[] args) {
         LoginHandler loginHandler = new LoginHandler();
         User user = loginHandler.login();
-        
+
         if (user != null) {
             handleUserInput(user);  // Removed the extra call to displayMenu() here
         } else {
@@ -72,7 +71,7 @@ public class HospitalApp {
                 AppointmentManagement.scheduleAppointment(sc, patient);
                 break;
             case 5:
-            	AppointmentManagement.manageRescheduleAppointment(sc, patient);
+                AppointmentManagement.manageRescheduleAppointment(sc, patient);
                 break;
             case 6:
                 // Code to cancel an appointment
@@ -91,7 +90,7 @@ public class HospitalApp {
 
     // Implement doctor-specific actions
     public static void handleDoctorActions(Doctor doctor, int choice) {
-    	Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
                 break;
@@ -101,7 +100,7 @@ public class HospitalApp {
                 break;
             case 4:
                 // Code to schedule an appointment
-            	AppointmentManagement.setDoctorAvailability(sc, doctor);
+                AppointmentManagement.setDoctorAvailability(sc, doctor);
                 break;
             case 5:
                 // Code to reschedule an appointment
@@ -128,6 +127,7 @@ public class HospitalApp {
 
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
         StaffManager staffManager = new StaffManager(admin);
+        InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
                 staffManager.manageStaff(sc);  // Option 1: Manage Hospital Staff
@@ -136,7 +136,7 @@ public class HospitalApp {
                 admin.viewAppointments();  // Option 2: View Appointments
                 break;
             case 3:
-                admin.manageInventory();  // Option 3: Manage Medication Inventory
+                inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
                 break;
             case 4:
                 System.out.print("Enter medicine name for replenishment approval: ");

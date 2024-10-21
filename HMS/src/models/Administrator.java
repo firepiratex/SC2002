@@ -1,12 +1,13 @@
 package models;
 
-import management.AppointmentManagement;
-import handlers.InventoryManagement;
-import handlers.StaffManagement;
+import handlers.StaffHandler;
 import interfaces.Manageable;
+import management.AppointmentManagement;
+import management.InventoryManagement;
 
 public class Administrator extends User implements Manageable {
-    private StaffManagement staffManagement;
+
+    private StaffHandler staffHandler;
     private AppointmentManagement appointmentManagement;
     private InventoryManagement inventoryManagement;
     private int age;
@@ -20,15 +21,15 @@ public class Administrator extends User implements Manageable {
     }
 
     // Lazy initialization for staffManagement
-    public StaffManagement getStaffManagement() {
-        if (this.staffManagement == null) {
-            this.staffManagement = StaffManagement.getInstance();  // Initialize when needed
+    public StaffHandler getStaffManagement() {
+        if (this.staffHandler == null) {
+            this.staffHandler = StaffHandler.getInstance();  // Initialize when needed
         }
-        return this.staffManagement;
+        return this.staffHandler;
     }
-    
+
     public int getAge() {
-    	return age;
+        return age;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class Administrator extends User implements Manageable {
         System.out.println("Administrator Menu:");
         System.out.println("1. Manage Hospital Staff");
         System.out.println("2. View Appointments");
-        System.out.println("3. Manage Medication Inventory");
+        System.out.println("3. View and Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Logout");
     }
@@ -58,7 +59,6 @@ public class Administrator extends User implements Manageable {
     }
 
     // New Functions
-
     // View all appointments
     public void viewAppointments() {
         //appointmentManagement.viewAllAppointments();
@@ -66,11 +66,11 @@ public class Administrator extends User implements Manageable {
 
     // Manage medication inventory
     public void manageInventory() {
-        inventoryManagement.displayInventory();
+        inventoryManagement.viewInventory();
     }
 
     // Approve replenishment requests for specific medications
     public void approveReplenishmentRequest(String medicineName) {
-        inventoryManagement.approveReplenishmentRequest(medicineName);
+        // inventoryManagement.approveReplenishmentRequest(medicineName);
     }
 }
