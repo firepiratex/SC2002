@@ -10,6 +10,7 @@ import handlers.CSVHandler;
 import handlers.PatientHandler;
 import handlers.StaffManagement;
 import interfaces.DateAndTime;
+import models.Patient;
 import models.User;
 
 public class AppointmentManagement implements DateAndTime{
@@ -37,7 +38,40 @@ public class AppointmentManagement implements DateAndTime{
 		AppointmentHandler.getInstance().viewAvailableAppointment(doctor, scanner);
 	}
 	
-	// Set doctor's availability for a particular time slot
+	public static void scheduleAppointment(Scanner scanner, Patient patient) {
+		int choice, size;
+		String[] line;
+		User doctor;
+		size = StaffManagement.getInstance().displayDoctor();
+		while(true) {
+			System.out.print("Enter the doctor (0 to exit): ");
+			if (scanner.hasNextInt()) {
+				choice = scanner.nextInt();
+				if (choice == 0) {
+					return;
+				} else if (choice >= 1 && choice <= size) {
+					doctor = StaffManagement.getInstance().getStaff(choice-1);
+					break;
+				} else {
+					System.out.println("Invalid option. Try again.");
+				}
+			} else {
+				System.out.println("Invalid input. Try again.");
+			}
+		}
+		line = AppointmentHandler.getInstance().setAppointment(doctor, patient, scanner);
+		if (line == null) {
+			return;
+		}
+		line[0] = patient.getId();
+		AppointmentHandler.getInstance().saveScheduledAppointment(line);
+		System.out.println("Scheduled appointment successful.");
+	}
+	
+	public static void manageRescheduleAppointment(Scanner scanner, Patient patient) {
+		AppointmentHandler.getInstance().rescheduleAppointment(patient, scanner);
+	}
+	
 	public static void setDoctorAvailability(Scanner scanner, User doctor) {
 		String date, startTime, endTime;
 		while (true) {
@@ -75,6 +109,7 @@ public class AppointmentManagement implements DateAndTime{
 			System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
 		}
 	}
+	
 	
 	/*
 	// View appointments for a specific doctor

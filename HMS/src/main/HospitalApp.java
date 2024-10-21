@@ -69,10 +69,10 @@ public class HospitalApp {
                 AppointmentManagement.viewAvailableAppointment(sc);
                 break;
             case 4:
-                // Code to schedule an appointment
+                AppointmentManagement.scheduleAppointment(sc, patient);
                 break;
             case 5:
-                // Code to reschedule an appointment
+            	AppointmentManagement.manageRescheduleAppointment(sc, patient);
                 break;
             case 6:
                 // Code to cancel an appointment

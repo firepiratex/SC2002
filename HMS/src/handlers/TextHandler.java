@@ -17,7 +17,6 @@ public class TextHandler {
         return data;
     }
 
-    // Method to write CSV data back to a file (if needed)
     public static void writeTXT(String filePath, List<String[]> data) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
             for (String[] row : data) {
