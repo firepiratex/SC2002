@@ -79,7 +79,7 @@ public class HospitalApp {
                 AppointmentManagement.manageRescheduleAppointment(sc, patient);
                 break;
             case 6:
-                // Code to cancel an appointment
+                AppointmentManagement.manageAppointment(sc, patient);
                 break;
             case 7:
                 // Code to view past appointment outcomes
