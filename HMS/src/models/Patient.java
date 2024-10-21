@@ -19,8 +19,7 @@ public class Patient extends User {
     public void updatePersonalInfo(String newContact) {
         this.contactInfo = newContact;
     }
-
-    // Implement the viewMedicalRecord() method
+    
     public void viewMedicalRecord() {
         System.out.println("Medical Record for Patient ID: " + getId());
         System.out.println("Name: " + getName());

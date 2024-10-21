@@ -71,6 +71,18 @@ public class AppointmentManagement implements DateAndTime {
     	AppointmentHandler.getInstance().cancelAppointment(patient, scanner);
     }
     
+    public static void manageAppointmentRequest(Scanner scanner, User doctor) {
+    	AppointmentHandler.getInstance().manageAppointment(scanner, doctor);
+    }
+    
+    public static void viewUpcomingAppointment(User doctor) {
+    	AppointmentHandler.getInstance().viewUpcomingAppointment(doctor);
+    }
+    
+    public static void recordAppointmentOutcome(Scanner scanner, User doctor) {
+    	AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
+    }
+    
     public static void setDoctorAvailability(Scanner scanner, User doctor) {
         String date, startTime, endTime;
         while (true) {
@@ -108,71 +120,4 @@ public class AppointmentManagement implements DateAndTime {
             System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
         }
     }
-
-    /*
-	// View appointments for a specific doctor
-	public void viewAppointments(String doctorId) {
-		System.out.println("Appointments for Doctor ID: " + doctorId);
-		for (Appointment appointment : appointments) {
-			if (appointment.getDoctorId().equals(doctorId) && appointment.getStatus().equals("Confirmed")) {
-				System.out.println("Appointment ID: " + appointment.getAppointmentId() + 
-						", Date: " + appointment.getDate() + 
-						", Time: " + appointment.getTime() + 
-						", Status: " + appointment.getStatus());
-			}
-		}
-	}
-
-	public Appointment findAvailableSlot(String doctorId, String date, String time) {
-		for (Appointment appointment : appointments) {
-			if (appointment.getDoctorId().equals(doctorId) && 
-					appointment.getDate().equals(date) && 
-					appointment.getTime().equals(time) && 
-					appointment.getStatus().equals("Available")) {
-				return appointment;
-			}
-		}
-		return null;  // Return null if no available slot is found
-	}
-
-	public Appointment findAppointmentById(String appointmentId) {
-		for (Appointment appointment : appointments) {
-			if (appointment.getAppointmentId().equals(appointmentId)) {
-				return appointment;
-			}
-		}
-		return null;  // Return null if no appointment is found
-	}
-
-	public void scheduleAppointment(String patientId, String doctorId, String date, String time) {
-		Appointment appointment = findAvailableSlot(doctorId, date, time);
-		if (appointment != null) {
-			appointment.setPatientId(patientId);
-			appointment.setStatus("Confirmed");
-			System.out.println("Appointment successfully scheduled.");
-		} else {
-			System.out.println("Selected time slot is unavailable.");
-		}
-	}
-
-	public void cancelAppointment(String appointmentId) {
-		Appointment appointment = findAppointmentById(appointmentId);
-		if (appointment != null) {
-			appointment.setStatus("Cancelled");
-			System.out.println("Appointment successfully cancelled.");
-		} else {
-			System.out.println("Appointment not found.");
-		}
-	}
-	// View all appointments in the system
-	public void viewAllAppointments() {
-		System.out.println("All Appointments:");
-		for (Appointment appointment : appointments) {
-			System.out.println("Appointment ID: " + appointment.getAppointmentId() +
-					", Doctor ID: " + appointment.getDoctorId() +
-					", Date: " + appointment.getDate() +
-					", Time: " + appointment.getTime() +
-					", Status: " + appointment.getStatus());
-		}
-	}*/
 }

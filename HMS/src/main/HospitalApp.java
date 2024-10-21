@@ -4,6 +4,7 @@ import handlers.LoginHandler;
 import java.util.Scanner;
 import management.AppointmentManagement;
 import management.InventoryManagement;
+import management.MedicalRecordManagement;
 import management.StaffManager;
 import models.Administrator;
 import models.Doctor;  // Import the new StaffManager class
@@ -58,7 +59,7 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
-                patient.viewMedicalRecord();
+            	patient.viewMedicalRecord();
                 break;
             case 2:
                 String contactNo = sc.nextLine();
@@ -77,7 +78,7 @@ public class HospitalApp {
                 AppointmentManagement.manageAppointment(sc, patient);
                 break;
             case 7:
-                // Code to view past appointment outcomes
+            	MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
             case 8:
                 System.out.println("Returning to login...");
@@ -88,28 +89,28 @@ public class HospitalApp {
         }
     }
 
-    // Implement doctor-specific actions
     public static void handleDoctorActions(Doctor doctor, int choice) {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
+            	MedicalRecordManagement.viewPatientMedicalRecord(doctor);
                 break;
             case 2:
+            	MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
                 break;
             case 4:
-                // Code to schedule an appointment
                 AppointmentManagement.setDoctorAvailability(sc, doctor);
                 break;
             case 5:
-                // Code to reschedule an appointment
+                AppointmentManagement.manageAppointmentRequest(sc, doctor);
                 break;
             case 6:
-                // Code to cancel an appointment
+                AppointmentManagement.viewUpcomingAppointment(doctor);
                 break;
             case 7:
-                // Code to view past appointment outcomes
+                AppointmentManagement.recordAppointmentOutcome(sc, doctor);
                 break;
             case 8:
                 System.out.println("Returning to login...");
