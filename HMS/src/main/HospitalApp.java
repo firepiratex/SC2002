@@ -22,6 +22,7 @@ public class HospitalApp {
             handleUserInput(user);  // Removed the extra call to displayMenu() here
         } else {
             System.out.println("Login failed! Exiting system.");
+            System.out.println("Test");
         }
     }
 
