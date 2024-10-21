@@ -1,9 +1,12 @@
 package main;
 
 import handlers.LoginHandler;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import management.AppointmentManagement;
 import management.InventoryManagement;
+import management.MedicineManagement;
 import management.StaffManager;
 import models.Administrator;
 import models.Doctor;  // Import the new StaffManager class
@@ -12,6 +15,8 @@ import models.Pharmacist;
 import models.User;
 
 public class HospitalApp {
+
+    private static final List<MedicineManagement> medicineList = new ArrayList<>();
 
     public static void main(String[] args) {
         LoginHandler loginHandler = new LoginHandler();
@@ -40,7 +45,7 @@ public class HospitalApp {
             } else if (user instanceof Doctor) {
                 handleDoctorActions((Doctor) user, choice);
             } else if (user instanceof Pharmacist) {
-                handlePharmacistActions((Pharmacist) user, choice);
+                handlePharmacistActions((Pharmacist) user, choice, medicineList);
             } else if (user instanceof Administrator) {
                 handleAdminActions((Administrator) user, choice, sc);  // Pass Scanner as well
             }
@@ -121,7 +126,18 @@ public class HospitalApp {
     }
 
     // Implement pharmacist-specific actions
-    public static void handlePharmacistActions(Pharmacist pharmacist, int choice) {
+    public static void handlePharmacistActions(Pharmacist pharmacist, int choice, List<MedicineManagement> medicineList) {
+        Scanner sc = new Scanner(System.in);
+        InventoryManagement inventoryManagement = new InventoryManagement();
+        switch (choice) {
+            case 3:
+                inventoryManagement.viewInventory();
+            case 4:
+                InventoryManagement.submitReplenishmentRequest(pharmacist, sc, medicineList);
+                break;
+            default:
+
+        }
         // Similar logic for pharmacist actions
     }
 
@@ -139,9 +155,11 @@ public class HospitalApp {
                 inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
                 break;
             case 4:
+                /* 
                 System.out.print("Enter medicine name for replenishment approval: ");
                 String medicineName = sc.nextLine();
-                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests
+                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests */
+                InventoryManagement.manageReplenishmentRequest(sc, medicineList);
                 break;
             case 5:
                 System.out.println("Returning to login...");
