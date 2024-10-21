@@ -60,13 +60,17 @@ public class AppointmentManagement implements DateAndTime {
         }
         line[0] = patient.getId();
         AppointmentHandler.getInstance().saveScheduledAppointment(line);
-        System.out.println("Scheduled appointment successful.");
+        System.out.println("Scheduled appointment successful.\n");
     }
 
     public static void manageRescheduleAppointment(Scanner scanner, Patient patient) {
         AppointmentHandler.getInstance().rescheduleAppointment(patient, scanner);
     }
-
+    
+    public static void manageAppointment(Scanner scanner, Patient patient) {
+    	AppointmentHandler.getInstance().cancelAppointment(patient, scanner);
+    }
+    
     public static void setDoctorAvailability(Scanner scanner, User doctor) {
         String date, startTime, endTime;
         while (true) {

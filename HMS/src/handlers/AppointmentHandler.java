@@ -27,7 +27,8 @@ public class AppointmentHandler implements DateAndTime {
     }
 
     public void viewAvailableAppointment(User doctor, Scanner scanner) {
-        String date, startTime = "09:00", endTime = "17:00";
+    	timeList.clear();
+    	String date, startTime = "09:00", endTime = "17:00";
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
         List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
         List<String> appointmentList = new ArrayList<>();
@@ -72,11 +73,12 @@ public class AppointmentHandler implements DateAndTime {
             System.out.println((j + 1) + ". " + timeList.get(j));
             j++;
         }
-        timeList.clear();
+        System.out.println("\n");
     }
 
     public String[] setAppointment(User doctor, Patient patient, Scanner scanner) {
-        int choice;
+    	timeList.clear();
+    	int choice;
         String time, date, startTime = "09:00", endTime = "17:00";
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
         List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
@@ -93,6 +95,11 @@ public class AppointmentHandler implements DateAndTime {
         for (int i = 0; i < appointmentSchedule.size(); i++) {
             if (doctor.getId().equals(appointmentSchedule.get(i)[1]) && date.equals(appointmentSchedule.get(i)[3])) {
                 appointmentList.add(appointmentSchedule.get(i)[4]);
+            }
+        }
+        for (int i = 0; i < appointmentSchedule.size(); i++) {
+            if (patient.getId().equals(appointmentSchedule.get(i)[0]) && date.equals(appointmentSchedule.get(i)[3])) {
+                patientScheduleList.add(appointmentSchedule.get(i)[4]);
             }
         }
         for (int i = 0; i < doctorSchedule.size(); i++) {
@@ -128,6 +135,7 @@ public class AppointmentHandler implements DateAndTime {
             System.out.println((j + 1) + ". " + timeList.get(j));
             j++;
         }
+        System.out.println("\n");
         while (true) {
             System.out.print("Enter the slot (0 to exit): ");
             if (scanner.hasNextInt()) {
@@ -144,12 +152,12 @@ public class AppointmentHandler implements DateAndTime {
                 System.out.println("Invalid input. Try again.");
             }
         }
-        timeList.clear();
         return new String[]{"Patient ID", doctor.getId(), "Pending", date, time, "-"};
     }
 
     public void setAppointment(User doctor, Patient patient, Scanner scanner, String[] existingAppointment) {
-        int choice;
+    	timeList.clear();
+    	int choice;
         String time, date, startTime = "09:00", endTime = "17:00";
         String[] row;
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
@@ -169,6 +177,11 @@ public class AppointmentHandler implements DateAndTime {
                 appointmentList.add(appointmentSchedule.get(i)[4]);
             }
         }
+        for (int i = 0; i < appointmentSchedule.size(); i++) {
+            if (patient.getId().equals(appointmentSchedule.get(i)[0]) && date.equals(appointmentSchedule.get(i)[3])) {
+                patientScheduleList.add(appointmentSchedule.get(i)[4]);
+            }
+        }
         for (int i = 0; i < doctorSchedule.size(); i++) {
             if (doctor.getId().equals(doctorSchedule.get(i)[0]) && date.equals(doctorSchedule.get(i)[1])) {
                 startTime = doctorSchedule.get(i)[2];
@@ -186,6 +199,7 @@ public class AppointmentHandler implements DateAndTime {
             }
             timeList.add(beginning.toString());
         }
+        System.out.println(appointmentList);
         timeList.removeAll(appointmentList);
         timeList.removeAll(patientScheduleList);
         if (timeList.size() == 0) {
@@ -202,6 +216,7 @@ public class AppointmentHandler implements DateAndTime {
             System.out.println((j + 1) + ". " + timeList.get(j));
             j++;
         }
+        System.out.println("\n");
         while (true) {
             System.out.print("Enter the slot (0 to exit): ");
             if (scanner.hasNextInt()) {
@@ -226,14 +241,13 @@ public class AppointmentHandler implements DateAndTime {
                 System.out.println("Invalid input. Try again.");
             }
         }
-        timeList.clear();
         appointmentSchedule.add(0, new String[]{"Patient ID,Doctor ID,Status,Date,Time,Outcome"});
         appointmentSchedule.add(row);
         CSVHandler.writeCSV(appointmentFile, appointmentSchedule);
     }
 
     public void rescheduleAppointment(Patient patient, Scanner scanner) {
-        int choice, size;
+        int choice, choice2, size;
         User doctor;
         String doctorID, status, date, time;
         List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
@@ -267,11 +281,11 @@ public class AppointmentHandler implements DateAndTime {
                     while (true) {
                         System.out.print("Enter the doctor (0 to exit): ");
                         if (scanner.hasNextInt()) {
-                            choice = scanner.nextInt();
-                            if (choice == 0) {
+                            choice2 = scanner.nextInt();
+                            if (choice2 == 0) {
                                 return;
-                            } else if (choice >= 1 && choice <= size) {
-                                doctor = StaffHandler.getInstance().getStaff(choice - 1);
+                            } else if (choice2 >= 1 && choice2 <= size) {
+                                doctor = StaffHandler.getInstance().getStaff(choice2-1);
                                 break;
                             } else {
                                 System.out.println("Invalid option. Try again.");
@@ -280,7 +294,7 @@ public class AppointmentHandler implements DateAndTime {
                             System.out.println("Invalid input. Try again.");
                         }
                     }
-                    setAppointment(doctor, patient, scanner, patientExistingAppointment.get(choice - 1));
+                    setAppointment(doctor, patient, scanner, patientExistingAppointment.get(choice-1));
                     break;
                 }
             } else {
@@ -288,6 +302,55 @@ public class AppointmentHandler implements DateAndTime {
                 scanner.next();
             }
         }
+    }
+    
+    public void cancelAppointment(Patient patient, Scanner scanner) {
+    	int choice;
+        String doctorID, status, date, time;
+        List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
+        List<String[]> patientExistingAppointment = new ArrayList<>();
+        for (int i = 0; i < appointmentSchedule.size(); i++) {
+            if (appointmentSchedule.get(i)[0].equals(patient.getId()) && !appointmentSchedule.get(i)[2].equals("Canceled") && appointmentSchedule.get(i)[5].equals("-")) {
+                patientExistingAppointment.add(appointmentSchedule.get(i));
+            }
+        }
+        if (patientExistingAppointment.size() == 0) {
+            System.out.println("You have no existing Appointment.");
+            return;
+        }
+        System.out.println("----Existing Appointment----");
+        for (int i = 0; i < patientExistingAppointment.size(); i++) {
+            doctorID = patientExistingAppointment.get(i)[1];
+            status = patientExistingAppointment.get(i)[2];
+            date = patientExistingAppointment.get(i)[3];
+            time = patientExistingAppointment.get(i)[4];
+            System.out.println((i + 1) + ". " + StaffHandler.getInstance().findStaffById(doctorID).getName() + " " + date + " " + time + " (" + status + ")");
+        }
+        while (true) {
+			System.out.print("\nEnter the appointment you want to cancel (0 to exit): ");
+			if (scanner.hasNextInt()) {
+				choice = scanner.nextInt();
+				if (choice == 0) {
+					return;
+				}
+				if (choice >= 1 && choice <= patientExistingAppointment.size()) {
+					String cancel = Arrays.toString(patientExistingAppointment.get(choice-1));
+					for (int i = 0; i < appointmentSchedule.size(); i++) {
+                        String appointment = Arrays.toString(appointmentSchedule.get(i));
+                        if (appointment.equals(cancel)) {
+                            appointmentSchedule.remove(i);
+                        }
+                    }
+					System.out.println("You have cancelled the appointment.");
+					appointmentSchedule.add(0, new String[]{"Patient ID,Doctor ID,Status,Date,Time,Outcome"});
+					CSVHandler.writeCSV(appointmentFile, appointmentSchedule);
+					break;
+				}
+			} else {
+				System.out.println("Invalid input. Try again.");
+                scanner.next();
+			}
+		}
     }
 
     public boolean saveDoctorAvailability(String[] line) {
