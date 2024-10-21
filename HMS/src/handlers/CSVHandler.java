@@ -11,8 +11,8 @@ public class CSVHandler {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             line = br.readLine();
-            while ((line = br.readLine()) != null) {
-                data.add(line.split(","));
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
+            	data.add(line.split(","));
             }
         } catch (IOException e) {
             e.printStackTrace();

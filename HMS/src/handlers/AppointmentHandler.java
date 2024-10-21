@@ -39,20 +39,16 @@ public class AppointmentHandler implements DateAndTime{
 			}
 			System.out.println("Incorrect date. Try again.");
 		}
-    	if (appointmentSchedule.size() != 0) {
-	    	for(String[] line : appointmentSchedule) {
-				if (doctor.getId().equals(line[1]) && date.equals(line[3])) {
-					appointmentList.add(line[4]);
-				}
+    	for(int i = 0; i < appointmentSchedule.size(); i++) {
+    		if (doctor.getId().equals(appointmentSchedule.get(i)[1]) && date.equals(appointmentSchedule.get(i)[3])) {
+				appointmentList.add(appointmentSchedule.get(i)[4]);
 			}
     	}
-    	if (doctorSchedule.size() != 0) {
-    		for(String[] line : doctorSchedule) {
-				if (doctor.getId().equals(line[0]) && date.equals(line[1])) {
-					startTime = line[2];
-					endTime = line[3];
-					break;
-				}
+    	for(int i = 0; i < doctorSchedule.size(); i++) {
+    		if (doctor.getId().equals(doctorSchedule.get(i)[0]) && date.equals(doctorSchedule.get(i)[1])) {
+				startTime = doctorSchedule.get(i)[2];
+				endTime = doctorSchedule.get(i)[3];
+				break;
 			}
     	}
     	LocalTime beginning = LocalTime.parse(startTime);
@@ -94,23 +90,16 @@ public class AppointmentHandler implements DateAndTime{
 			}
 			System.out.println("Incorrect date. Try again.");
 		}
-    	if (appointmentSchedule.size() != 0) {
-	    	for(String[] line : appointmentSchedule) {
-				if (doctor.getId().equals(line[1]) && date.equals(line[3])) {
-					appointmentList.add(line[4]);
-				}
-				if (patient.getId().equals(line[0]) && date.equals(line[3])) {
-					patientScheduleList.add(line[4]);
-				}
+    	for(int i = 0; i < appointmentSchedule.size(); i++) {
+    		if (doctor.getId().equals(appointmentSchedule.get(i)[1]) && date.equals(appointmentSchedule.get(i)[3])) {
+				appointmentList.add(appointmentSchedule.get(i)[4]);
 			}
     	}
-    	if (doctorSchedule.size() != 0) {
-    		for(String[] line : doctorSchedule) {
-				if (doctor.getId().equals(line[0]) && date.equals(line[1])) {
-					startTime = line[2];
-					endTime = line[3];
-					break;
-				}
+    	for(int i = 0; i < doctorSchedule.size(); i++) {
+    		if (doctor.getId().equals(doctorSchedule.get(i)[0]) && date.equals(doctorSchedule.get(i)[1])) {
+				startTime = doctorSchedule.get(i)[2];
+				endTime = doctorSchedule.get(i)[3];
+				break;
 			}
     	}
     	LocalTime beginning = LocalTime.parse(startTime);
@@ -175,23 +164,16 @@ public class AppointmentHandler implements DateAndTime{
 			}
 			System.out.println("Incorrect date. Try again.");
 		}
-    	if (appointmentSchedule.size() != 0) {
-	    	for(String[] line : appointmentSchedule) {
-				if (doctor.getId().equals(line[1]) && date.equals(line[3])) {
-					appointmentList.add(line[4]);
-				}
-				if (patient.getId().equals(line[0]) && date.equals(line[3])) {
-					patientScheduleList.add(line[4]);
-				}
+    	for(int i = 0; i < appointmentSchedule.size(); i++) {
+    		if (doctor.getId().equals(appointmentSchedule.get(i)[1]) && date.equals(appointmentSchedule.get(i)[3])) {
+				appointmentList.add(appointmentSchedule.get(i)[4]);
 			}
     	}
-    	if (doctorSchedule.size() != 0) {
-    		for(String[] line : doctorSchedule) {
-				if (doctor.getId().equals(line[0]) && date.equals(line[1])) {
-					startTime = line[2];
-					endTime = line[3];
-					break;
-				}
+    	for(int i = 0; i < doctorSchedule.size(); i++) {
+    		if (doctor.getId().equals(doctorSchedule.get(i)[0]) && date.equals(doctorSchedule.get(i)[1])) {
+				startTime = doctorSchedule.get(i)[2];
+				endTime = doctorSchedule.get(i)[3];
+				break;
 			}
     	}
     	LocalTime beginning = LocalTime.parse(startTime);
@@ -256,11 +238,9 @@ public class AppointmentHandler implements DateAndTime{
     	String doctorID, status, date, time;
     	List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
     	List<String[]> patientExistingAppointment = new ArrayList<>();
-    	if (appointmentSchedule.size() != 0) {
-    		for(String[] line : appointmentSchedule) {
-    			if (line[0].equals(patient.getId()) && !line[2].equals("Canceled") && line[5].equals("-")) {
-    				patientExistingAppointment.add(line);
-    			}
+    	for(int i = 0; i < appointmentSchedule.size(); i++) {
+    		if (appointmentSchedule.get(i)[0].equals(patient.getId()) && !appointmentSchedule.get(i)[2].equals("Canceled") && appointmentSchedule.get(i)[5].equals("-")) {
+    			patientExistingAppointment.add(appointmentSchedule.get(i));
     		}
     	}
     	if (patientExistingAppointment.size() == 0) {
@@ -313,6 +293,16 @@ public class AppointmentHandler implements DateAndTime{
     public boolean saveDoctorAvailability(String[] line) {
     	Boolean duplicateTime = false;
     	List<String[]> data = CSVHandler.readCSV(doctorFile);
+    	for(int i = 0; i < data.size(); i++) {
+    		if (line[0].equals(data.get(i)[0]) && line[1].equals(data.get(i)[1])) {
+				LocalTime newStartTime = LocalTime.parse(line[2]);
+		        LocalTime existingStartTime = LocalTime.parse(data.get(i)[2]);
+		        LocalTime existingEndTime = LocalTime.parse(data.get(i)[3]);
+		        if (newStartTime.compareTo(existingStartTime) >= 0 && newStartTime.compareTo(existingEndTime) < 0) {
+		        	duplicateTime = true;
+		        }
+			}
+    	}
     	if (data.size() != 0) {
 	    	for (String[] eachRow : data) {
 				if (line[0].equals(eachRow[0]) && line[1].equals(eachRow[1])) {
