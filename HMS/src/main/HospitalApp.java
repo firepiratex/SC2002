@@ -64,7 +64,7 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
-            	patient.viewMedicalRecord();
+                patient.viewMedicalRecord();
                 break;
             case 2:
                 String contactNo = sc.nextLine();
@@ -83,7 +83,7 @@ public class HospitalApp {
                 AppointmentManagement.manageAppointment(sc, patient);
                 break;
             case 7:
-            	MedicalRecordManagement.viewPatientMedicalRecord(patient);
+                MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
             case 8:
                 System.out.println("Returning to login...");
@@ -98,10 +98,10 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
             case 1:
-            	MedicalRecordManagement.viewPatientMedicalRecord(doctor);
+                MedicalRecordManagement.viewPatientMedicalRecord(doctor);
                 break;
             case 2:
-            	MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
+                MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
                 break;
@@ -131,6 +131,12 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
+            case 1:
+                pharmacist.viewAppointmentOutcomeRecord(sc);
+                break;
+            case 2:
+                pharmacist.updatePrescriptionStatus(sc);
+                break;
             case 3:
                 inventoryManagement.viewInventory();
             case 4:

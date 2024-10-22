@@ -66,23 +66,23 @@ public class AppointmentManagement implements DateAndTime {
     public static void manageRescheduleAppointment(Scanner scanner, Patient patient) {
         AppointmentHandler.getInstance().rescheduleAppointment(patient, scanner);
     }
-    
+
     public static void manageAppointment(Scanner scanner, Patient patient) {
-    	AppointmentHandler.getInstance().cancelAppointment(patient, scanner);
+        AppointmentHandler.getInstance().cancelAppointment(patient, scanner);
     }
-    
+
     public static void manageAppointmentRequest(Scanner scanner, User doctor) {
-    	AppointmentHandler.getInstance().manageAppointment(scanner, doctor);
+        AppointmentHandler.getInstance().manageAppointment(scanner, doctor);
     }
-    
+
     public static void viewUpcomingAppointment(User doctor) {
-    	AppointmentHandler.getInstance().viewUpcomingAppointment(doctor);
+        AppointmentHandler.getInstance().viewUpcomingAppointment(doctor);
     }
-    
+
     public static void recordAppointmentOutcome(Scanner scanner, User doctor) {
-    	AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
+        AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
     }
-    
+
     public static void setDoctorAvailability(Scanner scanner, User doctor) {
         String date, startTime, endTime;
         while (true) {
@@ -119,5 +119,18 @@ public class AppointmentManagement implements DateAndTime {
         if (AppointmentHandler.getInstance().saveDoctorAvailability(row)) {
             System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
         }
+    }
+
+    public List<String> getAppointmentOutcome(String patientId) {
+        // Placeholder for actual logic to retrieve appointment outcomes from a database or file
+        List<String> outcomeRecord = new ArrayList<>();
+
+        // Sample logic
+        if (patientId.equals("P123")) {
+            outcomeRecord.add("2024-10-10: Prescription for antibiotics.");
+            outcomeRecord.add("2024-10-15: Follow-up scheduled.");
+        }
+
+        return outcomeRecord;
     }
 }
