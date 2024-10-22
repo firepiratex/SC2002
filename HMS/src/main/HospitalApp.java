@@ -1,6 +1,7 @@
 package main;
 
 import handlers.LoginHandler;
+import handlers.MedicineHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,13 +21,15 @@ public class HospitalApp {
     private static final List<MedicineManagement> medicineList = new ArrayList<>();
 
     public static void main(String[] args) {
-        LoginHandler loginHandler = new LoginHandler();
-        User user = loginHandler.login();
-
-        if (user != null) {
-            handleUserInput(user);  // Removed the extra call to displayMenu() here
-        } else {
-            System.out.println("Login failed! Exiting system.");
+        while(true) {
+            LoginHandler loginHandler = new LoginHandler();
+            User user = loginHandler.login();
+    
+            if (user != null) {
+                handleUserInput(user);  // Removed the extra call to displayMenu() here
+            } else {
+                System.out.println("Login failed! Exiting system.");
+            }
         }
     }
 
@@ -129,13 +132,14 @@ public class HospitalApp {
     // Implement pharmacist-specific actions
     public static void handlePharmacistActions(Pharmacist pharmacist, int choice, List<MedicineManagement> medicineList) {
         Scanner sc = new Scanner(System.in);
+        MedicineHandler medicineHandler = new MedicineHandler();
         InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
                 pharmacist.viewAppointmentOutcomeRecord(sc);
                 break;
             case 2:
-                pharmacist.updatePrescriptionStatus(sc);
+                pharmacist.managePrescription(sc, medicineHandler);
                 break;
             case 3:
                 inventoryManagement.viewInventory();

@@ -1,4 +1,6 @@
-Paracetamol,100,20
-Ibuprofen,0,1000
+Medicine Name,Initial Stock,Low Stock,Level Alert
+Medicine Name,Initial Stock,Low Stock,Level Alert
+Medicine Name,Initial Stock,Low Stock,Level Alert
 Amoxicillin,0,100
-Paracetamol,100,20
+Paracetamol,80,20
+Ibuprofen,0,1000

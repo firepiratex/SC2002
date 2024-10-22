@@ -1,2 +1,2 @@
-Doctor ID,Patient ID,Date,Type of Service, Prescribed Medications, Consultation Notes
-D001,P1001,23/10/2024,super good bone,pending,good bone
+D001,P1001,23/10/2024,super good bone,dispensed,good bone
+D001,P1001,23/10/2024,super good bone,dispensed,good bone
