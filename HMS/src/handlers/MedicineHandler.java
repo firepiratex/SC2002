@@ -28,13 +28,11 @@ public class MedicineHandler {
     // Save the updated medicine list to file
     public void saveMedicine(List<MedicineManagement> medicineList) {
         List<String[]> data = new ArrayList<>();
-
         for (MedicineManagement medicine : medicineList) {
             String[] row = {medicine.getMedicineName(), String.valueOf(medicine.getStock()), String.valueOf(medicine.getLowStockAlert())};
             data.add(row);
-            data.add(0,new String[]{"Medicine Name,Initial Stock,Low Stock,Level Alert"});
         }
-
+        data.add(0,new String[]{"Medicine Name,Initial Stock,Low Stock,Level Alert"});
         CSVHandler.writeCSV(medicineFile, data);
     }
 }
