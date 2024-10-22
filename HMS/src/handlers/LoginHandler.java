@@ -30,6 +30,7 @@ public class LoginHandler {
         return user;
     }
 
+
     private User authenticate(String id, String password) {
         // First, check if the user is a patient
         Patient patient = PatientHandler.getInstance().findPatientById(id);
@@ -47,6 +48,9 @@ public class LoginHandler {
         return null;
     }
 
+    
+
+
     private void initialLogin(User user, Scanner scanner) {
         System.out.println("This is your first time logging in so you need "
                 + "to change your password");
@@ -62,7 +66,7 @@ public class LoginHandler {
                     continue;
                 }
                 System.out.println("You have changed your password successfully!");
-                user.setPassword(confirmPassword);
+                user.setPassword(PasswordHash.hash(confirmPassword)); // Store the hashed password
                 break;
             } else {
                 System.out.println("The password does not match. Try again");
