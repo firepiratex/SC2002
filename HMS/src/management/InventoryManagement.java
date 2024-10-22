@@ -24,8 +24,13 @@ public class InventoryManagement {
     public void viewInventory() {
         System.out.println("---- Medicine Inventory ----");
         for (MedicineManagement eachMedicine : medicineList) {
-            System.out.println(eachMedicine);
+            if (eachMedicine.getStock() > eachMedicine.getLowStockAlert()) {
+				System.out.println(eachMedicine);
+			} else {
+				System.out.println(eachMedicine + " (Low Stock Level)");
+			}
         }
+        return;
     }
 
     public void inventoryMenu(Scanner scanner) {
@@ -166,36 +171,35 @@ public class InventoryManagement {
         }
     }
 
-    public static void submitReplenishmentRequest(User pharmacist, Scanner scanner, List<MedicineManagement> medicineList) {
-        // Keep requestList as List<String[]> as expected by CSVHandler and InventoryHandler
+    public void submitReplenishmentRequest(User pharmacist, Scanner scanner) {
         List<String[]> requestList = CSVHandler.readCSV("src/data/Replenishment_Request.csv");
         List<String> lowMedicineStock = new ArrayList<>();
         int choice, amount;
-        String[] row;  // Change to String[] to match the expected type
-
-        // Check for low stock medicine
+        String[] row;
+    
+        // Check for low stock medicines
         for (MedicineManagement eachMedicine : medicineList) {
             if (eachMedicine.getStock() < eachMedicine.getLowStockAlert()) {
                 lowMedicineStock.add(eachMedicine.getMedicineName());
             }
         }
-
+    
         // If no medicines are low in stock
-        if (lowMedicineStock.size() == 0) {
-            System.out.println("No medications that are low in level.");
+        if (lowMedicineStock.isEmpty()) {
+            System.out.println("No medications are low in level.");
             return;
         }
-
+    
         // Display low stock medicines
         System.out.println("----Low Stock Level Medicine----");
         for (int i = 0; i < lowMedicineStock.size(); i++) {
             System.out.println((i + 1) + ". " + lowMedicineStock.get(i));
         }
         System.out.println("0. Exit");
-
+    
         // Handle user input and submission
         while (true) {
-            System.out.print("\nEnter the medicine no. you want to submit request: ");
+            System.out.print("\nEnter the medicine no. you want to submit a request for: ");
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
                 if (choice == 0) {
@@ -208,22 +212,23 @@ public class InventoryManagement {
                             System.out.println("Amount must be more than 0.");
                             break;
                         }
-
-                        // Create row as a String[] instead of String
+    
+                        // Prepare row for CSV request
                         row = new String[]{
-                            pharmacist.getId(), // Pharmacist ID
-                            lowMedicineStock.get(choice - 1), // Medicine name
-                            String.valueOf(amount) // Amount to replenish
+                            pharmacist.getId(),  // Pharmacist ID
+                            lowMedicineStock.get(choice - 1),  // Medicine name
+                            String.valueOf(amount)  // Amount to replenish
                         };
-                        requestList.add(row);  // Add the array to requestList
-
+                        requestList.add(row);  // Add the replenishment request
+    
                         System.out.println("Request submitted successfully.");
-
-                        // Save the replenishment request with the updated requestList
+    
+                        // Save the replenishment request with updated requestList
                         InventoryHandler.saveReplenishmentRequest(requestList);
                         return;
                     } else {
                         System.out.println("Invalid input. Try again.");
+                        scanner.next();  // Clear invalid input
                     }
                 } else {
                     System.out.println("Invalid choice. Try again.");
@@ -235,7 +240,7 @@ public class InventoryManagement {
         }
     }
 
-    public static void manageReplenishmentRequest(Scanner scanner, List<MedicineManagement> medicineList) {
+    public void manageReplenishmentRequest(Scanner scanner) {
         List<String[]> requestList = CSVHandler.readCSV("src/data/Replenishment_Request.csv");
         int choice, option;
 

@@ -2,24 +2,18 @@ package main;
 
 import handlers.LoginHandler;
 import handlers.MedicineHandler;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import management.AppointmentManagement;
 import management.InventoryManagement;
 import management.MedicalRecordManagement;
-import management.MedicineManagement;
 import management.StaffManager;
 import models.Administrator;
-import models.Doctor;  // Import the new StaffManager class
+import models.Doctor;
 import models.Patient;
 import models.Pharmacist;
-import models.User;
+import models.User;  // Import the new StaffManager class
 
 public class HospitalApp {
-
-    private static final List<MedicineManagement> medicineList = new ArrayList<>();
-
     public static void main(String[] args) {
         while(true) {
             LoginHandler loginHandler = new LoginHandler();
@@ -49,7 +43,7 @@ public class HospitalApp {
             } else if (user instanceof Doctor) {
                 handleDoctorActions((Doctor) user, choice);
             } else if (user instanceof Pharmacist) {
-                handlePharmacistActions((Pharmacist) user, choice, medicineList);
+                handlePharmacistActions((Pharmacist) user, choice);
             } else if (user instanceof Administrator) {
                 handleAdminActions((Administrator) user, choice, sc);  // Pass Scanner as well
             }
@@ -130,7 +124,7 @@ public class HospitalApp {
     }
 
     // Implement pharmacist-specific actions
-    public static void handlePharmacistActions(Pharmacist pharmacist, int choice, List<MedicineManagement> medicineList) {
+    public static void handlePharmacistActions(Pharmacist pharmacist, int choice) {
         Scanner sc = new Scanner(System.in);
         MedicineHandler medicineHandler = new MedicineHandler();
         InventoryManagement inventoryManagement = new InventoryManagement();
@@ -143,8 +137,9 @@ public class HospitalApp {
                 break;
             case 3:
                 inventoryManagement.viewInventory();
+                break;
             case 4:
-                InventoryManagement.submitReplenishmentRequest(pharmacist, sc, medicineList);
+                inventoryManagement.submitReplenishmentRequest(pharmacist, sc);
                 break;
             default:
 
@@ -170,7 +165,7 @@ public class HospitalApp {
                 System.out.print("Enter medicine name for replenishment approval: ");
                 String medicineName = sc.nextLine();
                 admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests */
-                InventoryManagement.manageReplenishmentRequest(sc, medicineList);
+                inventoryManagement.manageReplenishmentRequest(sc);
                 break;
             case 5:
                 System.out.println("Returning to login...");

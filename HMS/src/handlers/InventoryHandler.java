@@ -10,9 +10,9 @@ public class InventoryHandler {
         try {
             FileWriter writeFile = new FileWriter(new File("src/data/Replenishment_Request.csv"));
             StringBuilder line = new StringBuilder();
-            line.append("Staff ID,Medicine Name,Stock\n");
+            line.append("Staff ID,Medicine Name,Stock\n");  // Header for the CSV
             for (String[] eachRequest : requestList) {
-                line.append(eachRequest);
+                line.append(String.join(",", eachRequest));  // Convert String[] to CSV string
                 line.append("\n");
             }
             writeFile.write(line.toString());

@@ -24,19 +24,19 @@ public class MedicineManagement {
 	}
 	
 	public void minusStock() {
-		this.stock--;
+		this.stock--;  // Reduce by 1
 	}
 	
 	public void minusStock(int quantity) {
-		this.stock -= quantity;
+		this.stock -= quantity;  // Reduce by specified quantity
 	}
 	
 	public void addStock() {
-		this.stock--;
+		this.stock++;  // Increment by 1 (fixed the decrement error)
 	}
 	
 	public void addStock(int quantity) {
-		this.stock += quantity;
+		this.stock += quantity;  // Increment by specified quantity
 	}
 	
 	public void setLowStockAlert(int lowStockAlert) {
