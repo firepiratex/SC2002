@@ -1,5 +1,7 @@
 package models;
 
+import handlers.PasswordHash;
+
 public abstract class User {
     protected String id;
     protected String name;
@@ -32,7 +34,7 @@ public abstract class User {
     }
 
     public boolean validatePassword(String inputPassword) {
-        return this.password.equals(inputPassword);
+        return this.password.equals(PasswordHash.hash(inputPassword));
     }
 
     public String getPassword() {

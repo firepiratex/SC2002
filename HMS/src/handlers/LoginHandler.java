@@ -18,7 +18,7 @@ public class LoginHandler {
             String password = sc.nextLine();
 
             user = authenticate(id, password);
-            if (user != null && user.getPassword().equals("password")) {
+            if (user != null && user.getPassword().equals(PasswordHash.hash("password"))) {
                 initialLogin(user, sc);
             } else if (user != null) {
                 System.out.println("Login successful! Welcome, " + user.getName() + " (" + user.getRole() + ")");
@@ -61,7 +61,7 @@ public class LoginHandler {
             System.out.print("Enter your new password again: ");
             String confirmPassword = scanner.next();
             if (password.equals(confirmPassword)) {
-                if (confirmPassword.equals("password")) {
+                if (confirmPassword.equals(PasswordHash.hash("password"))) {
                     System.out.println("Cannot be the default password.");
                     continue;
                 }

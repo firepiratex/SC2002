@@ -34,7 +34,7 @@ public class StaffHandler implements AccountSaver {
         List<String[]> data2 = TextHandler.readTXT(staffTXTFile);
         for (int index = 0; index < data.size(); index++) {
             String id = data.get(index)[0];
-            String password = "password";
+            String password = PasswordHash.hash("password");
             for (int index2 = 0; index2 < data2.size(); index2++) {
                 String id2 = data2.get(index2)[0];
                 if (id.equals(id2)) {
