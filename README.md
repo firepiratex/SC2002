@@ -1,4 +1,4 @@
-# Welcome to SCSK Group 5's Hospital Management System (HMS)!
+# SCSK Group 5's Hospital Management System (HMS)!
 ![HMS LOGO2](https://github.com/user-attachments/assets/c1bf46f7-aeb5-4f33-9c37-e444496ad3ac)
 ## About
 This is a project for SC2002 (Object-Oriented Design & Programming) which is a **Command Line Interface (CLI)** application which aims at automating the management of hospital operations, including patient management, appointment scheduling, staff management, and billing. The system is expected to facilitate efficient management of hospital resources, enhance patient care, and streamline administrative processes.
