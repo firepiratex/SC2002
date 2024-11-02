@@ -18,7 +18,7 @@ public class PatientHandler implements AccountSaver {
 
     public static PatientHandler getInstance() {
         if (instance == null) {
-            instance = new PatientHandler();  // Initialize only when needed
+            instance = new PatientHandler();
         }
         return instance;
     }
@@ -44,11 +44,11 @@ public class PatientHandler implements AccountSaver {
                     break;
                 }
             }
-            String name = data.get(index)[1];              // Patient Name
+            String name = data.get(index)[1];
             String dateOfBirth = data.get(index)[2];
             String gender = data.get(index)[3];
             String bloodType = data.get(index)[4];
-            String contactInfo = data.get(index)[5];       // Contact Information
+            String contactInfo = data.get(index)[5];
             patients.add(new Patient(id, name, password, dateOfBirth, gender, bloodType, contactInfo));
         }
     }

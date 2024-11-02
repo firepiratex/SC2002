@@ -23,7 +23,7 @@ public class StaffHandler implements AccountSaver {
 
     public static StaffHandler getInstance() {
         if (instance == null) {
-            instance = new StaffHandler();  // Initialize only when needed
+            instance = new StaffHandler();
         }
         return instance;
     }
@@ -42,7 +42,7 @@ public class StaffHandler implements AccountSaver {
                     break;
                 }
             }
-            String name = data.get(index)[1];              // Patient Name
+            String name = data.get(index)[1];
             String role = data.get(index)[2];
             String gender = data.get(index)[3];
             int age = Integer.valueOf(data.get(index)[4]);
@@ -122,7 +122,6 @@ public class StaffHandler implements AccountSaver {
     // Display all staff members
     public void displayStaff() {
         for (User user : staff) {
-            //System.out.println("ID: " + user.getId() + ", Name: " + user.getName() + ", Role: " + user.getRole());
             System.out.print(user.getId() + " ");
         }
         System.out.println();

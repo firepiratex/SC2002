@@ -21,7 +21,7 @@ public class HospitalApp {
             User user = loginHandler.login();
 
             if (user != null) {
-                handleUserInput(user);  // Removed the extra call to displayMenu() here
+                handleUserInput(user);
             } else {
                 System.out.println("Login failed! Exiting system.");
             }
@@ -46,10 +46,9 @@ public class HospitalApp {
             } else if (user instanceof Pharmacist) {
                 handlePharmacistActions((Pharmacist) user, choice);
             } else if (user instanceof Administrator) {
-                handleAdminActions((Administrator) user, choice, sc);  // Pass Scanner as well
+                handleAdminActions((Administrator) user, choice, sc);
             }
 
-            // If the user selects option 8, log them out and exit the loop
             if (choice == 8) {
                 running = false;
                 System.out.println("Logging out...");
@@ -157,7 +156,6 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
 
         }
-        // Similar logic for pharmacist actions
     }
 
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
@@ -165,13 +163,13 @@ public class HospitalApp {
         InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
-                staffManager.manageStaff(sc);  // Option 1: Manage Hospital Staff
+                staffManager.manageStaff(sc);
                 break;
             case 2:
-                admin.viewAppointments();  // Option 2: View Appointments
+                admin.viewAppointments();
                 break;
             case 3:
-                inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
+                inventoryManagement.inventoryMenu(sc);
                 break;
             case 4:
                 inventoryManagement.manageReplenishmentRequest(sc);

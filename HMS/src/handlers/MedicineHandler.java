@@ -10,7 +10,6 @@ public class MedicineHandler {
 
     // Read medicine list from file
     public List<Medicine> loadMedicine() {
-        // Placeholder for actual file reading logic (e.g., using CSVHandler)
         List<String[]> data = CSVHandler.readCSV(medicineFile);
         List<Medicine> medicineList = new ArrayList<>();
 
