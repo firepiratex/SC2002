@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class TextHandler {
+
     public static List<String[]> readTXT(String filePath) {
         List<String[]> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

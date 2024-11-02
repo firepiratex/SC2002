@@ -110,8 +110,8 @@ public class Pharmacist extends User {
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
-		List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
-		List<MedicineManagement> medicineList = medicineHandler.loadMedicine();
+        List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
+        List<Medicine> medicineList = medicineHandler.loadMedicine();
 
         int choice, medication, amount;
         String[] parts;
@@ -159,18 +159,18 @@ public class Pharmacist extends User {
                             row = parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",dispensed," + parts[5];
                             updatedRow = row.split(",");  // Assuming row is a CSV-formatted string
                             recordList.set(i, updatedRow);
-							System.out.println("Update successfully.");
-							medicineHandler.saveMedicine(medicineList);  // Assuming saveMedicine is an instance method
-							CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
-							break;
-						}
-					}
-					break;
-				} else {
-					System.out.println("Invalid choice. Try again.");
-				}
-			} else {
-				System.out.println("Invalid input. Try again.");
+                            System.out.println("Update successfully.");
+                            medicineHandler.saveMedicine(medicineList);  // Assuming saveMedicine is an instance method
+                            CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
+                            break;
+                        }
+                    }
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Try again.");
                 scanner.next();
             }
         }

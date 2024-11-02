@@ -11,10 +11,17 @@ public class AppointmentHandler implements DateAndTime {
 
     private static AppointmentHandler instance;
     private List<String> timeList;
-    private final String appointmentFile = "HMS/src/data/Appointment_Detail.csv";
-    private final String appointmentLogFile = "HMS/src/data/Appointment_Log.csv";
-    private final String appointmentOutcomeFile = "HMS/src/data/Appointment_Outcome_Record.csv";
-    private final String doctorFile = "HMS/src/data/Doctor_Availability.csv";
+    private List<Appointment> appointments;
+    private List<String[]> appointmentLogList;
+    private final String appointmentFile = "src/data/Appointment_Detail.csv";
+    private final String appointmentLogFile = "src/data/Appointment_Log.csv";
+    private final String appointmentOutcomeFile = "src/data/Appointment_Outcome_Record.csv";
+    private final String doctorFile = "src/data/Doctor_Availability.csv";
+    private String startTime;
+    private String endTime;
+    private String time;
+    private String date;
+    private int choice;
 
     private AppointmentHandler() {
         this.timeList = new ArrayList<>();
@@ -131,7 +138,7 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-    
+
     public void viewUpcomingAppointment(User doctor) {
         List<Appointment> doctorSchedule = new ArrayList<>();
         for (int i = 0; i < appointments.size(); i++) {
@@ -149,17 +156,17 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-    
+
     public void viewAllAppointment() {
-    	System.out.println("\n----All Appointments----");
-    	if (appointments.size() == 0) {
-    		System.out.println("No appointments.");
-    	} else {
-	    	for(Appointment eachAppointment : appointments) {
-	    		System.out.println(eachAppointment);
-	    	}
-    	}
-    	System.out.println("");
+        System.out.println("\n----All Appointments----");
+        if (appointments.size() == 0) {
+            System.out.println("No appointments.");
+        } else {
+            for (Appointment eachAppointment : appointments) {
+                System.out.println(eachAppointment);
+            }
+        }
+        System.out.println("");
     }
 
     public void setAppointment(User doctor, Patient patient, Scanner scanner) {
