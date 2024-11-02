@@ -3,26 +3,44 @@ package models;
 import java.util.regex.Pattern;
 
 import handlers.MedicalCertificateHandler;
+import handlers.PatientHandler;
 
 public class Patient extends User {
 
     private String contactInfo;
+    private String contactNo;
 
-    public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo) {
+    public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo, String contactNo) {
         super(id, name, password, "Patient", gender);
         this.contactInfo = contactInfo;
+        this.contactNo = contactNo;
     }
 
     public String getContactInfo() {
         return contactInfo;
+    }
+    
+    public String getContactNumber() {
+        return contactNo;
     }
 
     public void updatePersonalInfo(String email) {
         if (isValid(email)) {
         	this.contactInfo = email;
         	System.out.println("\nContact information updated successfully.\n");
+        	PatientHandler.getInstance().saveAccount();
         } else {
         	System.out.println("\nInvalid email address.\n");
+        }
+    }
+    
+    public void updateContactNo(String number) {
+        if (number.matches("[0-9]{8}")) {
+        	this.contactNo = number;
+        	System.out.println("\nContact Number updated successfully.\n");
+        	PatientHandler.getInstance().saveAccount();
+        } else {
+        	System.out.println("\nInvalid number.\n");
         }
     }
 
@@ -30,6 +48,8 @@ public class Patient extends User {
         System.out.println("Medical Record for Patient ID: " + getId());
         System.out.println("Name: " + getName());
         System.out.println("Contact Info: " + getContactInfo());
+        System.out.println("Contact Number: " + getContactNumber());
+        System.out.println("");
     }
 
     public void requestMedicalCertificate(String reason, int duration) {
@@ -56,6 +76,12 @@ public class Patient extends User {
         System.out.println("9. View Medical Certificates");
         System.out.println("10. View Billing Records");
         System.out.println("11. Logout");
+    }
+    
+    public void displayPersonalInfoMenu() {
+    	System.out.println("1. Update Email Address");
+        System.out.println("2. Update Phone Number");
+        System.out.println("0. Exit");
     }
     
     public static boolean isValid(String email) {

@@ -64,7 +64,7 @@ public class Pharmacist extends User {
 // If record exists, view the patient medical record, otherwise show a message
         if (hasRecord) {
             // Create a temporary Patient object with the patient ID
-            Patient tempPatient = new Patient(patientId, "TemporaryName", "password", "UnknownGender", "DOB", "Address", "Phone");
+            Patient tempPatient = new Patient(patientId, "TemporaryName", "password", "UnknownGender", "DOB", "Address", "Phone", "Phone2");
 
             // Call the method from MedicalRecordManagement (static method call)
             MedicalRecordManagement.viewPatientMedicalRecord(tempPatient);

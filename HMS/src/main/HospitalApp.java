@@ -82,9 +82,27 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
-                System.out.print("Enter new contact email address: ");
-                String email = sc.nextLine();
-                patient.updatePersonalInfo(email);
+            	patient.displayPersonalInfoMenu();
+            	while(true) {
+            		System.out.print("Enter the choice: ");
+            		choice = sc.nextInt();
+            		if (choice == 0) {
+            			break;
+            		} else if (choice == 1) {
+            			System.out.print("Enter new contact email address: ");
+                        String email = sc.nextLine();
+                        patient.updatePersonalInfo(email);
+                        break;
+            		} else if (choice == 2) {
+            			sc.nextLine();
+            			System.out.print("Enter new contact number: ");
+                        String number = sc.nextLine();
+                        patient.updateContactNo(number);
+                        break;
+            		} else {
+            			System.out.println("Invalid choice.");
+            		}
+            	}
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);

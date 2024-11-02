@@ -37,10 +37,12 @@ public class PatientHandler implements AccountSaver {
         for (int index = 0; index < data.size(); index++) {
             String id = data.get(index)[0];
             String password = PasswordHash.hash("password");
+            String contactNumber = "-";
             for (int index2 = 0; index2 < data2.size(); index2++) {
                 String id2 = data2.get(index2)[0];
                 if (id.equals(id2)) {
                     password = data2.get(index2)[1];
+                    contactNumber = data2.get(index2)[2];
                     break;
                 }
             }
@@ -49,14 +51,14 @@ public class PatientHandler implements AccountSaver {
             String gender = data.get(index)[3];
             String bloodType = data.get(index)[4];
             String contactInfo = data.get(index)[5];
-            patients.add(new Patient(id, name, password, dateOfBirth, gender, bloodType, contactInfo));
+            patients.add(new Patient(id, name, password, dateOfBirth, gender, bloodType, contactInfo, contactNumber));
         }
     }
 
     public void saveAccount() {
         List<String[]> data = new ArrayList<>();
         for (Patient patient : patients) {
-            String[] row = {patient.getId(), patient.getPassword()};
+            String[] row = {patient.getId(), patient.getPassword(), patient.getContactNumber()};
             data.add(row);
         }
         TextHandler.writeTXT(patientTXTFile, data);
