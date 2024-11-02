@@ -8,7 +8,7 @@ import java.util.*;
 import models.Patient;
 import models.User;
 
-public class AppointmentManagement implements DateAndTime {
+public class AppointmentManagement{
 
     public static void viewAvailableAppointment(Scanner scanner) {
         int choice, size;
@@ -71,18 +71,5 @@ public class AppointmentManagement implements DateAndTime {
 
     public static void recordAppointmentOutcome(Scanner scanner, User doctor) {
         AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
-    }
-
-    public List<String> getAppointmentOutcome(String patientId) {
-        // Placeholder for actual logic to retrieve appointment outcomes from a database or file
-        List<String> outcomeRecord = new ArrayList<>();
-
-        // Sample logic
-        if (patientId.equals("P123")) {
-            outcomeRecord.add("2024-10-10: Prescription for antibiotics.");
-            outcomeRecord.add("2024-10-15: Follow-up scheduled.");
-        }
-
-        return outcomeRecord;
     }
 }
