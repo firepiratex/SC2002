@@ -69,50 +69,8 @@ public class AppointmentManagement implements DateAndTime {
         AppointmentHandler.getInstance().manageAppointment(scanner, doctor);
     }
 
-    public static void viewUpcomingAppointment(User doctor) {
-        AppointmentHandler.getInstance().viewUpcomingAppointment(doctor);
-    }
-
     public static void recordAppointmentOutcome(Scanner scanner, User doctor) {
         AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
-    }
-
-    public static void setDoctorAvailability(Scanner scanner, User doctor) {
-        String date, startTime, endTime;
-        while (true) {
-            System.out.print("Enter the date (DD/MM/YYYY): ");
-            date = scanner.next();
-            if (DateAndTime.dateChecker(date)) {
-                break;
-            }
-            System.out.println("Incorrect date. Try again.");
-        }
-        while (true) {
-            System.out.print("Enter the start time (00:00 - 23:59): ");
-            startTime = scanner.next();
-            if (DateAndTime.timeOfDay(startTime)) {
-                if (DateAndTime.timeChecker(startTime)) {
-                    break;
-                }
-            }
-            System.out.println("Incorrect time. Try again.");
-        }
-        while (true) {
-            LocalTime start = LocalTime.parse(startTime);
-            LocalTime newStartTime = start.plusMinutes(1);
-            System.out.print("Enter the end time (" + newStartTime + " - 23:59): ");
-            endTime = scanner.next();
-            if (DateAndTime.timeOfDay(endTime)) {
-                if (DateAndTime.timeChecker(startTime, endTime)) {
-                    break;
-                }
-            }
-            System.out.println("Incorrect time. Try again.");
-        }
-        String[] row = {doctor.getId(), date, startTime, endTime};
-        if (AppointmentHandler.getInstance().saveDoctorAvailability(row)) {
-            System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
-        }
     }
 
     public List<String> getAppointmentOutcome(String patientId) {
