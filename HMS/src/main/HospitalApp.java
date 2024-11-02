@@ -117,10 +117,11 @@ public class HospitalApp {
                 AppointmentManagement.manageAppointment(sc, patient);
                 break;
             case 7:
-                MedicalRecordManagement.viewPatientMedicalRecord(patient);
+            	//AppointmentManagement.viewScheduledAppointment();
                 break;
             case 8:
-                AppointmentManagement.viewScheduledAppointment();
+            	MedicalRecordManagement.viewPatientMedicalRecord(patient);
+                break;
             case 9:  // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();

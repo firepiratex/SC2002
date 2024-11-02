@@ -609,16 +609,10 @@ public class AppointmentHandler implements DateAndTime {
 
     public List<Appointment> getAppointmentsForPatient(String patientId) {
         List<Appointment> patientAppointments = new ArrayList<>();
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         
         for (Appointment appointment : appointments) {
             if (appointment.getPatientId().equals(patientId)) {
-                // Parse the date string to a LocalDate
-                LocalDate appointmentDate = LocalDate.parse(appointment.getDate(), dateFormatter);
-                if (appointmentDate.isBefore(LocalDate.now())) {
-                    // Add only past appointments
                     patientAppointments.add(appointment);
-                }
             }
         }
         return patientAppointments;

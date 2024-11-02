@@ -80,16 +80,10 @@ public class AppointmentManagement {
         List<Appointment> pastAppointments = AppointmentHandler.getInstance().getAppointmentsForPatient(patient.getId());
     
         for (Appointment appointment : pastAppointments) {
-            // Convert the date from String to LocalDate
-            LocalDate appointmentDate = LocalDate.parse(appointment.getDate()); // Ensure the date format matches "yyyy-MM-dd"
-            
-            if (appointmentDate.isBefore(LocalDate.now())) {
+            if (appointment.getOutcome().equals("Refer to Record")) {
                 return true;  // Found a past appointment
             }
         }
         return false;  // No past appointments found
-    }
-    public static void viewScheduledAppointment(){
-
     }
 }
