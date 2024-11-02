@@ -6,7 +6,7 @@ import management.MedicineManagement;
 
 public class MedicineHandler {
 
-    private final String medicineFile = "src/data/Medicine_List.csv";
+    private final String medicineFile = "HMS/src/data/Medicine_List.csv";
 
     // Read medicine list from file
     public List<MedicineManagement> loadMedicine() {

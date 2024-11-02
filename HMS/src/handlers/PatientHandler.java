@@ -7,8 +7,8 @@ import models.Patient;
 public class PatientHandler implements AccountSaver{
 	private static PatientHandler instance;
     private List<Patient> patients;
-    private final String patientFile = "src/data/Patient_List.csv";
-    private final String patientTXTFile = "src/data/Patient_Account.txt";
+    private final String patientFile = "HMS/src/data/Patient_List.csv";
+    private final String patientTXTFile = "HMS/src/data/Patient_Account.txt";
 
     private PatientHandler() {
         this.patients = new ArrayList<>();
