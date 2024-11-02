@@ -48,9 +48,6 @@ public class LoginHandler {
         return null;
     }
 
-    
-
-
     private void initialLogin(User user, Scanner scanner) {
         System.out.println("This is your first time logging in so you need "
                 + "to change your password");

@@ -25,13 +25,13 @@ public class Doctor extends User {
     	return age;
     }
 
-    // Recording the outcome of the appointment
+    /*// Recording the outcome of the appointment
     public void recordAppointmentOutcome(Appointment appointment, String notes, List<String> prescriptions) {
         appointment.setOutcomeNotes(notes);  // Set outcome notes for the appointment
         appointment.setPrescriptions(prescriptions);  // Set prescriptions for the appointment
         appointment.setStatus("Completed");  // Mark appointment as completed
         System.out.println("Appointment outcome recorded successfully.");
-    }
+    }*/
 
     @Override
     public void displayMenu() {

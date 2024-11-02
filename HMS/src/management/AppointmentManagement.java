@@ -35,7 +35,6 @@ public class AppointmentManagement implements DateAndTime {
 
     public static void scheduleAppointment(Scanner scanner, Patient patient) {
         int choice, size;
-        String[] line;
         User doctor;
         size = StaffHandler.getInstance().displayDoctor();
         while (true) {
@@ -54,12 +53,7 @@ public class AppointmentManagement implements DateAndTime {
                 System.out.println("Invalid input. Try again.");
             }
         }
-        line = AppointmentHandler.getInstance().setAppointment(doctor, patient, scanner);
-        if (line == null) {
-            return;
-        }
-        line[0] = patient.getId();
-        AppointmentHandler.getInstance().saveScheduledAppointment(line);
+        AppointmentHandler.getInstance().setAppointment(doctor, patient, scanner);
         System.out.println("Scheduled appointment successful.\n");
     }
 

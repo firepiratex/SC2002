@@ -84,7 +84,6 @@ public class HospitalApp {
                 break;
             case 8:
                 System.out.println("Returning to login...");
-                boolean running = false;
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
@@ -116,7 +115,6 @@ public class HospitalApp {
                 break;
             case 8:
                 System.out.println("Returning to login...");
-                boolean running = false;
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
