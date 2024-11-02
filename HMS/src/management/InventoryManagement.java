@@ -176,7 +176,7 @@ public class InventoryManagement {
     }
 
     public void submitReplenishmentRequest(User pharmacist, Scanner scanner) {
-        List<String[]> requestList = CSVHandler.readCSV("HMS/src/data/Replenishment_Request.csv");
+        List<String[]> requestList = CSVHandler.readCSV("src/data/Replenishment_Request.csv");
         List<String> lowMedicineStock = new ArrayList<>();
         int choice, amount;
         String[] row;
