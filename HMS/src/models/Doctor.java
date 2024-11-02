@@ -1,6 +1,6 @@
 package models;
 
-import java.util.List;
+import handlers.MedicalCertificateHandler;
 import management.AppointmentManagement;
 
 public class Doctor extends User {
@@ -20,29 +20,31 @@ public class Doctor extends User {
     public void viewUpcomingAppointments() {
         //appointmentManagement.viewAppointments(this.getId());  // Call viewAppointments method
     }
-    
+
     public int getAge() {
-    	return age;
+        return age;
     }
 
-    /*// Recording the outcome of the appointment
-    public void recordAppointmentOutcome(Appointment appointment, String notes, List<String> prescriptions) {
-        appointment.setOutcomeNotes(notes);  // Set outcome notes for the appointment
-        appointment.setPrescriptions(prescriptions);  // Set prescriptions for the appointment
-        appointment.setStatus("Completed");  // Mark appointment as completed
-        System.out.println("Appointment outcome recorded successfully.");
-    }*/
+    public void viewPatientCertificates(Patient patient) {
+        MedicalCertificateHandler.viewCertificatesForPatient(patient);
+    }
+
+    public void approveOrRejectCertificate(String patientId, String newStatus) {
+        MedicalCertificateHandler.updateCertificateStatus(patientId, newStatus);
+    }
 
     @Override
     public void displayMenu() {
         System.out.println("Doctor Menu:");
-        System.out.println("\n1. View Patient Medical Records\n"
-				+ "2. Update Patient Medical Records\n"
-				+ "3. View Personal Schedule\n"
-				+ "4. Set Availability for Appointments\n"
-				+ "5. Accept or Decline Appointment Requests\n"
-				+ "6. View Upcoming Appointments\n"
-				+ "7. Record Appointment Outcome\n"
-				+ "8. Logout\n");
+        System.out.println("1. View Patient Medical Records");
+        System.out.println("2. Update Patient Medical Records");
+        System.out.println("3. View Personal Schedule");
+        System.out.println("4. Set Availability for Appointments");
+        System.out.println("5. Accept or Decline Appointment Requests");
+        System.out.println("6. View Upcoming Appointments");
+        System.out.println("7. Record Appointment Outcome");
+        System.out.println("8. View Patient Medical Certificates");
+        System.out.println("9. Approve/Reject Medical Certificates");
+        System.out.println("10. Logout");
     }
 }

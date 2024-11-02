@@ -1,6 +1,7 @@
 package main;
 
 import handlers.LoginHandler;
+import handlers.MedicalCertificateHandler;
 import handlers.MedicineHandler;
 import java.util.Scanner;
 import management.AppointmentManagement;
@@ -47,7 +48,7 @@ public class HospitalApp {
                 handleAdminActions((Administrator) user, choice, sc);
             }
 
-            if (choice == 8) {
+            if (choice == 10) {  // Updated logout option to align with doctor's new menu
                 running = false;
                 System.out.println("Logging out...");
             }
@@ -110,29 +111,24 @@ public class HospitalApp {
             case 2:
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
-            case 3:
-                // Additional doctor-specific actions can be added here
+            case 8:  // View all medical certificates
+                MedicalCertificateHandler.viewAllCertificates();
                 break;
-            case 4:
-                AppointmentManagement.setDoctorAvailability(sc, doctor);
+            case 9:  // Approve or reject a specific medical certificate
+                System.out.println("Enter the Patient ID whose certificate you want to approve/reject: ");
+                String patientIdToUpdate = sc.nextLine();
+                System.out.print("Enter new status (Approved/Rejected): ");
+                String newStatus = sc.nextLine();
+                doctor.approveOrRejectCertificate(patientIdToUpdate, newStatus);
                 break;
-            case 5:
-                AppointmentManagement.manageAppointmentRequest(sc, doctor);
-                break;
-            case 6:
-                AppointmentManagement.viewUpcomingAppointment(doctor);
-                break;
-            case 7:
-                AppointmentManagement.recordAppointmentOutcome(sc, doctor);
-                break;
-            case 8:
+            case 10:
                 System.out.println("Returning to login...");
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
         }
     }
-
+    
     // Implement pharmacist-specific actions
     public static void handlePharmacistActions(Pharmacist pharmacist, int choice) {
         Scanner sc = new Scanner(System.in);
