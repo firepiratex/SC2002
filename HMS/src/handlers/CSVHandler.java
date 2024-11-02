@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class CSVHandler {
-
-    // Method to read CSV file and return list of String arrays
     public static List<String[]> readCSV(String filePath) {
         List<String[]> data = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -20,7 +18,6 @@ public class CSVHandler {
         return data;
     }
 
-    // Method to write CSV data back to a file (if needed)
     public static void writeCSV(String filePath, List<String[]> data) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(filePath))) {
         	for (String[] row : data) {

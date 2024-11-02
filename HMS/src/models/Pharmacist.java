@@ -5,45 +5,22 @@ import handlers.MedicineHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import management.AppointmentManagement;
-import management.AppointmentOutcomeRecord;
 import management.InventoryManagement;
 import management.MedicalRecordManagement;
-import management.MedicineManagement;
 import management.PrescriptionManagement;
 import management.ReplenishmentManagement;
 
 public class Pharmacist extends User {
 
-    private AppointmentManagement appointmentManagement;
     private InventoryManagement inventoryManagement;
     private PrescriptionManagement prescriptionManagement;
     private ReplenishmentManagement replenishmentManagement;
-    private MedicalRecordManagement medicalRecordManagement;
-    private MedicineHandler medicineHandler;
-
     private int age;
 
     public Pharmacist(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Pharmacist", gender);
         this.age = age;
-        this.medicineHandler = new MedicineHandler();
-    }
-
-    public void viewAppointmentOutcome(AppointmentOutcomeRecord appointmentOutcomeRecord, String appointmentId) {
-        //appointmentOutcomeRecord.displayOutcome(appointmentId);
-    }
-
-    public void updatePrescriptionStatus(AppointmentOutcomeRecord appointmentOutcomeRecord, String appointmentId, String status) {
-        //appointmentOutcomeRecord.updatePrescriptionStatus(appointmentId, status);
-    }
-
-    public void viewInventory(InventoryManagement inventoryManagement) {
-        inventoryManagement.viewInventory();
-    }
-
-    public void submitReplenishmentRequest(InventoryManagement inventoryManagement, String medicineName) {
-        // inventoryManagement.submitReplenishmentRequest(medicineName);
+        new MedicineHandler();
     }
 
     public int getAge() {
@@ -133,69 +110,69 @@ public class Pharmacist extends User {
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
-		List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
-		List<MedicineManagement> medicineList = medicineHandler.loadMedicine();
+        List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+        List<Medicine> medicineList = medicineHandler.loadMedicine();
 
-		int choice, medication,amount;
-		String[] parts;
-		String row = "";
+        int choice, medication, amount;
+        String[] parts;
+        String row = "";
         String[] updatedRow;
-		System.out.println("----Patient Medical Records----");
-		for (int i = 0; i < recordList.size(); i++) {
-			System.out.println((i+1) + ". " + Arrays.toString(recordList.get(i)));
-		}
-		while(true) {
-			System.out.print("\nChoose a record to update (0 to exit): ");
-			if (scanner.hasNextInt()) {
-				choice = scanner.nextInt();
-				if (choice == 0) {
-					return;
-				} else if (choice >= 1 && choice <= recordList.size()) {
-					for(int i = 0; i < recordList.size(); i++) {
-						if (recordList.get(i).equals(recordList.get(choice-1))) {
-							parts = recordList.get(i);
+        System.out.println("----Patient Medical Records----");
+        for (int i = 0; i < recordList.size(); i++) {
+            System.out.println((i + 1) + ". " + Arrays.toString(recordList.get(i)));
+        }
+        while (true) {
+            System.out.print("\nChoose a record to update (0 to exit): ");
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                if (choice == 0) {
+                    return;
+                } else if (choice >= 1 && choice <= recordList.size()) {
+                    for (int i = 0; i < recordList.size(); i++) {
+                        if (recordList.get(i).equals(recordList.get(choice - 1))) {
+                            parts = recordList.get(i);
                             updatedRow = row.split(",");  // Convert the string back to a String array
                             recordList.set(i, updatedRow);  // Update the record
-							System.out.println("----Medications----");
-							for(int j = 0; j < medicineList.size(); j++) {
-								System.out.println((j+1) + ". " + medicineList.get(j).getMedicineName());
-							}
-							System.out.print("\nChoose a medication to prescribe: ");
-							if (scanner.hasNextInt()) {
-								medication = scanner.nextInt();
-								System.out.print("Amount to give: ");
-								if (scanner.hasNextInt()) {
-									amount = scanner.nextInt();
-									if (amount < 1 || amount > medicineList.get(medication-1).getStock()) {
-										System.out.println("Invalid amount.");
-										return;
-									}
-									medicineList.get(medication-1).minusStock(amount);
-								} else {
-									System.out.println("Invalid amount.");
-									return;
-								}
-							} else {
-								System.out.println("Invalid medication.");
-								return;
-							}
-							row = parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",dispensed," + parts[5];
-							updatedRow = row.split(",");  // Assuming row is a CSV-formatted string
+                            System.out.println("----Medications----");
+                            for (int j = 0; j < medicineList.size(); j++) {
+                                System.out.println((j + 1) + ". " + medicineList.get(j).getMedicineName());
+                            }
+                            System.out.print("\nChoose a medication to prescribe: ");
+                            if (scanner.hasNextInt()) {
+                                medication = scanner.nextInt();
+                                System.out.print("Amount to give: ");
+                                if (scanner.hasNextInt()) {
+                                    amount = scanner.nextInt();
+                                    if (amount < 1 || amount > medicineList.get(medication - 1).getStock()) {
+                                        System.out.println("Invalid amount.");
+                                        return;
+                                    }
+                                    medicineList.get(medication - 1).minusStock(amount);
+                                } else {
+                                    System.out.println("Invalid amount.");
+                                    return;
+                                }
+                            } else {
+                                System.out.println("Invalid medication.");
+                                return;
+                            }
+                            row = parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",dispensed," + parts[5];
+                            updatedRow = row.split(",");  // Assuming row is a CSV-formatted string
                             recordList.set(i, updatedRow);
-							System.out.println("Update successfully.");
-							medicineHandler.saveMedicine(medicineList);  // Assuming saveMedicine is an instance method
-							CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
-							break;
-						}
-					}
-					break;
-				} else {
-					System.out.println("Invalid choice. Try again.");
-				}
-			} else {
-				System.out.println("Invalid input. Try again.");
+                            System.out.println("Update successfully.");
+                            medicineHandler.saveMedicine(medicineList);  // Assuming saveMedicine is an instance method
+                            CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
+                            break;
+                        }
+                    }
+                    break;
+                } else {
+                    System.out.println("Invalid choice. Try again.");
+                }
+            } else {
+                System.out.println("Invalid input. Try again.");
                 scanner.next();
-			}
-		}
-	}
+            }
+        }
+    }
 }

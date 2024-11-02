@@ -32,19 +32,16 @@ public class LoginHandler {
 
 
     private User authenticate(String id, String password) {
-        // First, check if the user is a patient
         Patient patient = PatientHandler.getInstance().findPatientById(id);
         if (patient != null && patient.validatePassword(password)) {
             return patient;
         }
 
-        // Then check if the user is staff (doctor, pharmacist, or administrator)
-        User staff = StaffHandler.getInstance().findStaffById(id);  // Corrected method call
+        User staff = StaffHandler.getInstance().findStaffById(id);
         if (staff != null && staff.validatePassword(password)) {
             return staff;
         }
 
-        // If no match found, return null
         return null;
     }
 
@@ -58,7 +55,7 @@ public class LoginHandler {
             System.out.print("Enter your new password again: ");
             String confirmPassword = scanner.next();
             if (password.equals(confirmPassword)) {
-                if (confirmPassword.equals(PasswordHash.hash("password"))) {
+                if (confirmPassword.equals("password")) {
                     System.out.println("Cannot be the default password.");
                     continue;
                 }

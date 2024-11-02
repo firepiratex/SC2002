@@ -8,7 +8,6 @@ public class Appointment {
     private String status;
     private String outcome;
 
-    // Modify the constructor to accept six parameters if needed
     public Appointment(String patientId, String doctorId, String status, String date, String time, String outcome) {
         this.patientId = patientId;
         this.doctorId = doctorId;

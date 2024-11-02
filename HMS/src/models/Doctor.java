@@ -1,24 +1,60 @@
 package models;
 
+import handlers.AppointmentHandler;
 import handlers.MedicalCertificateHandler;
-import management.AppointmentManagement;
+import interfaces.DateAndTime;
+import java.time.LocalTime;
+import java.util.Scanner;
 
-public class Doctor extends User {
-    private AppointmentManagement appointmentManagement;
+public class Doctor extends User implements DateAndTime {
+
     private int age;
 
     public Doctor(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Doctor", gender);
         this.age = age;
-        this.appointmentManagement = new AppointmentManagement();  // Initialize appointment management
     }
 
-    public void setAvailability(String date, String time) {
-        //appointmentManagement.setDoctorAvailability(this.getId(), date, time);  // Call setDoctorAvailability method
+    public void setAvailability(Scanner scanner) {
+        String date, startTime, endTime;
+        while (true) {
+            System.out.print("Enter the date (DD/MM/YYYY): ");
+            date = scanner.next();
+            if (DateAndTime.dateChecker(date)) {
+                break;
+            }
+            System.out.println("Incorrect date. Try again.");
+        }
+        while (true) {
+            System.out.print("Enter the start time (00:00 - 23:59): ");
+            startTime = scanner.next();
+            if (DateAndTime.timeOfDay(startTime)) {
+                if (DateAndTime.timeChecker(startTime)) {
+                    break;
+                }
+            }
+            System.out.println("Incorrect time. Try again.");
+        }
+        while (true) {
+            LocalTime start = LocalTime.parse(startTime);
+            LocalTime newStartTime = start.plusMinutes(1);
+            System.out.print("Enter the end time (" + newStartTime + " - 23:59): ");
+            endTime = scanner.next();
+            if (DateAndTime.timeOfDay(endTime)) {
+                if (DateAndTime.timeChecker(startTime, endTime)) {
+                    break;
+                }
+            }
+            System.out.println("Incorrect time. Try again.");
+        }
+        String[] row = {super.getId(), date, startTime, endTime};
+        if (AppointmentHandler.getInstance().saveDoctorAvailability(row)) {
+            System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
+        }
     }
 
     public void viewUpcomingAppointments() {
-        //appointmentManagement.viewAppointments(this.getId());  // Call viewAppointments method
+        AppointmentHandler.getInstance().viewUpcomingAppointment(this);
     }
 
     public int getAge() {

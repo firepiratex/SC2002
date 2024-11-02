@@ -15,11 +15,12 @@ import models.Pharmacist;
 import models.User;
 
 public class HospitalApp {
+
     public static void main(String[] args) {
-        while(true) {
+        while (true) {
             LoginHandler loginHandler = new LoginHandler();
             User user = loginHandler.login();
-    
+
             if (user != null) {
                 handleUserInput(user);
             } else {
@@ -48,9 +49,19 @@ public class HospitalApp {
                 handleAdminActions((Administrator) user, choice, sc);
             }
 
-            if (choice == 10) {  // Updated logout option to align with doctor's new menu
+            if (choice == 10) {
                 running = false;
                 System.out.println("Logging out...");
+            } else if ((user instanceof Pharmacist)) {
+                if (choice == 5) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
+            } else if (user instanceof Administrator) {
+                if (choice == 5) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
             }
         }
     }
@@ -101,7 +112,7 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
         }
     }
-    
+
     public static void handleDoctorActions(Doctor doctor, int choice) {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
@@ -110,6 +121,19 @@ public class HospitalApp {
                 break;
             case 2:
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
+                break;
+            case 3:
+            case 4:
+                doctor.setAvailability(sc);
+                break;
+            case 5:
+                AppointmentManagement.manageAppointmentRequest(sc, doctor);
+                break;
+            case 6:
+                doctor.viewUpcomingAppointments();
+                break;
+            case 7:
+                AppointmentManagement.recordAppointmentOutcome(sc, doctor);
                 break;
             case 8:  // View all medical certificates
                 MedicalCertificateHandler.viewAllCertificates();
@@ -128,7 +152,7 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
         }
     }
-    
+
     // Implement pharmacist-specific actions
     public static void handlePharmacistActions(Pharmacist pharmacist, int choice) {
         Scanner sc = new Scanner(System.in);
@@ -146,6 +170,9 @@ public class HospitalApp {
                 break;
             case 4:
                 inventoryManagement.submitReplenishmentRequest(pharmacist, sc);
+                break;
+            case 5:
+                System.out.println("Returning to login...");
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
@@ -170,7 +197,7 @@ public class HospitalApp {
                 break;
             case 5:
                 System.out.println("Returning to login...");
-                return;
+                break;
             default:
                 System.out.println("Invalid option. Please try again.");
         }

@@ -3,14 +3,11 @@ package models;
 import handlers.MedicalCertificateHandler;
 
 public class Patient extends User {
-    private String dateOfBirth;
-    private String bloodType;
+
     private String contactInfo;
 
     public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo) {
         super(id, name, password, "Patient", gender);
-        this.dateOfBirth = dateOfBirth;
-        this.bloodType = bloodType;
         this.contactInfo = contactInfo;
     }
 
@@ -52,5 +49,5 @@ public class Patient extends User {
         System.out.println("9. View Medical Certificates");
         System.out.println("10. Logout");
     }
-    
+
 }

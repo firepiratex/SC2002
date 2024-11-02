@@ -8,16 +8,14 @@ import management.InventoryManagement;
 public class Administrator extends User implements Manageable {
 
     private StaffHandler staffHandler;
-    private AppointmentManagement appointmentManagement;
-    private InventoryManagement inventoryManagement;
+    private final InventoryManagement inventoryManagement;
     private int age;
 
     public Administrator(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Administrator", gender);
         this.age = age;
-        this.appointmentManagement = new AppointmentManagement();
+        new AppointmentManagement();
         this.inventoryManagement = new InventoryManagement();
-        // Do not initialize staffManagement here to avoid recursion
     }
 
     // Lazy initialization for staffManagement
@@ -69,8 +67,4 @@ public class Administrator extends User implements Manageable {
         inventoryManagement.viewInventory();
     }
 
-    // Approve replenishment requests for specific medications
-    public void approveReplenishmentRequest(String medicineName) {
-        // inventoryManagement.approveReplenishmentRequest(medicineName);
-    }
 }
