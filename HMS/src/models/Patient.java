@@ -1,8 +1,8 @@
 package models;
 
-import java.util.regex.Pattern;
 import handlers.MedicalCertificateHandler;
 import handlers.PatientHandler;
+import java.util.regex.Pattern;
 import management.AppointmentManagement;  // Ensure this import is present
 
 public class Patient extends User {
@@ -19,7 +19,7 @@ public class Patient extends User {
     public String getContactInfo() {
         return contactInfo;
     }
-    
+
     public String getContactNumber() {
         return contactNo;
     }
@@ -33,7 +33,7 @@ public class Patient extends User {
             System.out.println("\nInvalid email address.\n");
         }
     }
-    
+
     public void updateContactNo(String number) {
         if (number.matches("[0-9]{8}")) {
             this.contactNo = number;
@@ -83,23 +83,23 @@ public class Patient extends User {
         System.out.println("11. View Billing Records");
         System.out.println("12. Logout");
     }
-    
+
     public void displayPersonalInfoMenu() {
         System.out.println("1. Update Email Address");
         System.out.println("2. Update Phone Number");
         System.out.println("0. Exit");
     }
-    
-    public static boolean isValid(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + 
-                "[a-zA-Z0-9_+&*-]+)*@" + 
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
-                "A-Z]{2,7}$"; 
 
-        Pattern pat = Pattern.compile(emailRegex); 
+    public static boolean isValid(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."
+                + "[a-zA-Z0-9_+&*-]+)*@"
+                + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+                + "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
         if (email == null) {
-            return false; 
+            return false;
         }
-        return pat.matcher(email).matches(); 
+        return pat.matcher(email).matches();
     }
 }
