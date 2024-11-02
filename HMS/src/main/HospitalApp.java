@@ -113,13 +113,13 @@ public class HospitalApp {
             case 3:
                 break;
             case 4:
-                AppointmentManagement.setDoctorAvailability(sc, doctor);
+                doctor.setAvailability(sc);
                 break;
             case 5:
                 AppointmentManagement.manageAppointmentRequest(sc, doctor);
                 break;
             case 6:
-                AppointmentManagement.viewUpcomingAppointment(doctor);
+                doctor.viewUpcomingAppointments();
                 break;
             case 7:
                 AppointmentManagement.recordAppointmentOutcome(sc, doctor);
