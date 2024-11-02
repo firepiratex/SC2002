@@ -56,6 +56,10 @@ public class Doctor extends User implements DateAndTime {
     public void viewUpcomingAppointments() {
         AppointmentHandler.getInstance().viewUpcomingAppointment(this);
     }
+    
+    public void viewPersonalSchedule() {
+    	AppointmentHandler.getInstance().viewPersonalSchedule(this);
+    }
 
     public int getAge() {
         return age;

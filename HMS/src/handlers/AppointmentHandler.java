@@ -120,14 +120,13 @@ public class AppointmentHandler implements DateAndTime {
         System.out.println("\n");
     }
 
-    public void viewUpcomingAppointment(User doctor) {
-        List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
-        List<String[]> doctorSchedule = new ArrayList<>();
-        for (int i = 0; i < appointmentSchedule.size(); i++) {
-            String doctorID = appointmentSchedule.get(i)[1];
-            String status = appointmentSchedule.get(i)[2];
+    public void viewPersonalSchedule(User doctor) {
+        List<Appointment> doctorSchedule = new ArrayList<>();
+        for (int i = 0; i < appointments.size(); i++) {
+            String doctorID = appointments.get(i).getDoctorId();
+            String status = appointments.get(i).getStatus();
             if (doctor.getId().equals(doctorID) && status.equals("Confirmed")) {
-                doctorSchedule.add(appointmentSchedule.get(i));
+                doctorSchedule.add(appointments.get(i));
             }
         }
         if (doctorSchedule.size() == 0) {
@@ -135,7 +134,25 @@ public class AppointmentHandler implements DateAndTime {
         } else {
             System.out.println("----" + doctor.getName() + "'s Schedule----");
             for (int i = 0; i < doctorSchedule.size(); i++) {
-                System.out.println((i + 1) + ". " + Arrays.toString(doctorSchedule.get(i)));
+                System.out.println((i + 1) + ". " + doctorSchedule.get(i));
+            }
+        }
+    }
+    
+    public void viewUpcomingAppointment(User doctor) {
+        List<Appointment> doctorSchedule = new ArrayList<>();
+        for (int i = 0; i < appointments.size(); i++) {
+            String doctorID = appointments.get(i).getDoctorId();
+            if (doctor.getId().equals(doctorID)) {
+                doctorSchedule.add(appointments.get(i));
+            }
+        }
+        if (doctorSchedule.size() == 0) {
+            System.out.println("You have no appointments\n");
+        } else {
+            System.out.println("----" + doctor.getName() + "'s Schedule----");
+            for (int i = 0; i < doctorSchedule.size(); i++) {
+                System.out.println((i + 1) + ". " + doctorSchedule.get(i));
             }
         }
     }
