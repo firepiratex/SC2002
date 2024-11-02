@@ -2,12 +2,12 @@ package management;
 
 import handlers.AppointmentHandler;
 import handlers.StaffHandler;
-import models.Appointment;  // Ensure this class exists and has a method to get the appointment date
-import models.Patient;
-import models.User;
-import java.time.LocalDate;
+import java.time.LocalDate;  // Ensure this class exists and has a method to get the appointment date
 import java.util.List;
 import java.util.Scanner;
+import models.Appointment;
+import models.Patient;
+import models.User;
 
 public class AppointmentManagement {
 
@@ -89,5 +89,7 @@ public class AppointmentManagement {
         }
         return false;  // No past appointments found
     }
-    
+    public static void viewScheduledAppointment(){
+
+    }
 }

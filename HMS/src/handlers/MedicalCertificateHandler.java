@@ -95,44 +95,45 @@ public class MedicalCertificateHandler {
         }
     }
 
-    public static void updateCertificateStatus(String patientId, String newStatus) {
+    public static void updateCertificateStatus(String patientId, String newStatus, String doctorId) {
         File inputFile = new File(FILE_PATH);
-        File tempFile = new File("src/data/temp_Medical_Certificate.csv");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile)); BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
+        File tempFile = new File("HMS/src/data/temp_Medical_Certificate.csv");
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+    
             String line;
             boolean found = false;
-
+    
             // Copy header
-            String header = reader.readLine();
-            writer.write(header);
+            writer.write(reader.readLine() + ",Approved/Rejected By");
             writer.newLine();
-
+    
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 if (data.length >= 6 && data[0].equals(patientId)) {
-                    System.out.println("Updating status for Patient ID: " + patientId);
                     data[5] = newStatus;  // Update the status field
+                    line += "," + doctorId;  // Add the doctor ID who approved/rejected
                     found = true;
                 }
-                writer.write(String.join(",", data));
+                writer.write(line);
                 writer.newLine();
             }
-
+    
             if (!found) {
                 System.out.println("No medical certificate found for the given patient ID.");
             } else {
                 System.out.println("Medical certificate status updated successfully.");
             }
-
+    
             // Replace the original file with the updated one
             if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
                 System.out.println("Error updating the file.");
             }
-
+    
         } catch (IOException e) {
             System.out.println("Error updating certificate status: " + e.getMessage());
         }
     }
+    
 }
