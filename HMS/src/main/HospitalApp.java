@@ -123,6 +123,7 @@ public class HospitalApp {
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
+                break;
             case 4:
                 doctor.setAvailability(sc);
                 break;
