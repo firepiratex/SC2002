@@ -131,7 +131,7 @@ public class HospitalApp {
                 patient.viewMedicalCertificates();
                 break;
             case 10:
-                BillingRecordManagement.displayPastOutcomes(patient);
+                BillingRecordManagement.displayPastOutcomes(sc, patient);
                 break;
             case 11:  // Logout
                 System.out.println("Returning to login...");

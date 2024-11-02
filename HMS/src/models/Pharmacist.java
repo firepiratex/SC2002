@@ -2,6 +2,8 @@ package models;
 
 import handlers.CSVHandler;
 import handlers.MedicineHandler;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -47,29 +49,18 @@ public class Pharmacist extends User {
 
     // Method to view appointment outcome record
     public void viewAppointmentOutcomeRecord(Scanner scanner) {
-        System.out.print("Enter patient ID to view outcome: ");
-        String patientId = scanner.nextLine();
-        // Read the CSV file to check if there are any records for the patient
-        List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
+        List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
 
-        // Filter the records to check if there's a match for the patient
-        boolean hasRecord = false;
-        for (String[] record : recordList) {
-            if (record[1].equals(patientId)) {  // Assuming patient ID is at index 1
-                hasRecord = true;
-                break;
-            }
-        }
-
-// If record exists, view the patient medical record, otherwise show a message
-        if (hasRecord) {
-            // Create a temporary Patient object with the patient ID
-            Patient tempPatient = new Patient(patientId, "TemporaryName", "password", "UnknownGender", "DOB", "Address", "Phone", "Phone2");
-
-            // Call the method from MedicalRecordManagement (static method call)
-            MedicalRecordManagement.viewPatientMedicalRecord(tempPatient);
+        if (recordList.size() == 0) {
+        	System.out.println("No appointment outcome record found.");
         } else {
-            System.out.println("No appointment outcome record found for Patient ID: " + patientId);
+        	System.out.println("----Appointment Outcome Record(s)----");
+        	for(int i = 0; i < recordList.size(); i++) {
+        		if (recordList.get(i)[4].equals("pending")) {
+        			System.out.println(Arrays.toString(recordList.get(i)));
+        		}
+        	}
+        	System.out.println("");
         }
     }
 
@@ -110,16 +101,31 @@ public class Pharmacist extends User {
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
-        List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
+        List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+        List<String[]> pendingList = new ArrayList<>();
         List<Medicine> medicineList = medicineHandler.loadMedicine();
-
-        int choice, medication, amount;
+        int choice, choice2, medication, amount;
         String[] parts;
-        String row = "";
-        String[] updatedRow;
-        System.out.println("----Patient Medical Records----");
-        for (int i = 0; i < recordList.size(); i++) {
-            System.out.println((i + 1) + ". " + Arrays.toString(recordList.get(i)));
+        if (recordList.size() == 0) {
+        	System.out.println("No appointment outcome record found.\n");
+        	return;
+        } else {
+	        for (int i = 0; i < recordList.size(); i++) {
+	            if (recordList.get(i)[4].equals("Pending")) {
+	            	pendingList.add(recordList.get(i));
+	            }
+	        }
+        }
+        if (pendingList.size() != 0) {
+        	System.out.println("----Appointment Outcome Record(s)----");
+	        for (int i = 0; i < recordList.size(); i++) {
+	            if (recordList.get(i)[4].equals("Pending")) {
+	            	System.out.println((i + 1) + ". " + Arrays.toString(recordList.get(i)));
+	            }
+	        }
+        } else {
+        	System.out.println("No appointment outcome record found.\n");
+        	return;
         }
         while (true) {
             System.out.print("\nChoose a record to update (0 to exit): ");
@@ -131,36 +137,38 @@ public class Pharmacist extends User {
                     for (int i = 0; i < recordList.size(); i++) {
                         if (recordList.get(i).equals(recordList.get(choice - 1))) {
                             parts = recordList.get(i);
-                            updatedRow = row.split(",");  // Convert the string back to a String array
-                            recordList.set(i, updatedRow);  // Update the record
                             System.out.println("----Medications----");
                             for (int j = 0; j < medicineList.size(); j++) {
                                 System.out.println((j + 1) + ". " + medicineList.get(j).getMedicineName());
                             }
                             System.out.print("\nChoose a medication to prescribe: ");
                             if (scanner.hasNextInt()) {
-                                medication = scanner.nextInt();
-                                System.out.print("Amount to give: ");
-                                if (scanner.hasNextInt()) {
-                                    amount = scanner.nextInt();
-                                    if (amount < 1 || amount > medicineList.get(medication - 1).getStock()) {
-                                        System.out.println("Invalid amount.");
+                            	choice2 = scanner.nextInt();
+                            	if (choice2 >= 1 && choice2 <= medicineList.size()) {
+                            		System.out.print("Amount to give: ");
+                                    if (scanner.hasNextInt()) {
+                                        amount = scanner.nextInt();
+                                        if (amount < 1 || amount > medicineList.get(choice2 - 1).getStock()) {
+                                            System.out.println("Invalid amount.\n");
+                                            return;
+                                        }
+                                        medicineList.get(choice2 - 1).minusStock(amount);
+                                    } else {
+                                        System.out.println("Invalid amount.\n");
                                         return;
                                     }
-                                    medicineList.get(medication - 1).minusStock(amount);
-                                } else {
-                                    System.out.println("Invalid amount.");
+                            	} else {
+                            		System.out.println("Invalid medication.\n");
                                     return;
-                                }
+                            	}
                             } else {
-                                System.out.println("Invalid medication.");
+                                System.out.println("Invalid medication.\n");
                                 return;
                             }
-                            row = parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",dispensed," + parts[5];
-                            updatedRow = row.split(",");  // Assuming row is a CSV-formatted string
-                            recordList.set(i, updatedRow);
+                            recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ","+ amount + " " + medicineList.get(choice2-1).getMedicineName() + "," + parts[5]});
                             System.out.println("Update successfully.");
-                            medicineHandler.saveMedicine(medicineList);  // Assuming saveMedicine is an instance method
+                            medicineHandler.saveMedicine(medicineList);
+                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescribed Medications, Consultation Notes"});
                             CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
                             break;
                         }
