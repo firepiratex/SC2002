@@ -85,7 +85,6 @@ public class HospitalApp {
                 System.out.print("Enter new contact email address: ");
                 String email = sc.nextLine();
                 patient.updatePersonalInfo(email);
-                System.out.println("Contact information updated successfully.");
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
