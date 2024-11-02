@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import models.Appointment;
 import models.Patient;
@@ -552,8 +551,7 @@ public class AppointmentHandler implements DateAndTime {
                     System.out.print("Type of service provided: ");
                     scanner.nextLine();
                     String service = scanner.nextLine();
-                    System.out.print("Prescribed Medications (default is pending): ");
-                    String medication = scanner.nextLine();
+                    String medication = "Pending";
                     System.out.print("Consultation Notes: ");
                     String notes = scanner.nextLine();
                     recordList.add(new String[]{schedule.getDoctorId(), schedule.getPatientId(), schedule.getDate(), service, medication, notes});

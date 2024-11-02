@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import management.InventoryManagement;
-import management.MedicalRecordManagement;
 import management.PrescriptionManagement;
 import management.ReplenishmentManagement;
 
@@ -104,7 +103,7 @@ public class Pharmacist extends User {
         List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
         List<String[]> pendingList = new ArrayList<>();
         List<Medicine> medicineList = medicineHandler.loadMedicine();
-        int choice, choice2, medication, amount;
+        int choice, choice2, amount;
         String[] parts;
         if (recordList.size() == 0) {
         	System.out.println("No appointment outcome record found.\n");
