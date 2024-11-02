@@ -1,8 +1,13 @@
 package handlers;
 
 import interfaces.DateAndTime;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import models.Appointment;
 import models.Patient;
 import models.User;
@@ -49,6 +54,20 @@ public class AppointmentHandler implements DateAndTime {
 
     private void saveAppointment() {
         List<String[]> data = new ArrayList<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        appointments.sort((s1,s2) -> {
+        	LocalDate date1 = LocalDate.parse(s1.getDate(), dateFormatter);
+            LocalDate date2 = LocalDate.parse(s2.getDate(), dateFormatter);
+            int dateComparison = date1.compareTo(date2);
+
+            if (dateComparison != 0) {
+                return dateComparison;
+            }
+
+            LocalTime time1 = LocalTime.parse(s1.getTime());
+            LocalTime time2 = LocalTime.parse(s2.getTime());
+            return time1.compareTo(time2);
+        });
         for (int i = 0; i < appointments.size(); i++) {
             String patientID = appointments.get(i).getPatientId();
             String doctorID = appointments.get(i).getDoctorId();

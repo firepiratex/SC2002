@@ -51,6 +51,7 @@ public class AppointmentManagement{
             } else {
                 System.out.println("Invalid input. Try again.");
             }
+            scanner.nextLine();
         }
         AppointmentHandler.getInstance().setAppointment(doctor, patient, scanner);
         System.out.println("Scheduled appointment successful.\n");
