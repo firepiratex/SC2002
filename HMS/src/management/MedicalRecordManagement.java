@@ -1,11 +1,10 @@
 package management;
 
+import handlers.CSVHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import handlers.CSVHandler;
 import models.User;
 
 public class MedicalRecordManagement {

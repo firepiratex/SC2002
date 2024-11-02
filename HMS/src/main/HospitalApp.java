@@ -1,6 +1,7 @@
 package main;
 
 import handlers.LoginHandler;
+import handlers.MedicalCertificateHandler;
 import handlers.MedicineHandler;
 import java.util.Scanner;
 import management.AppointmentManagement;
@@ -12,7 +13,7 @@ import models.Administrator;
 import models.Doctor;
 import models.Patient;
 import models.Pharmacist;
-import models.User;  // Import the new StaffManager class
+import models.User;
 
 public class HospitalApp {
 
@@ -33,9 +34,8 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
-        // Continue displaying the menu and asking for input until the user logs out
         while (running) {
-            user.displayMenu();  // Display the user-specific menu (this is the only place it should be called)
+            user.displayMenu();
             System.out.print("Enter option: ");
             int choice = sc.nextInt();
             sc.nextLine();  // Consume the newline character
@@ -50,7 +50,7 @@ public class HospitalApp {
                 handleAdminActions((Administrator) user, choice, sc);
             }
 
-            if (choice == 8) {
+            if (choice == 10) {
                 running = false;
                 System.out.println("Logging out...");
             } else if ((user instanceof Pharmacist)) {
@@ -75,8 +75,10 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
+                System.out.print("Enter new contact number: ");
                 String contactNo = sc.nextLine();
                 patient.updatePersonalInfo(contactNo);
+                System.out.println("Contact information updated successfully.");
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
@@ -93,7 +95,18 @@ public class HospitalApp {
             case 7:
                 MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
-            case 8:
+            case 8:  // Request medical certificate
+                System.out.print("Enter reason for medical certificate: ");
+                String reason = sc.nextLine();
+                System.out.print("Enter duration (in days): ");
+                int duration = sc.nextInt();
+                sc.nextLine();  // Consume the newline character
+                patient.requestMedicalCertificate(reason, duration);
+                break;
+            case 9:  // View medical certificates
+                patient.viewMedicalCertificates();
+                break;
+            case 10:  // Logout
                 System.out.println("Returning to login...");
                 break;
             case 9:
@@ -114,6 +127,7 @@ public class HospitalApp {
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
+            	doctor.viewPersonalSchedule();
                 break;
             case 4:
                 doctor.setAvailability(sc);
@@ -127,7 +141,17 @@ public class HospitalApp {
             case 7:
                 AppointmentManagement.recordAppointmentOutcome(sc, doctor);
                 break;
-            case 8:
+            case 8:  // View all medical certificates
+                MedicalCertificateHandler.viewAllCertificates();
+                break;
+            case 9:  // Approve or reject a specific medical certificate
+                System.out.println("Enter the Patient ID whose certificate you want to approve/reject: ");
+                String patientIdToUpdate = sc.nextLine();
+                System.out.print("Enter new status (Approved/Rejected): ");
+                String newStatus = sc.nextLine();
+                doctor.approveOrRejectCertificate(patientIdToUpdate, newStatus);
+                break;
+            case 10:
                 System.out.println("Returning to login...");
                 break;
             default:
@@ -158,7 +182,6 @@ public class HospitalApp {
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
-
         }
     }
 

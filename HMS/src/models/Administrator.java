@@ -1,5 +1,6 @@
 package models;
 
+import handlers.AppointmentHandler;
 import handlers.StaffHandler;
 import interfaces.Manageable;
 import management.AppointmentManagement;
@@ -18,10 +19,9 @@ public class Administrator extends User implements Manageable {
         this.inventoryManagement = new InventoryManagement();
     }
 
-    // Lazy initialization for staffManagement
     public StaffHandler getStaffManagement() {
         if (this.staffHandler == null) {
-            this.staffHandler = StaffHandler.getInstance();  // Initialize when needed
+            this.staffHandler = StaffHandler.getInstance();
         }
         return this.staffHandler;
     }
@@ -40,26 +40,24 @@ public class Administrator extends User implements Manageable {
         System.out.println("5. Logout");
     }
 
-    // Implement the methods from Manageable interface
     @Override
     public void addStaff(User newStaff) {
-        getStaffManagement().addStaff(newStaff);  // Use lazy initialization
+        getStaffManagement().addStaff(newStaff);
     }
 
     @Override
     public void removeStaff(String staffId) {
-        getStaffManagement().removeStaff(staffId);  // Use lazy initialization
+        getStaffManagement().removeStaff(staffId);
     }
 
     @Override
     public void viewAllStaff() {
-        getStaffManagement().displayStaff();  // Use lazy initialization
+        getStaffManagement().displayStaff();
     }
 
-    // New Functions
     // View all appointments
     public void viewAppointments() {
-        //appointmentManagement.viewAllAppointments();
+        AppointmentHandler.getInstance().viewAllAppointment();
     }
 
     // Manage medication inventory

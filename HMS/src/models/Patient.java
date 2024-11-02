@@ -1,5 +1,7 @@
 package models;
 
+import handlers.MedicalCertificateHandler;
+
 public class Patient extends User {
 
     private String contactInfo;
@@ -23,6 +25,16 @@ public class Patient extends User {
         System.out.println("Contact Info: " + getContactInfo());
     }
 
+    public void requestMedicalCertificate(String reason, int duration) {
+        MedicalCertificate certificate = new MedicalCertificate(getId(), getName(), reason, duration);
+        MedicalCertificateHandler.addCertificate(certificate);
+        System.out.println("Medical certificate requested successfully.");
+    }
+
+    public void viewMedicalCertificates() {
+        MedicalCertificateHandler.viewCertificatesForPatient(this);
+    }
+
     @Override
     public void displayMenu() {
         System.out.println("Patient Menu:");
@@ -33,8 +45,10 @@ public class Patient extends User {
         System.out.println("5. Reschedule Appointment");
         System.out.println("6. Cancel Appointment");
         System.out.println("7. View Past Appointment Outcome Records");
-        System.out.println("8. Logout");
-        System.out.println("9. View Billing Records");
-
+        System.out.println("8. Request Medical Certificate");
+        System.out.println("9. View Medical Certificates");
+        System.out.println("10. View Billing Records");
+        System.out.println("11. Logout");
     }
+
 }

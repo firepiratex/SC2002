@@ -153,11 +153,14 @@ public class InventoryManagement {
         for (int i = 0; i < medicineList.size(); i++) {
             System.out.println((i + 1) + ". " + medicineList.get(i).getMedicineName() + " (Current Alert: " + medicineList.get(i).getLowStockAlert() + ")");
         }
-
-        System.out.print("Enter the option of the medicine to change: ");
+        System.out.println("");
+        System.out.print("Enter the option of the medicine to change (0 to exit): ");
         int choice = scanner.nextInt();
         scanner.nextLine();  // Consume newline
-
+        if (choice == 0) {
+        	System.out.println("");
+        	return;
+        }
         if (choice > 0 && choice <= medicineList.size()) {
             Medicine selectedMedicine = medicineList.get(choice - 1);
             System.out.print("Enter new stock alert level for " + selectedMedicine.getMedicineName() + ": ");
