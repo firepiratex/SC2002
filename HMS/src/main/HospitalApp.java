@@ -1,5 +1,6 @@
 package main;
 
+import handlers.AppointmentHandler;
 import handlers.LoginHandler;
 import handlers.MedicalCertificateHandler;
 import handlers.MedicineHandler;
@@ -56,7 +57,7 @@ public class HospitalApp {
                     System.out.println("Logging out...");
                 }
             } else if (user instanceof Patient) {
-                if (choice == 11) {
+                if (choice == 12) {
                     running = false;
                     System.out.println("Logging out...");
                 }
@@ -117,9 +118,12 @@ public class HospitalApp {
                 AppointmentManagement.manageAppointment(sc, patient);
                 break;
             case 7:
+            	AppointmentHandler.getInstance().viewScheduledAppointment(patient);
+            	break;
+            case 8:
                 MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
-            case 8:  // Request medical certificate
+            case 9:  // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();
                 System.out.print("Enter duration (in days): ");
@@ -127,13 +131,13 @@ public class HospitalApp {
                 sc.nextLine();  // Consume the newline character
                 patient.requestMedicalCertificate(reason, duration);
                 break;
-            case 9:  // View medical certificates
+            case 10:  // View medical certificates
                 patient.viewMedicalCertificates();
                 break;
-            case 10:
+            case 11:
                 BillingRecordManagement.displayPastOutcomes(sc, patient);
                 break;
-            case 11:  // Logout
+            case 12:  // Logout
                 System.out.println("Returning to login...");
                 break;
             default:
