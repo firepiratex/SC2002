@@ -86,6 +86,7 @@ public class HospitalApp {
             	while(true) {
             		System.out.print("Enter the choice: ");
             		choice = sc.nextInt();
+            		sc.nextLine();
             		if (choice == 0) {
             			break;
             		} else if (choice == 1) {
@@ -94,7 +95,6 @@ public class HospitalApp {
                         patient.updatePersonalInfo(email);
                         break;
             		} else if (choice == 2) {
-            			sc.nextLine();
             			System.out.print("Enter new contact number: ");
                         String number = sc.nextLine();
                         patient.updateContactNo(number);
