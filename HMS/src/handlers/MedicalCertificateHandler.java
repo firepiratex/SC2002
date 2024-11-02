@@ -6,7 +6,8 @@ import models.MedicalCertificate;
 import models.Patient;
 
 public class MedicalCertificateHandler {
-    private static final String FILE_PATH = "HMS/src/data/Medical_Certificate.csv";  // Update with your actual path
+
+    private static final String FILE_PATH = "src/data/Medical_Certificate.csv";  // Update with your actual path
 
     public static void addCertificate(MedicalCertificate certificate) {
         File file = new File(FILE_PATH);
@@ -36,7 +37,7 @@ public class MedicalCertificateHandler {
                 String[] data = line.split(",");
                 if (data.length >= 6 && data[0].equals(patient.getId())) {
                     MedicalCertificate certificate = new MedicalCertificate(
-                        data[0], data[1], data[2], Integer.parseInt(data[4])
+                            data[0], data[1], data[2], Integer.parseInt(data[4])
                     );
                     certificate.setStatus(data[5]);
                     certificate.setIssueDate(LocalDate.parse(data[3]));
@@ -60,22 +61,22 @@ public class MedicalCertificateHandler {
             String line;
             boolean isFirstLine = true;
             boolean found = false;
-    
+
             while ((line = reader.readLine()) != null) {
                 if (isFirstLine) {
                     isFirstLine = false;  // Skip header
                     System.out.println("---- All Medical Certificate Requests ----");
                     continue;
                 }
-    
+
                 String[] data = line.split(",");
                 if (data.length >= 6) {
                     MedicalCertificate certificate = new MedicalCertificate(
-                        data[0], data[1], data[2], Integer.parseInt(data[4])
+                            data[0], data[1], data[2], Integer.parseInt(data[4])
                     );
                     certificate.setStatus(data[5]);
                     certificate.setIssueDate(LocalDate.parse(data[3]));
-                    
+
                     // Only display certificates with "Pending" status
                     if ("Pending".equalsIgnoreCase(certificate.getStatus())) {
                         certificate.displayCertificate();
@@ -83,7 +84,7 @@ public class MedicalCertificateHandler {
                     }
                 }
             }
-    
+
             if (!found) {
                 System.out.println("No pending medical certificates found.");
             }
@@ -93,13 +94,12 @@ public class MedicalCertificateHandler {
             System.out.println("Error parsing medical certificate data: " + e.getMessage());
         }
     }
-    
+
     public static void updateCertificateStatus(String patientId, String newStatus) {
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("HMS/src/data/temp_Medical_Certificate.csv");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile)); BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
 
             String line;
             boolean found = false;
