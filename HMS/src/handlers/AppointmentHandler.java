@@ -156,6 +156,18 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
+    
+    public void viewAllAppointment() {
+    	System.out.println("\n----All Appointments----");
+    	if (appointments.size() == 0) {
+    		System.out.println("No appointments.");
+    	} else {
+	    	for(Appointment eachAppointment : appointments) {
+	    		System.out.println(eachAppointment);
+	    	}
+    	}
+    	System.out.println("");
+    }
 
     public void setAppointment(User doctor, Patient patient, Scanner scanner) {
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
