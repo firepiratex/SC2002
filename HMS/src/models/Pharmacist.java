@@ -55,7 +55,7 @@ public class Pharmacist extends User {
         } else {
         	System.out.println("----Appointment Outcome Record(s)----");
         	for(int i = 0; i < recordList.size(); i++) {
-        		if (recordList.get(i)[4].equals("pending")) {
+        		if (recordList.get(i)[4].equals("Pending")) {
         			System.out.println(Arrays.toString(recordList.get(i)));
         		}
         	}

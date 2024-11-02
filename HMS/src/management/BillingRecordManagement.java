@@ -66,7 +66,7 @@ public class BillingRecordManagement {
         // Print the appointment details, type of service, medicine/quantity pairs, and total bill cost
         System.out.println("Appointment on: " + completedAppointment[2] + " with the type of service: " + completedAppointment[3]);
         System.out.println("Medicine(s) and Quantity List");
-        System.out.println("Medicine:" + parts[1] + ", Quantity: " + parts[0]);
+        System.out.println("Medicine: " + parts[1] + ", Quantity: " + parts[0]);
         // Print the final bill cost
         System.out.printf("Total Medicine Bill Cost: $%.2f%n", totalBillCost);
 
