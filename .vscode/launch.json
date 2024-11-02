@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "HospitalApp",
+      "request": "launch",
+      "mainClass": "main.HospitalApp",
+      "projectName": "HMS"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/abdillahgoh/Desktop/NTU /Y2S1/SC2002 object oriented prog/SC2002/HMS",
+      "program": "/Users/abdillahgoh/Desktop/NTU /Y2S1/SC2002 object oriented prog/SC2002/HMS/build/Debug/outDebug"
+    }
+  ]
+}

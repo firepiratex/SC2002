@@ -110,7 +110,7 @@ public class Pharmacist extends User {
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
-		List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+		List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
 		List<MedicineManagement> medicineList = medicineHandler.loadMedicine();
 
         int choice, medication, amount;
