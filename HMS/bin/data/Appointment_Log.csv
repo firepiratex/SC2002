@@ -1,13 +1,1 @@
-Patient ID,Doctor ID,Status,Date,Time,Outcome
-P1001,D001,Pending,23/10/2024,10:00,-
-P1001,D001,Canceled(Patient),23/10/2024,10:00,-
-P1001,D001,Pending,23/10/2024,13:00,-
-P1001,D001,Pending,23/10/2024,14:00,-
-P1001,D002,Pending,23/10/2024,12:00,-
-P1001,D001,Confirmed,23/10/2024,14:00,-
-P1001,D001,Confirmed,23/10/2024,14:00,Refer to Record
-P1001,D002,Confirmed,23/10/2024,12:00,-
-P1001,D002,Confirmed,23/10/2024,12:00,Refer to Record
-P1001,D001,Confirmed,23/10/2024,14:00,Refer to Record
-P1001,D001,Confirmed,23/10/2024,14:00,Refer to Record
-P1001,D001,Pending,27/10/2024,12:00,-
+
