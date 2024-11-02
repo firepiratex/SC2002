@@ -5,6 +5,7 @@ import handlers.MedicalCertificateHandler;
 import handlers.MedicineHandler;
 import java.util.Scanner;
 import management.AppointmentManagement;
+import management.BillingRecordManagement;
 import management.InventoryManagement;
 import management.MedicalRecordManagement;
 import management.StaffManager;
@@ -49,9 +50,16 @@ public class HospitalApp {
                 handleAdminActions((Administrator) user, choice, sc);
             }
 
-            if (choice == 10) {
-                running = false;
-                System.out.println("Logging out...");
+            if (user instanceof Doctor) {
+                if (choice == 10) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
+            } else if (user instanceof Patient) {
+                if (choice == 11) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
             } else if ((user instanceof Pharmacist)) {
                 if (choice == 5) {
                     running = false;
@@ -105,7 +113,10 @@ public class HospitalApp {
             case 9:  // View medical certificates
                 patient.viewMedicalCertificates();
                 break;
-            case 10:  // Logout
+            case 10:
+                BillingRecordManagement.displayPastOutcomes(patient);
+                break;
+            case 11:  // Logout
                 System.out.println("Returning to login...");
                 break;
             default:
@@ -123,7 +134,7 @@ public class HospitalApp {
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
-            	doctor.viewPersonalSchedule();
+                doctor.viewPersonalSchedule();
                 break;
             case 4:
                 doctor.setAvailability(sc);

@@ -47,7 +47,8 @@ public class Patient extends User {
         System.out.println("7. View Past Appointment Outcome Records");
         System.out.println("8. Request Medical Certificate");
         System.out.println("9. View Medical Certificates");
-        System.out.println("10. Logout");
+        System.out.println("10. View Billing Records");
+        System.out.println("11. Logout");
     }
 
 }

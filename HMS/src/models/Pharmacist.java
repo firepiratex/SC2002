@@ -50,7 +50,7 @@ public class Pharmacist extends User {
         System.out.print("Enter patient ID to view outcome: ");
         String patientId = scanner.nextLine();
         // Read the CSV file to check if there are any records for the patient
-        List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+        List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
 
         // Filter the records to check if there's a match for the patient
         boolean hasRecord = false;
@@ -110,7 +110,7 @@ public class Pharmacist extends User {
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
-        List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+        List<String[]> recordList = CSVHandler.readCSV("HMS/src/data/Appointment_Outcome_Record.csv");
         List<Medicine> medicineList = medicineHandler.loadMedicine();
 
         int choice, medication, amount;
