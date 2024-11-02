@@ -14,11 +14,12 @@ import models.Pharmacist;
 import models.User;  // Import the new StaffManager class
 
 public class HospitalApp {
+
     public static void main(String[] args) {
-        while(true) {
+        while (true) {
             LoginHandler loginHandler = new LoginHandler();
             User user = loginHandler.login();
-    
+
             if (user != null) {
                 handleUserInput(user);  // Removed the extra call to displayMenu() here
             } else {
@@ -52,6 +53,16 @@ public class HospitalApp {
             if (choice == 8) {
                 running = false;
                 System.out.println("Logging out...");
+            } else if ((user instanceof Pharmacist)) {
+                if (choice == 5) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
+            } else if (user instanceof Administrator) {
+                if (choice == 5) {
+                    running = false;
+                    System.out.println("Logging out...");
+                }
             }
         }
     }
@@ -139,7 +150,11 @@ public class HospitalApp {
             case 4:
                 inventoryManagement.submitReplenishmentRequest(pharmacist, sc);
                 break;
+            case 5:
+                System.out.println("Returning to login...");
+                break;
             default:
+                System.out.println("Invalid option. Please try again.");
 
         }
         // Similar logic for pharmacist actions
@@ -159,15 +174,11 @@ public class HospitalApp {
                 inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
                 break;
             case 4:
-                /* 
-                System.out.print("Enter medicine name for replenishment approval: ");
-                String medicineName = sc.nextLine();
-                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests */
                 inventoryManagement.manageReplenishmentRequest(sc);
                 break;
             case 5:
                 System.out.println("Returning to login...");
-                return;
+                break;
             default:
                 System.out.println("Invalid option. Please try again.");
         }

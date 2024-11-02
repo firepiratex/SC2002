@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import models.Medicine;
 import models.User;
 
 public class InventoryManagement {
 
-    private List<MedicineManagement> medicineList;
-    private MedicineHandler medicineHandler;
+    private final List<Medicine> medicineList;
+    private final MedicineHandler medicineHandler;
 
     // Constructor that loads the inventory using the handler
     public InventoryManagement() {
@@ -23,12 +24,12 @@ public class InventoryManagement {
     // View the current inventory
     public void viewInventory() {
         System.out.println("---- Medicine Inventory ----");
-        for (MedicineManagement eachMedicine : medicineList) {
+        for (Medicine eachMedicine : medicineList) {
             if (eachMedicine.getStock() > eachMedicine.getLowStockAlert()) {
-				System.out.println(eachMedicine);
-			} else {
-				System.out.println(eachMedicine + " (Low Stock Level)");
-			}
+                System.out.println(eachMedicine);
+            } else {
+                System.out.println(eachMedicine + " (Low Stock Level)");
+            }
         }
         return;
     }
@@ -110,7 +111,7 @@ public class InventoryManagement {
         int amount = scanner.nextInt();
         scanner.nextLine();  // Consume newline
 
-        for (MedicineManagement medicine : medicineList) {
+        for (Medicine medicine : medicineList) {
             if (medicine.getMedicineName().equalsIgnoreCase(name)) {
                 medicine.addStock(amount);
                 System.out.println(amount + " units of " + name + " added.");
@@ -130,7 +131,7 @@ public class InventoryManagement {
         int amount = scanner.nextInt();
         scanner.nextLine();  // Consume newline
 
-        for (MedicineManagement medicine : medicineList) {
+        for (Medicine medicine : medicineList) {
             if (medicine.getMedicineName().equalsIgnoreCase(name)) {
                 if (medicine.getStock() >= amount) {
                     medicine.minusStock(amount);
@@ -158,7 +159,7 @@ public class InventoryManagement {
         scanner.nextLine();  // Consume newline
 
         if (choice > 0 && choice <= medicineList.size()) {
-            MedicineManagement selectedMedicine = medicineList.get(choice - 1);
+            Medicine selectedMedicine = medicineList.get(choice - 1);
             System.out.print("Enter new stock alert level for " + selectedMedicine.getMedicineName() + ": ");
             int newAlertLevel = scanner.nextInt();
             scanner.nextLine();  // Consume newline
@@ -176,27 +177,27 @@ public class InventoryManagement {
         List<String> lowMedicineStock = new ArrayList<>();
         int choice, amount;
         String[] row;
-    
+
         // Check for low stock medicines
-        for (MedicineManagement eachMedicine : medicineList) {
+        for (Medicine eachMedicine : medicineList) {
             if (eachMedicine.getStock() < eachMedicine.getLowStockAlert()) {
                 lowMedicineStock.add(eachMedicine.getMedicineName());
             }
         }
-    
+
         // If no medicines are low in stock
         if (lowMedicineStock.isEmpty()) {
             System.out.println("No medications are low in level.");
             return;
         }
-    
+
         // Display low stock medicines
         System.out.println("----Low Stock Level Medicine----");
         for (int i = 0; i < lowMedicineStock.size(); i++) {
             System.out.println((i + 1) + ". " + lowMedicineStock.get(i));
         }
         System.out.println("0. Exit");
-    
+
         // Handle user input and submission
         while (true) {
             System.out.print("\nEnter the medicine no. you want to submit a request for: ");
@@ -212,17 +213,17 @@ public class InventoryManagement {
                             System.out.println("Amount must be more than 0.");
                             break;
                         }
-    
+
                         // Prepare row for CSV request
                         row = new String[]{
-                            pharmacist.getId(),  // Pharmacist ID
-                            lowMedicineStock.get(choice - 1),  // Medicine name
-                            String.valueOf(amount)  // Amount to replenish
+                            pharmacist.getId(), // Pharmacist ID
+                            lowMedicineStock.get(choice - 1), // Medicine name
+                            String.valueOf(amount) // Amount to replenish
                         };
                         requestList.add(row);  // Add the replenishment request
-    
+
                         System.out.println("Request submitted successfully.");
-    
+
                         // Save the replenishment request with updated requestList
                         InventoryHandler.saveReplenishmentRequest(requestList);
                         return;

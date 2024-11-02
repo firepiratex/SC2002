@@ -3,7 +3,6 @@ package handlers;
 import interfaces.DateAndTime;
 import java.time.LocalTime;
 import java.util.*;
-
 import models.Appointment;
 import models.Patient;
 import models.User;
@@ -28,36 +27,36 @@ public class AppointmentHandler implements DateAndTime {
         this.appointments = new ArrayList<>();
         loadAppointment();
     }
-    
+
     private void loadAppointment() {
-    	List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
-    	for(int i = 0; i < appointmentSchedule.size(); i++) {
-    		String patientID = appointmentSchedule.get(i)[0];
-    		String doctorID = appointmentSchedule.get(i)[1];
-    		String status = appointmentSchedule.get(i)[2];
-    		String date = appointmentSchedule.get(i)[3];
-    		String time = appointmentSchedule.get(i)[4];
-    		String outcome = appointmentSchedule.get(i)[5];
-    		
-    		Appointment appointment = null;
-    		appointment = new Appointment(patientID, doctorID, status, date, time, outcome);
-    		
-    		appointments.add(appointment);
-    	}
+        List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
+        for (int i = 0; i < appointmentSchedule.size(); i++) {
+            String patientID = appointmentSchedule.get(i)[0];
+            String doctorID = appointmentSchedule.get(i)[1];
+            String status = appointmentSchedule.get(i)[2];
+            String date = appointmentSchedule.get(i)[3];
+            String time = appointmentSchedule.get(i)[4];
+            String outcome = appointmentSchedule.get(i)[5];
+
+            Appointment appointment = null;
+            appointment = new Appointment(patientID, doctorID, status, date, time, outcome);
+
+            appointments.add(appointment);
+        }
     }
-    
+
     private void saveAppointment() {
-    	List<String[]> data = new ArrayList<>();
-    	for(int i = 0; i < appointments.size(); i++) {
-    		String patientID = appointments.get(i).getPatientId();
-    		String doctorID = appointments.get(i).getDoctorId();
-    		String status = appointments.get(i).getStatus();
-    		String date = appointments.get(i).getDate();
-    		String time = appointments.get(i).getTime();
-    		String outcome = appointments.get(i).getOutcome();
-    		
-    		data.add(new String[] {patientID,doctorID,status,date,time,outcome});
-    	}
+        List<String[]> data = new ArrayList<>();
+        for (int i = 0; i < appointments.size(); i++) {
+            String patientID = appointments.get(i).getPatientId();
+            String doctorID = appointments.get(i).getDoctorId();
+            String status = appointments.get(i).getStatus();
+            String date = appointments.get(i).getDate();
+            String time = appointments.get(i).getTime();
+            String outcome = appointments.get(i).getOutcome();
+
+            data.add(new String[]{patientID, doctorID, status, date, time, outcome});
+        }
         data.add(0, new String[]{"Patient ID,Doctor ID,Status,Date,Time,Outcome"});
         CSVHandler.writeCSV(appointmentFile, data);
     }
@@ -374,7 +373,7 @@ public class AppointmentHandler implements DateAndTime {
         }
         System.out.println("----Existing Appointment----");
         for (int i = 0; i < patientExistingAppointment.size(); i++) {
-        	doctorID = patientExistingAppointment.get(i).getDoctorId();
+            doctorID = patientExistingAppointment.get(i).getDoctorId();
             status = patientExistingAppointment.get(i).getStatus();
             date = patientExistingAppointment.get(i).getDate();
             time = patientExistingAppointment.get(i).getTime();
@@ -391,7 +390,7 @@ public class AppointmentHandler implements DateAndTime {
                     Appointment cancel = patientExistingAppointment.get(choice - 1);
                     for (int i = 0; i < appointments.size(); i++) {
                         if (appointments.get(i).equals(cancel)) {
-                        	appointments.remove(i);
+                            appointments.remove(i);
                         }
                     }
                     //appointmentLogList.add(new String[]{parts[0], parts[1], "Canceled(Patient)", parts[3], parts[4], parts[5]});

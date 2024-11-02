@@ -1,14 +1,11 @@
 package models;
 
 public class Patient extends User {
-	private String dateOfBirth;
-    private String bloodType;
+
     private String contactInfo;
 
     public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo) {
         super(id, name, password, "Patient", gender);
-        this.dateOfBirth = dateOfBirth;
-        this.bloodType = bloodType;
         this.contactInfo = contactInfo;
     }
 
@@ -19,7 +16,7 @@ public class Patient extends User {
     public void updatePersonalInfo(String newContact) {
         this.contactInfo = newContact;
     }
-    
+
     public void viewMedicalRecord() {
         System.out.println("Medical Record for Patient ID: " + getId());
         System.out.println("Name: " + getName());
