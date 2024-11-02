@@ -11,7 +11,7 @@ import models.Administrator;
 import models.Doctor;
 import models.Patient;
 import models.Pharmacist;
-import models.User;  // Import the new StaffManager class
+import models.User;
 
 public class HospitalApp {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class HospitalApp {
             User user = loginHandler.login();
     
             if (user != null) {
-                handleUserInput(user);  // Removed the extra call to displayMenu() here
+                handleUserInput(user);
             } else {
                 System.out.println("Login failed! Exiting system.");
             }
@@ -31,9 +31,8 @@ public class HospitalApp {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
-        // Continue displaying the menu and asking for input until the user logs out
         while (running) {
-            user.displayMenu();  // Display the user-specific menu (this is the only place it should be called)
+            user.displayMenu();
             System.out.print("Enter option: ");
             int choice = sc.nextInt();
             sc.nextLine();  // Consume the newline character
@@ -45,10 +44,9 @@ public class HospitalApp {
             } else if (user instanceof Pharmacist) {
                 handlePharmacistActions((Pharmacist) user, choice);
             } else if (user instanceof Administrator) {
-                handleAdminActions((Administrator) user, choice, sc);  // Pass Scanner as well
+                handleAdminActions((Administrator) user, choice, sc);
             }
 
-            // If the user selects option 8, log them out and exit the loop
             if (choice == 8) {
                 running = false;
                 System.out.println("Logging out...");
@@ -64,8 +62,10 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
+                System.out.print("Enter new contact number: ");
                 String contactNo = sc.nextLine();
                 patient.updatePersonalInfo(contactNo);
+                System.out.println("Contact information updated successfully.");
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
@@ -81,6 +81,17 @@ public class HospitalApp {
                 break;
             case 7:
                 MedicalRecordManagement.viewPatientMedicalRecord(patient);
+                break;
+            case 9:  // Request medical certificate
+                System.out.print("Enter reason for medical certificate: ");
+                String reason = sc.nextLine();
+                System.out.print("Enter duration (in days): ");
+                int duration = sc.nextInt();
+                sc.nextLine();  // Consume the newline character
+                patient.requestMedicalCertificate(reason, duration);
+                break;
+            case 10:  // View medical certificates
+                patient.viewMedicalCertificates();
                 break;
             case 8:
                 System.out.println("Returning to login...");
@@ -100,6 +111,7 @@ public class HospitalApp {
                 MedicalRecordManagement.updatePatientMedicalRecord(doctor, sc);
                 break;
             case 3:
+                // Additional doctor-specific actions can be added here
                 break;
             case 4:
                 AppointmentManagement.setDoctorAvailability(sc, doctor);
@@ -140,9 +152,8 @@ public class HospitalApp {
                 inventoryManagement.submitReplenishmentRequest(pharmacist, sc);
                 break;
             default:
-
+                System.out.println("Invalid option. Please try again.");
         }
-        // Similar logic for pharmacist actions
     }
 
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
@@ -150,19 +161,15 @@ public class HospitalApp {
         InventoryManagement inventoryManagement = new InventoryManagement();
         switch (choice) {
             case 1:
-                staffManager.manageStaff(sc);  // Option 1: Manage Hospital Staff
+                staffManager.manageStaff(sc);
                 break;
             case 2:
-                admin.viewAppointments();  // Option 2: View Appointments
+                admin.viewAppointments();
                 break;
             case 3:
-                inventoryManagement.inventoryMenu(sc);  // Option 3: Manage Medication Inventory
+                inventoryManagement.inventoryMenu(sc);
                 break;
             case 4:
-                /* 
-                System.out.print("Enter medicine name for replenishment approval: ");
-                String medicineName = sc.nextLine();
-                admin.approveReplenishmentRequest(medicineName);  // Option 4: Approve Replenishment Requests */
                 inventoryManagement.manageReplenishmentRequest(sc);
                 break;
             case 5:
