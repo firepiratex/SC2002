@@ -55,7 +55,7 @@ public class LoginHandler {
             System.out.print("Enter your new password again: ");
             String confirmPassword = scanner.next();
             if (password.equals(confirmPassword)) {
-                if (confirmPassword.equals(PasswordHash.hash("password"))) {
+                if (confirmPassword.equals("password")) {
                     System.out.println("Cannot be the default password.");
                     continue;
                 }
