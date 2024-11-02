@@ -83,7 +83,7 @@ public class HospitalApp {
             case 7:
                 MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
-            case 9:  // Request medical certificate
+            case 8:  // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();
                 System.out.print("Enter duration (in days): ");
@@ -91,17 +91,17 @@ public class HospitalApp {
                 sc.nextLine();  // Consume the newline character
                 patient.requestMedicalCertificate(reason, duration);
                 break;
-            case 10:  // View medical certificates
+            case 9:  // View medical certificates
                 patient.viewMedicalCertificates();
                 break;
-            case 8:
+            case 10:  // Logout
                 System.out.println("Returning to login...");
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
         }
     }
-
+    
     public static void handleDoctorActions(Doctor doctor, int choice) {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
