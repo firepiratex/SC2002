@@ -1,5 +1,7 @@
 package models;
 
+import java.util.regex.Pattern;
+
 import handlers.MedicalCertificateHandler;
 
 public class Patient extends User {
@@ -15,8 +17,13 @@ public class Patient extends User {
         return contactInfo;
     }
 
-    public void updatePersonalInfo(String newContact) {
-        this.contactInfo = newContact;
+    public void updatePersonalInfo(String email) {
+        if (isValid(email)) {
+        	this.contactInfo = email;
+        	System.out.println("\nContact information updated successfully.\n");
+        } else {
+        	System.out.println("\nInvalid email address.\n");
+        }
     }
 
     public void viewMedicalRecord() {
@@ -50,5 +57,17 @@ public class Patient extends User {
         System.out.println("10. View Billing Records");
         System.out.println("11. Logout");
     }
+    
+    public static boolean isValid(String email) {
+    	String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
+    			"[a-zA-Z0-9_+&*-]+)*@" + 
+    			"(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+    			"A-Z]{2,7}$"; 
 
+    	Pattern pat = Pattern.compile(emailRegex); 
+    	if (email == null) {
+    		return false; 
+    	}
+    	return pat.matcher(email).matches(); 
+    } 
 }

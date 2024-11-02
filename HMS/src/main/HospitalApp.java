@@ -82,10 +82,9 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
-                System.out.print("Enter new contact number: ");
-                String contactNo = sc.nextLine();
-                patient.updatePersonalInfo(contactNo);
-                System.out.println("Contact information updated successfully.");
+                System.out.print("Enter new contact email address: ");
+                String email = sc.nextLine();
+                patient.updatePersonalInfo(email);
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
