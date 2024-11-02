@@ -2,12 +2,14 @@ package management;
 
 import handlers.AppointmentHandler;
 import handlers.StaffHandler;
-import java.util.*;
-
+import models.Appointment;  // Ensure this class exists and has a method to get the appointment date
 import models.Patient;
 import models.User;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
 
-public class AppointmentManagement{
+public class AppointmentManagement {
 
     public static void viewAvailableAppointment(Scanner scanner) {
         int choice, size;
@@ -72,4 +74,20 @@ public class AppointmentManagement{
     public static void recordAppointmentOutcome(Scanner scanner, User doctor) {
         AppointmentHandler.getInstance().recordAppointmentOutcome(scanner, doctor);
     }
+
+    // New method to check if a patient has any past appointments
+    public static boolean hasPastAppointment(Patient patient) {
+        List<Appointment> pastAppointments = AppointmentHandler.getInstance().getAppointmentsForPatient(patient.getId());
+    
+        for (Appointment appointment : pastAppointments) {
+            // Convert the date from String to LocalDate
+            LocalDate appointmentDate = LocalDate.parse(appointment.getDate()); // Ensure the date format matches "yyyy-MM-dd"
+            
+            if (appointmentDate.isBefore(LocalDate.now())) {
+                return true;  // Found a past appointment
+            }
+        }
+        return false;  // No past appointments found
+    }
+    
 }

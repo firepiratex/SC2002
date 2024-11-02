@@ -8,7 +8,7 @@ public class InventoryHandler {
 
     public static void saveReplenishmentRequest(List<String[]> requestList) {
         try {
-            FileWriter writeFile = new FileWriter(new File("src/data/Replenishment_Request.csv"));
+            FileWriter writeFile = new FileWriter(new File("./src/data/Replenishment_Request.csv"));
             StringBuilder line = new StringBuilder();
             line.append("Staff ID,Medicine Name,Stock\n");
             for (String[] eachRequest : requestList) {

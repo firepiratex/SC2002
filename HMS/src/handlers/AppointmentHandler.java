@@ -1,12 +1,10 @@
 package handlers;
 
 import interfaces.DateAndTime;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
 import models.Appointment;
 import models.Patient;
 import models.User;
@@ -17,16 +15,16 @@ public class AppointmentHandler implements DateAndTime {
     private List<String> timeList;
     private List<Appointment> appointments;
     private List<String[]> appointmentLogList;
-    private final String appointmentFile = "src/data/Appointment_Detail.csv";
-    private static final String appointmentLogFile = "src/data/Appointment_Log.csv";
-    private final String appointmentOutcomeFile = "src/data/Appointment_Outcome_Record.csv";
-    private final String doctorFile = "src/data/Doctor_Availability.csv";
+    private final String appointmentFile = "./src/data/Appointment_Detail.csv";
+    private static final String appointmentLogFile = "./src/data/Appointment_Log.csv";
+    private final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
+    private final String doctorFile = "./src/data/Doctor_Availability.csv";
     private String startTime;
     private String endTime;
     private String time;
     private String date;
     private int choice;
-
+    
     private AppointmentHandler() {
         this.timeList = new ArrayList<>();
         this.appointments = new ArrayList<>();
@@ -608,4 +606,22 @@ public class AppointmentHandler implements DateAndTime {
             return true;
         }
     }
+
+    public List<Appointment> getAppointmentsForPatient(String patientId) {
+        List<Appointment> patientAppointments = new ArrayList<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatientId().equals(patientId)) {
+                // Parse the date string to a LocalDate
+                LocalDate appointmentDate = LocalDate.parse(appointment.getDate(), dateFormatter);
+                if (appointmentDate.isBefore(LocalDate.now())) {
+                    // Add only past appointments
+                    patientAppointments.add(appointment);
+                }
+            }
+        }
+        return patientAppointments;
+    }
+    
 }

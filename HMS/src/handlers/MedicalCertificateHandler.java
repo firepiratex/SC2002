@@ -7,7 +7,7 @@ import models.Patient;
 
 public class MedicalCertificateHandler {
 
-    private static final String FILE_PATH = "src/data/Medical_Certificate.csv";  // Update with your actual path
+    private static final String FILE_PATH = "./src/data/Medical_Certificate.csv";  // Ensure the path matches your project structure
 
     public static void addCertificate(MedicalCertificate certificate) {
         File file = new File(FILE_PATH);
@@ -65,7 +65,7 @@ public class MedicalCertificateHandler {
             while ((line = reader.readLine()) != null) {
                 if (isFirstLine) {
                     isFirstLine = false;  // Skip header
-                    System.out.println("---- All Medical Certificate Requests ----");
+                    System.out.println("---- All Pending Medical Certificate Requests ----");
                     continue;
                 }
 
@@ -79,7 +79,7 @@ public class MedicalCertificateHandler {
 
                     // Only display certificates with "Pending" status
                     if ("Pending".equalsIgnoreCase(certificate.getStatus())) {
-                        certificate.displayCertificate();
+                        System.out.println("Patient ID: " + data[0] + ", Name: " + data[1] + ", Reason: " + data[2] + ", Duration: " + data[4] + " days, Status: " + data[5]);
                         found = true;
                     }
                 }
@@ -97,7 +97,7 @@ public class MedicalCertificateHandler {
 
     public static void updateCertificateStatus(String patientId, String newStatus) {
         File inputFile = new File(FILE_PATH);
-        File tempFile = new File("HMS/src/data/temp_Medical_Certificate.csv");
+        File tempFile = new File("src/data/temp_Medical_Certificate.csv");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile)); BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
 
@@ -105,12 +105,14 @@ public class MedicalCertificateHandler {
             boolean found = false;
 
             // Copy header
-            writer.write(reader.readLine());
+            String header = reader.readLine();
+            writer.write(header);
             writer.newLine();
 
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
                 if (data.length >= 6 && data[0].equals(patientId)) {
+                    System.out.println("Updating status for Patient ID: " + patientId);
                     data[5] = newStatus;  // Update the status field
                     found = true;
                 }

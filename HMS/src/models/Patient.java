@@ -1,9 +1,9 @@
 package models;
 
 import java.util.regex.Pattern;
-
 import handlers.MedicalCertificateHandler;
 import handlers.PatientHandler;
+import management.AppointmentManagement;  // Ensure this import is present
 
 public class Patient extends User {
 
@@ -26,21 +26,21 @@ public class Patient extends User {
 
     public void updatePersonalInfo(String email) {
         if (isValid(email)) {
-        	this.contactInfo = email;
-        	System.out.println("\nContact information updated successfully.\n");
-        	PatientHandler.getInstance().saveAccount();
+            this.contactInfo = email;
+            System.out.println("\nContact information updated successfully.\n");
+            PatientHandler.getInstance().saveAccount();
         } else {
-        	System.out.println("\nInvalid email address.\n");
+            System.out.println("\nInvalid email address.\n");
         }
     }
     
     public void updateContactNo(String number) {
         if (number.matches("[0-9]{8}")) {
-        	this.contactNo = number;
-        	System.out.println("\nContact Number updated successfully.\n");
-        	PatientHandler.getInstance().saveAccount();
+            this.contactNo = number;
+            System.out.println("\nContact Number updated successfully.\n");
+            PatientHandler.getInstance().saveAccount();
         } else {
-        	System.out.println("\nInvalid number.\n");
+            System.out.println("\nInvalid number.\n");
         }
     }
 
@@ -53,9 +53,14 @@ public class Patient extends User {
     }
 
     public void requestMedicalCertificate(String reason, int duration) {
-        MedicalCertificate certificate = new MedicalCertificate(getId(), getName(), reason, duration);
-        MedicalCertificateHandler.addCertificate(certificate);
-        System.out.println("Medical certificate requested successfully.");
+        // Check if the patient has had any past appointments before requesting an MC
+        if (AppointmentManagement.hasPastAppointment(this)) {
+            MedicalCertificate certificate = new MedicalCertificate(getId(), getName(), reason, duration);
+            MedicalCertificateHandler.addCertificate(certificate);
+            System.out.println("Medical certificate requested successfully.");
+        } else {
+            System.out.println("Error: You cannot request a medical certificate without any past appointments.");
+        }
     }
 
     public void viewMedicalCertificates() {
@@ -79,21 +84,21 @@ public class Patient extends User {
     }
     
     public void displayPersonalInfoMenu() {
-    	System.out.println("1. Update Email Address");
+        System.out.println("1. Update Email Address");
         System.out.println("2. Update Phone Number");
         System.out.println("0. Exit");
     }
     
     public static boolean isValid(String email) {
-    	String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
-    			"[a-zA-Z0-9_+&*-]+)*@" + 
-    			"(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
-    			"A-Z]{2,7}$"; 
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + 
+                "[a-zA-Z0-9_+&*-]+)*@" + 
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
+                "A-Z]{2,7}$"; 
 
-    	Pattern pat = Pattern.compile(emailRegex); 
-    	if (email == null) {
-    		return false; 
-    	}
-    	return pat.matcher(email).matches(); 
-    } 
+        Pattern pat = Pattern.compile(emailRegex); 
+        if (email == null) {
+            return false; 
+        }
+        return pat.matcher(email).matches(); 
+    }
 }
