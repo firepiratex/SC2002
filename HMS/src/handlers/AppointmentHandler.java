@@ -11,17 +11,10 @@ public class AppointmentHandler implements DateAndTime {
 
     private static AppointmentHandler instance;
     private List<String> timeList;
-    private List<Appointment> appointments;
-    private List<String[]> appointmentLogList;
-    private final String appointmentFile = "src/data/Appointment_Detail.csv";
-    private final String appointmentLogFile = "src/data/Appointment_Log.csv";
-    private final String appointmentOutcomeFile = "src/data/Appointment_Outcome_Record.csv";
-    private final String doctorFile = "src/data/Doctor_Availability.csv";
-    private String startTime;
-    private String endTime;
-    private String time;
-    private String date;
-    private int choice;
+    private final String appointmentFile = "HMS/src/data/Appointment_Detail.csv";
+    private final String appointmentLogFile = "HMS/src/data/Appointment_Log.csv";
+    private final String appointmentOutcomeFile = "HMS/src/data/Appointment_Outcome_Record.csv";
+    private final String doctorFile = "HMS/src/data/Doctor_Availability.csv";
 
     private AppointmentHandler() {
         this.timeList = new ArrayList<>();

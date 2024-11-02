@@ -34,5 +34,7 @@ public class Patient extends User {
         System.out.println("6. Cancel Appointment");
         System.out.println("7. View Past Appointment Outcome Records");
         System.out.println("8. Logout");
+        System.out.println("9. View Billing Records");
+
     }
 }

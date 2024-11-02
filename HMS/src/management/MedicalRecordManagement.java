@@ -9,11 +9,13 @@ import handlers.CSVHandler;
 import models.User;
 
 public class MedicalRecordManagement {
-    private static final String appointmentOutcomeFile = "src/data/Appointment_Outcome_Record.csv";
+    private static final String appointmentOutcomeFile = "HMS/src/data/Appointment_Outcome_Record.csv";
     
     public static void viewPatientMedicalRecord(User user) {
 		List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
-		System.out.println("----Patient Medical Records----");
+		System.out.println("--------------------------------------Patient Medical Records--------------------------------------");
+		System.out.println("|- Doctor -|- Patient -|- Date -|- Type of Service -|- Prescribed Medications -|- Consultation Notes -|");
+
 		if (user.getRole().equals("Doctor")) {
 			for(int i = 0; i < recordList.size(); i++) {
 				String doctorID = recordList.get(i)[0];

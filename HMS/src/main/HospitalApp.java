@@ -4,6 +4,7 @@ import handlers.LoginHandler;
 import handlers.MedicineHandler;
 import java.util.Scanner;
 import management.AppointmentManagement;
+import management.BillingRecordManagement;
 import management.InventoryManagement;
 import management.MedicalRecordManagement;
 import management.StaffManager;
@@ -94,6 +95,9 @@ public class HospitalApp {
                 break;
             case 8:
                 System.out.println("Returning to login...");
+                break;
+            case 9:
+                BillingRecordManagement.displayPastOutcomes(patient);
                 break;
             default:
                 System.out.println("Invalid option. Please try again.");
