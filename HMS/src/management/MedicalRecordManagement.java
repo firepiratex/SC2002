@@ -13,8 +13,12 @@ public class MedicalRecordManagement {
 
     public static void viewPatientMedicalRecord(User user) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
-        System.out.println("--------------------------------------Patient Medical Records--------------------------------------");
-        System.out.println("|- Doctor -|- Patient -|- Date -|- Type of Service -|- Consultation Notes -|- Prescribed Medications -|");
+        if (recordList.isEmpty()) {
+            System.out.println("There are no exisiting records");
+        } else {
+            System.out.println("--------------------------------------Patient Medical Records--------------------------------------");
+            System.out.println("|- Doctor -|- Patient -|- Date -|- Type of Service -|- Consultation Notes -|- Prescribed Medications -|");
+        }
 
         if (user.getRole().equals("Doctor")) {
             for (int i = 0; i < recordList.size(); i++) {
