@@ -158,8 +158,8 @@ public class InventoryManagement {
         int choice = scanner.nextInt();
         scanner.nextLine();  // Consume newline
         if (choice == 0) {
-        	System.out.println("");
-        	return;
+            System.out.println("");
+            return;
         }
         if (choice > 0 && choice <= medicineList.size()) {
             Medicine selectedMedicine = medicineList.get(choice - 1);
@@ -275,7 +275,6 @@ public class InventoryManagement {
                                 return;
                             } else if (option == 1) {
                                 String[] parts = requestList.get(choice - 1);  // Correct: parts is a String[]
-                                System.out.println(medicineList);
                                 for (int i = 0; i < medicineList.size(); i++) {
                                     if (parts[1].equals(medicineList.get(i).getMedicineName())) {
                                         requestList.remove(choice - 1);
@@ -285,6 +284,7 @@ public class InventoryManagement {
                                         // Fix: create an instance of MedicineHandler to call the non-static method
                                         MedicineHandler medicineHandler = new MedicineHandler();
                                         medicineHandler.saveMedicine(medicineList);
+                                        System.out.println(medicineList);
                                         System.out.println("Request approved and stock updated.");
                                         return;
                                     }
