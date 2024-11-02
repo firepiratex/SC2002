@@ -57,7 +57,7 @@ public class BillingRecordManagement {
         } else if (parts[1].equalsIgnoreCase("Ibuprofen")) {
             costPerUnit = 5.0; // $5 per unit for Ibuprofen
         } else if (parts[1].equalsIgnoreCase("Amoxicillin")) {
-            costPerUnit = 4.0; // $5 per unit for Ibuprofen
+            costPerUnit = 4.0; // $4 per unit for Amoxicillin
         } else {
             costPerUnit = 10.0; // Default $10 per unit for other medicines
         }

@@ -117,10 +117,8 @@ public class Pharmacist extends User {
         }
         if (pendingList.size() != 0) {
         	System.out.println("----Appointment Outcome Record(s)----");
-	        for (int i = 0; i < recordList.size(); i++) {
-	            if (recordList.get(i)[4].equals("Pending")) {
-	            	System.out.println((i + 1) + ". " + Arrays.toString(recordList.get(i)));
-	            }
+	        for (int i = 0; i < pendingList.size(); i++) {
+            	System.out.println((i + 1) + ". " + Arrays.toString(pendingList.get(i)));
 	        }
         } else {
         	System.out.println("No appointment outcome record found.\n");
@@ -132,9 +130,9 @@ public class Pharmacist extends User {
                 choice = scanner.nextInt();
                 if (choice == 0) {
                     return;
-                } else if (choice >= 1 && choice <= recordList.size()) {
+                } else if (choice >= 1 && choice <= pendingList.size()) {
                     for (int i = 0; i < recordList.size(); i++) {
-                        if (recordList.get(i).equals(recordList.get(choice - 1))) {
+                        if (recordList.get(i).equals(pendingList.get(choice-1))) {
                             parts = recordList.get(i);
                             System.out.println("----Medications----");
                             for (int j = 0; j < medicineList.size(); j++) {
