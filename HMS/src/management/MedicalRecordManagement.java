@@ -9,7 +9,7 @@ import models.User;
 
 public class MedicalRecordManagement {
 
-    private static final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
+    private static final String appointmentOutcomeFile = "HMS/src/data/Appointment_Outcome_Record.csv";
 
     public static void viewPatientMedicalRecord(User user) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
@@ -77,6 +77,9 @@ public class MedicalRecordManagement {
 
                             System.out.print("Consultation Notes: ");
                             String notes = scanner.nextLine();
+							
+							String paymentStatus = "Unpaid";
+
 
                             List<String> medicationsWithQuantities = new ArrayList<>();
                             String addMore;
@@ -86,6 +89,7 @@ public class MedicalRecordManagement {
                                 String medication = scanner.nextLine();
                                 System.out.print("Quantity of Medication: ");
                                 String quantity = scanner.nextLine();
+
                                 medicationsWithQuantities.add(medication + " (" + quantity + ")");
 
                                 System.out.print("Add another medication? (yes/no): ");
@@ -94,9 +98,9 @@ public class MedicalRecordManagement {
 
                             String medicationSummary = String.join(", ", medicationsWithQuantities);
 
-                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, notes, medicationSummary});
+                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, notes, paymentStatus, medicationSummary});
                             System.out.println("Update successfully.");
-                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,,Consultation Notes, Prescribed Medications "});
+                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,,Consultation Notes, Payment Status, Prescribed Medications "});
                             CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
                             break;
                         }
