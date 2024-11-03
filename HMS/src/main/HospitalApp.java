@@ -82,27 +82,27 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
-            	patient.displayPersonalInfoMenu();
-            	while(true) {
-            		System.out.print("Enter the choice: ");
-            		choice = sc.nextInt();
-            		sc.nextLine();
-            		if (choice == 0) {
-            			break;
-            		} else if (choice == 1) {
-            			System.out.print("Enter new contact email address: ");
+                patient.displayPersonalInfoMenu();
+                while (true) {
+                    System.out.print("Enter the choice: ");
+                    choice = sc.nextInt();
+                    sc.nextLine();
+                    if (choice == 0) {
+                        break;
+                    } else if (choice == 1) {
+                        System.out.print("Enter new contact email address: ");
                         String email = sc.nextLine();
                         patient.updatePersonalInfo(email);
                         break;
-            		} else if (choice == 2) {
-            			System.out.print("Enter new contact number: ");
+                    } else if (choice == 2) {
+                        System.out.print("Enter new contact number: ");
                         String number = sc.nextLine();
                         patient.updateContactNo(number);
                         break;
-            		} else {
-            			System.out.println("Invalid choice.");
-            		}
-            	}
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
+                }
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
@@ -117,10 +117,10 @@ public class HospitalApp {
                 AppointmentManagement.cancelAppointment(sc, patient);
                 break;
             case 7:
-            	AppointmentManagement.viewScheduledAppointment(patient);
+                AppointmentManagement.viewScheduledAppointment(patient);
                 break;
             case 8:
-            	MedicalRecordManagement.viewPatientMedicalRecord(patient);
+                MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
             case 9:  // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
@@ -134,7 +134,7 @@ public class HospitalApp {
                 patient.viewMedicalCertificates();
                 break;
             case 11:
-                BillingRecordManagement.displayPastOutcomes(sc, patient);
+                BillingRecordManagement.displayPastOutcomes(patient);
                 break;
             case 12:  // Logout
                 System.out.println("Returning to login...");
