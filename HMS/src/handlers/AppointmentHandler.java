@@ -1,7 +1,9 @@
 package handlers;
 
 import interfaces.DateAndTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import models.Appointment;
 import models.Patient;
@@ -13,16 +15,16 @@ public class AppointmentHandler implements DateAndTime {
     private List<String> timeList;
     private List<Appointment> appointments;
     private List<String[]> appointmentLogList;
-    private final String appointmentFile = "src/data/Appointment_Detail.csv";
-    private final String appointmentLogFile = "src/data/Appointment_Log.csv";
-    private final String appointmentOutcomeFile = "src/data/Appointment_Outcome_Record.csv";
-    private final String doctorFile = "src/data/Doctor_Availability.csv";
+    private final String appointmentFile = "./src/data/Appointment_Detail.csv";
+    private static final String appointmentLogFile = "./src/data/Appointment_Log.csv";
+    private final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
+    private final String doctorFile = "./src/data/Doctor_Availability.csv";
     private String startTime;
     private String endTime;
     private String time;
     private String date;
     private int choice;
-
+    
     private AppointmentHandler() {
         this.timeList = new ArrayList<>();
         this.appointments = new ArrayList<>();
@@ -49,6 +51,20 @@ public class AppointmentHandler implements DateAndTime {
 
     private void saveAppointment() {
         List<String[]> data = new ArrayList<>();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        appointments.sort((s1,s2) -> {
+        	LocalDate date1 = LocalDate.parse(s1.getDate(), dateFormatter);
+            LocalDate date2 = LocalDate.parse(s2.getDate(), dateFormatter);
+            int dateComparison = date1.compareTo(date2);
+
+            if (dateComparison != 0) {
+                return dateComparison;
+            }
+
+            LocalTime time1 = LocalTime.parse(s1.getTime());
+            LocalTime time2 = LocalTime.parse(s2.getTime());
+            return time1.compareTo(time2);
+        });
         for (int i = 0; i < appointments.size(); i++) {
             String patientID = appointments.get(i).getPatientId();
             String doctorID = appointments.get(i).getDoctorId();
@@ -70,6 +86,7 @@ public class AppointmentHandler implements DateAndTime {
         instance.startTime = "09:00";
         instance.endTime = "17:00";
         instance.timeList.clear();
+        instance.appointmentLogList = CSVHandler.readCSV(appointmentLogFile);
         return instance;
     }
 
@@ -167,6 +184,24 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
         System.out.println("");
+    }
+    
+    public void viewScheduledAppointment(Patient patient) {
+    	List<Appointment> patientAppointmentList = new ArrayList<>();
+    	for(int i = 0; i < appointments.size(); i++) {
+    		if (appointments.get(i).getPatientId().equals(patient.getId()) && appointments.get(i).getStatus().equals("Confirmed") && appointments.get(i).getOutcome().equals("-")) {
+    			patientAppointmentList.add(appointments.get(i));
+    		}
+    	}
+    	if (patientAppointmentList.size() == 0) {
+            System.out.println("No scheduled appointments.");
+        } else {
+        	System.out.println("\n----Scheduled Appointments----");
+            for (Appointment eachAppointment : appointments) {
+                System.out.println(eachAppointment);
+            }
+        }  	
+    	System.out.println("");
     }
 
     public void setAppointment(User doctor, Patient patient, Scanner scanner) {
@@ -532,8 +567,7 @@ public class AppointmentHandler implements DateAndTime {
                     System.out.print("Type of service provided: ");
                     scanner.nextLine();
                     String service = scanner.nextLine();
-                    System.out.print("Prescribed Medications (default is pending): ");
-                    String medication = scanner.nextLine();
+                    String medication = "Pending";
                     System.out.print("Consultation Notes: ");
                     String notes = scanner.nextLine();
                     recordList.add(new String[]{schedule.getDoctorId(), schedule.getPatientId(), schedule.getDate(), service, medication, notes});
@@ -590,4 +624,16 @@ public class AppointmentHandler implements DateAndTime {
             return true;
         }
     }
+
+    public List<Appointment> getAppointmentsForPatient(String patientId) {
+        List<Appointment> patientAppointments = new ArrayList<>();
+        
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatientId().equals(patientId)) {
+                    patientAppointments.add(appointment);
+            }
+        }
+        return patientAppointments;
+    }
+    
 }

@@ -12,8 +12,8 @@ public class StaffHandler implements AccountSaver {
     private static StaffHandler instance;
     private List<User> staff;
     private List<User> doctor;
-    private final String staffFile = "src/data/Staff_List.csv";
-    private final String staffTXTFile = "src/data/Staff_Account.txt";
+    private final String staffFile = "./src/data/Staff_List.csv";
+    private final String staffTXTFile = "./src/data/Staff_Account.txt";
 
     private StaffHandler() {
         this.staff = new ArrayList<>();

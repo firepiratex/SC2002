@@ -12,6 +12,16 @@ public class LoginHandler {
         Scanner sc = new Scanner(System.in);
         User user = null;
         while (true) {
+        	System.out.println(
+                    "-----------------------------\n"+
+                    " ██╗  ██╗███╗   ███╗███████╗\r\n" +
+                    " ██║  ██║████╗ ████║██╔════╝\r\n" +
+                    " ███████║██╔████╔██║███████╗ \r\n" +
+                    " ██╔══██║██║╚██╔╝██║╚════██║ \r\n" +
+                    " ██║  ██║██║ ╚═╝ ██║███████║\r\n" +
+                    " ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝\r" +
+                    "-----------------------------");
+            System.out.println("Hospital Management System");
             System.out.print("Enter User ID: ");
             String id = sc.nextLine();
             System.out.print("Enter Password: ");

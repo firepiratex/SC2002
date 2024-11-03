@@ -70,8 +70,9 @@ public class Doctor extends User implements DateAndTime {
     }
 
     public void approveOrRejectCertificate(String patientId, String newStatus) {
-        MedicalCertificateHandler.updateCertificateStatus(patientId, newStatus);
+        MedicalCertificateHandler.updateCertificateStatus(patientId, newStatus, this.getId());
     }
+    
 
     @Override
     public void displayMenu() {

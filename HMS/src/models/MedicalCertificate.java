@@ -9,6 +9,7 @@ public class MedicalCertificate {
     private LocalDate issueDate;
     private int duration;  // Duration in days
     private String status; // Pending, Approved, Rejected
+    private String approvedBy; // Doctor who approved/rejected
 
     // Constructor
     public MedicalCertificate(String patientId, String patientName, String reason, int duration) {
@@ -18,6 +19,7 @@ public class MedicalCertificate {
         this.issueDate = LocalDate.now();  // Default to current date
         this.duration = duration;
         this.status = "Pending";  // Default status
+        this.approvedBy = "N/A";  // Default value if not set
     }
 
     // Getters and setters
@@ -53,10 +55,18 @@ public class MedicalCertificate {
         this.status = status;
     }
 
+    public String getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
     // Convert to CSV format
     public String[] toCSVRow() {
         return new String[] {
-            patientId, patientName, reason, issueDate.toString(), String.valueOf(duration), status
+            patientId, patientName, reason, issueDate.toString(), String.valueOf(duration), status, approvedBy
         };
     }
 
@@ -69,6 +79,7 @@ public class MedicalCertificate {
         System.out.println("Issue Date: " + issueDate);
         System.out.println("Duration: " + duration + " days");
         System.out.println("Status: " + status);
+        System.out.println("Approved/Rejected By: " + approvedBy);
         System.out.println("-----------------------------");
     }
 }

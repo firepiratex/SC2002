@@ -56,7 +56,7 @@ public class HospitalApp {
                     System.out.println("Logging out...");
                 }
             } else if (user instanceof Patient) {
-                if (choice == 11) {
+                if (choice == 12) {
                     running = false;
                     System.out.println("Logging out...");
                 }
@@ -82,10 +82,27 @@ public class HospitalApp {
                 patient.viewMedicalRecord();
                 break;
             case 2:
-                System.out.print("Enter new contact number: ");
-                String contactNo = sc.nextLine();
-                patient.updatePersonalInfo(contactNo);
-                System.out.println("Contact information updated successfully.");
+            	patient.displayPersonalInfoMenu();
+            	while(true) {
+            		System.out.print("Enter the choice: ");
+            		choice = sc.nextInt();
+            		sc.nextLine();
+            		if (choice == 0) {
+            			break;
+            		} else if (choice == 1) {
+            			System.out.print("Enter new contact email address: ");
+                        String email = sc.nextLine();
+                        patient.updatePersonalInfo(email);
+                        break;
+            		} else if (choice == 2) {
+            			System.out.print("Enter new contact number: ");
+                        String number = sc.nextLine();
+                        patient.updateContactNo(number);
+                        break;
+            		} else {
+            			System.out.println("Invalid choice.");
+            		}
+            	}
                 break;
             case 3:
                 AppointmentManagement.viewAvailableAppointment(sc);
@@ -94,15 +111,18 @@ public class HospitalApp {
                 AppointmentManagement.scheduleAppointment(sc, patient);
                 break;
             case 5:
-                AppointmentManagement.manageRescheduleAppointment(sc, patient);
+                AppointmentManagement.rescheduleAppointment(sc, patient);
                 break;
             case 6:
-                AppointmentManagement.manageAppointment(sc, patient);
+                AppointmentManagement.cancelAppointment(sc, patient);
                 break;
             case 7:
-                MedicalRecordManagement.viewPatientMedicalRecord(patient);
+            	AppointmentManagement.viewScheduledAppointment(patient);
                 break;
-            case 8:  // Request medical certificate
+            case 8:
+            	MedicalRecordManagement.viewPatientMedicalRecord(patient);
+                break;
+            case 9:  // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();
                 System.out.print("Enter duration (in days): ");
@@ -110,13 +130,13 @@ public class HospitalApp {
                 sc.nextLine();  // Consume the newline character
                 patient.requestMedicalCertificate(reason, duration);
                 break;
-            case 9:  // View medical certificates
+            case 10:  // View medical certificates
                 patient.viewMedicalCertificates();
                 break;
-            case 10:
-                BillingRecordManagement.displayPastOutcomes(patient);
+            case 11:
+                BillingRecordManagement.displayPastOutcomes(sc, patient);
                 break;
-            case 11:  // Logout
+            case 12:  // Logout
                 System.out.println("Returning to login...");
                 break;
             default:

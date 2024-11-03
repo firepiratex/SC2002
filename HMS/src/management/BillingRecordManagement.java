@@ -1,7 +1,6 @@
 package management;
 
 import handlers.CSVHandler;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,13 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Map;
+import java.util.Scanner;
 import models.Patient;
 
 public class BillingRecordManagement {
 
-    private static final String appointmentOutcomeFile = "HMS/src/data/Appointment_Outcome_Record.csv";
+    private static final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
 
     public static void displayPastOutcomes(Patient patient) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
@@ -31,7 +30,6 @@ public class BillingRecordManagement {
                 String appointmentDate = record[2]; // 3rd column
                 String typeOfService = record[3];   // 4th column
                 String paymentStatus = record[5]; // Assuming the last column is the payment status
-
 
                 // Extract columns from the 6th (index 5) onwards (medicines and quantities)
                 String[] medicinesAndQuantities = Arrays.copyOfRange(record, 6, record.length);
@@ -77,10 +75,10 @@ public class BillingRecordManagement {
                 }
 
                 // Print the appointment details, type of service, medicine/quantity pairs, and total bill cost
-                System.out.println("========================================================================" );
+                System.out.println("========================================================================");
 
                 System.out.println("Appointment on: " + appointmentDate + " with the type of service: " + typeOfService);
-                System.out.println("Payment Status: "+ paymentStatus);
+                System.out.println("Payment Status: " + paymentStatus);
 
                 System.out.println("Medicine and Quantity List:");
                 for (Map<String, Integer> entry : medicineQuantityList) {
@@ -93,15 +91,12 @@ public class BillingRecordManagement {
                 System.out.printf("Total Medicine Bill Cost: $%.2f%n", totalBillCost);
 
                 double totalBillWithConsultation = totalBillCost + 20;
-                System.out.printf("Total Bill Cost with Consultation Fee: $%.2f%n",totalBillWithConsultation);
-
-
+                System.out.printf("Total Bill Cost with Consultation Fee: $%.2f%n", totalBillWithConsultation);
 
                 // Ask if the patient wants to pay the bill if unpaid
                 if (paymentStatus.equalsIgnoreCase("Unpaid")) {
-                processPayment(totalBillWithConsultation, record, i, patient);
+                    processPayment(totalBillWithConsultation, record, i, patient);
                 }
-
 
                 recordFound = true;
             }
@@ -111,15 +106,16 @@ public class BillingRecordManagement {
             System.out.println("No past appointment outcomes found for Patient ID: " + patient.getId());
         }
     }
+
     private static void processPayment(double totalBillWithConsultation, String[] record, int recordIndex, Patient patient) {
         Scanner scanner = new Scanner(System.in);
         System.out.printf("Your total bill is $%.2f.%n", totalBillWithConsultation);
-        System.out.println("Dear " + patient.getName()+ ", You have an outstanding bill of $"+ totalBillWithConsultation );
+        System.out.println("Dear " + patient.getName() + ", You have an outstanding bill of $" + totalBillWithConsultation);
         System.out.println("Please enter the amount you wish to pay or type '0' if you do not wish to pay at this moment");
 
         try {
             double paymentAmount = Double.parseDouble(scanner.nextLine().trim());
-    
+
             if (paymentAmount == 0) {
                 System.out.println("Payment has been skipped. You can pay later through the hospital portal.");
             } else if (paymentAmount >= totalBillWithConsultation) {
@@ -141,7 +137,7 @@ public class BillingRecordManagement {
             System.out.println("Invalid input. Please enter a numerical value.");
         }
     }
-    
+
     private static void updateCSVRecord(int recordIndex, String[] updatedRecord) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
 
