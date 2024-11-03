@@ -72,7 +72,7 @@ public class MedicalRecordManagement {
 
 							System.out.print("Consultation Notes: ");
 							String notes = scanner.nextLine();
-	
+							String paymentStatus = "Unpaid";
 							List<String> medicationsWithQuantities = new ArrayList<>();
 							String addMore;
 	
@@ -91,9 +91,9 @@ public class MedicalRecordManagement {
 	
 
 	
-							recordList.set(i, new String[]{parts[0], parts[1], parts[2],  service, notes, medicationSummary});
+							recordList.set(i, new String[]{parts[0], parts[1], parts[2],  service, notes, paymentStatus, medicationSummary});
 							System.out.println("Update successfully.");
-							recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,,Consultation Notes, Prescribed Medications "});
+							recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,Consultation Notes,Payment Status, Prescribed Medications "});
 							CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
 							break;
 						}
