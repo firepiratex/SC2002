@@ -111,13 +111,13 @@ public class HospitalApp {
                 AppointmentManagement.scheduleAppointment(sc, patient);
                 break;
             case 5:
-                AppointmentManagement.manageRescheduleAppointment(sc, patient);
+                AppointmentManagement.rescheduleAppointment(sc, patient);
                 break;
             case 6:
-                AppointmentManagement.manageAppointment(sc, patient);
+                AppointmentManagement.cancelAppointment(sc, patient);
                 break;
             case 7:
-            	//AppointmentManagement.viewScheduledAppointment();
+            	AppointmentManagement.viewScheduledAppointment(patient);
                 break;
             case 8:
             	MedicalRecordManagement.viewPatientMedicalRecord(patient);

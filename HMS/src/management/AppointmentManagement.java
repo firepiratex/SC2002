@@ -33,6 +33,10 @@ public class AppointmentManagement {
         }
         AppointmentHandler.getInstance().viewAvailableAppointment(doctor, scanner);
     }
+    
+    public static void viewScheduledAppointment(Patient patient) {
+    	AppointmentHandler.getInstance().viewScheduledAppointment(patient);
+    }
 
     public static void scheduleAppointment(Scanner scanner, Patient patient) {
         int choice, size;
@@ -59,11 +63,11 @@ public class AppointmentManagement {
         System.out.println("Scheduled appointment successful.\n");
     }
 
-    public static void manageRescheduleAppointment(Scanner scanner, Patient patient) {
+    public static void rescheduleAppointment(Scanner scanner, Patient patient) {
         AppointmentHandler.getInstance().rescheduleAppointment(patient, scanner);
     }
 
-    public static void manageAppointment(Scanner scanner, Patient patient) {
+    public static void cancelAppointment(Scanner scanner, Patient patient) {
         AppointmentHandler.getInstance().cancelAppointment(patient, scanner);
     }
 
