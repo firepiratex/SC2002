@@ -2,29 +2,65 @@ package handlers;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 import models.MedicalCertificate;
 import models.Patient;
 
 public class MedicalCertificateHandler {
-
+	
+	private static MedicalCertificateHandler instance; 
     private static final String FILE_PATH = "./src/data/Medical_Certificate.csv";  // Ensure the path matches your project structure
-
+    private List<MedicalCertificate> mcList;
+    
     public static void addCertificate(MedicalCertificate certificate) {
-        File file = new File(FILE_PATH);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-            // Check if the file is empty and write headers if needed
-            if (file.length() == 0) {
-                writer.write("Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By");
-                writer.newLine();
-            }
-            String[] data = certificate.toCSVRow();
-            writer.write(String.join(",", data));
-            writer.newLine();
-        } catch (IOException e) {
-            System.out.println("Error writing to CSV file: " + e.getMessage());
-        }
+        List<String[]> mcCSV = CSVHandler.readCSV(FILE_PATH);
+        mcCSV.add(certificate.toCSVRow());
+        mcCSV.add(0, new String[]{"Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By"});
+    }
+    
+    private MedicalCertificateHandler() {
+        this.mcList = new ArrayList<>();
+        loadMC();  // Load staff data when initializing
     }
 
+    public static MedicalCertificateHandler getInstance() {
+        if (instance == null) {
+            instance = new MedicalCertificateHandler();
+        }
+        return instance;
+    }
+    
+    private void loadMC() {
+    	List<String[]> mcCSV = CSVHandler.readCSV(FILE_PATH);
+    	for(int i = 0; i < mcCSV.size(); i++) {
+    		String patientID = mcCSV.get(i)[0];
+    		String patientName = mcCSV.get(i)[1];
+    		String reason = mcCSV.get(i)[2];
+    		String date = mcCSV.get(i)[3];
+    		String day = mcCSV.get(i)[4];
+    		String status = mcCSV.get(i)[5];
+    		String outcome = mcCSV.get(i)[6];
+    		
+    		MedicalCertificate mc = null;
+    		mc = new MedicalCertificate(patientID, patientName, reason, date, Integer.valueOf(day), status, outcome);
+    		mcList.add(mc);
+    	}
+    }
+    
+    private void saveMC() {
+    	List<String[]> data = new ArrayList<>();
+    	for(MedicalCertificate mc : mcList) {
+    		String[] row = {mc.getPatientId(), mc.getPatientName(), mc.getReason(), mc.getIssueDate().toString(), String.valueOf(mc.getDuration()), mc.getStatus(), mc.getApprovedBy()};
+    		data.add(row);
+    	}
+    	data.add(0, new String[]{"Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By"});
+    	CSVHandler.writeCSV(FILE_PATH, data);
+    }
+    
     public static void viewCertificatesForPatient(Patient patient) {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -98,57 +134,30 @@ public class MedicalCertificateHandler {
         }
     }
 
-    public static void updateCertificateStatus(String patientId, String newStatus, String doctorId) {
-        File inputFile = new File(FILE_PATH);
-        File tempFile = new File("./src/data/temp_Medical_Certificate.csv");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
-            String line;
-            boolean found = false;
-            boolean headerAdded = false;
-
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-
-                // Write the header if it hasn't been written yet
-                if (!headerAdded) {
-                    writer.write(line);  // Preserve the original header
-                    writer.newLine();
-                    headerAdded = true;
-                    continue;
-                }
-
-                if (data.length >= 6 && data[0].equals(patientId)) {
-                    data[5] = newStatus;  // Update the status field
-                    if (data.length > 6) {
-                        data[6] = doctorId;  // Replace the doctor ID who approved/rejected
-                    } else {
-                        line = String.join(",", data) + "," + doctorId;  // Add the doctor ID if not present
-                    }
-                    line = String.join(",", data);
-                    found = true;
-                }
-                writer.write(line);
-                writer.newLine();
-            }
-
-            if (!found) {
-                System.out.println("No medical certificate found for the given patient ID.");
-            } else {
-                System.out.println("Medical certificate status updated successfully.");
-            }
-
-            // Replace the original file with the updated one
-            if (!inputFile.delete() || !tempFile.renameTo(inputFile)) {
-                System.out.println("Error updating the file.");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error updating certificate status: " + e.getMessage());
-        }
+    public void updateCertificateStatus(String patientId, String newStatus, String doctorId, Scanner scanner) {
+    	int choice;
+    	for(int i = 0; i < mcList.size(); i++) {
+    		System.out.println((i+1) + ". " + mcList.get(i));
+    	}
+    	System.out.print("Enter your choice (0 to exit): ");
+    	if (scanner.hasNextInt()) {
+    		choice = scanner.nextInt();
+    		if (choice == 0) {
+    			return;
+    		} else if (choice >= 1 && choice <= mcList.size()) {
+    			MedicalCertificate currentMC = mcList.get(choice-1);
+    			currentMC.setStatus(newStatus);
+    			currentMC.setApprovedBy(doctorId);
+    			currentMC.setIssueDate(LocalDate.now());
+    			saveMC();
+    		} else {
+    			System.out.println("Invalid choice.");
+    		}
+    	} else {
+    		System.out.println("Invalid input.");
+    	}
     }
+    
     public static boolean viewPendingCertificates() {
         boolean found = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {

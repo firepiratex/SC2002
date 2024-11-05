@@ -74,8 +74,8 @@ public class Doctor extends User implements DateAndTime {
         MedicalCertificateHandler.viewCertificatesForPatient(patient);
     }
 
-    public void approveOrRejectCertificate(String patientId, String newStatus) {
-        MedicalCertificateHandler.updateCertificateStatus(patientId, newStatus, this.getId());
+    public void approveOrRejectCertificate(String patientId, String newStatus, Scanner scanner) {
+        MedicalCertificateHandler.getInstance().updateCertificateStatus(patientId, newStatus, this.getId(), scanner);
     }
     
 

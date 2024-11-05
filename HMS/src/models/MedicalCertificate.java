@@ -21,6 +21,16 @@ public class MedicalCertificate {
         this.status = "Pending";  // Default status
         this.approvedBy = "N/A";  // Default value if not set
     }
+    
+    public MedicalCertificate(String patientId, String patientName, String reason, String date, int day, String status, String outcome) {
+    	this.patientId = patientId;
+        this.patientName = patientName;
+        this.reason = reason;
+        this.issueDate = LocalDate.parse(date);
+        this.duration = day;
+        this.status = status;
+        this.approvedBy = outcome;
+    }
 
     // Getters and setters
     public LocalDate getIssueDate() {
@@ -54,7 +64,7 @@ public class MedicalCertificate {
     public void setStatus(String status) {
         this.status = status;
     }
-
+    
     public String getApprovedBy() {
         return approvedBy;
     }
@@ -62,7 +72,11 @@ public class MedicalCertificate {
     public void setApprovedBy(String approvedBy) {
         this.approvedBy = approvedBy;
     }
-
+    
+    public String toString() {
+    	return getPatientId() + " " + getPatientName() + " " + getReason() + " " + getDuration();
+    }
+    
     // Convert to CSV format
     public String[] toCSVRow() {
         return new String[] {

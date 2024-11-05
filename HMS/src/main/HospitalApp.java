@@ -191,7 +191,7 @@ public class HospitalApp {
                 String patientIdToUpdate = sc.nextLine();
                 System.out.print("Enter new status (Approved/Rejected): ");
                 String newStatus = sc.nextLine();
-                doctor.approveOrRejectCertificate(patientIdToUpdate, newStatus);
+                doctor.approveOrRejectCertificate(patientIdToUpdate, newStatus, sc);
                 break;
             case 10:
                 System.out.println("Returning to login...");
