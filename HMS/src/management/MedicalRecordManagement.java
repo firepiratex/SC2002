@@ -85,8 +85,15 @@ public class MedicalRecordManagement {
                             String addMore;
 
                             do {
-                                System.out.print("Prescribed Medication: ");
-                                String medication = scanner.nextLine();
+                                String medication;
+                                do {
+                                    System.out.print("Prescribed Medication (Medication List: Paracetamol, Ibuprofen, Amoxicillin): ");
+                                    medication = scanner.nextLine().trim();
+                                    if (!isValidMedication(medication)) {
+                                        System.out.println("Invalid medication. Please enter Paracetamol, Ibuprofen, or Amoxicillin.");
+                                    }
+                                } while (!isValidMedication(medication));
+
                                 System.out.print("Quantity of Medication: ");
                                 String quantity = scanner.nextLine();
 
@@ -114,6 +121,11 @@ public class MedicalRecordManagement {
                 scanner.next(); // Consume the invalid input
             }
         }
+    }
+    private static boolean isValidMedication(String medication) {
+        return medication.equalsIgnoreCase("Paracetamol") ||
+               medication.equalsIgnoreCase("Ibuprofen") ||
+               medication.equalsIgnoreCase("Amoxicillin");
     }
 
 }

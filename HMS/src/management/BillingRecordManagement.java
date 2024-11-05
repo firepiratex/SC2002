@@ -144,7 +144,7 @@ public class BillingRecordManagement {
         if (recordIndex >= 0 && recordIndex < recordList.size()) { // Ensure the index does not point to the header
             recordList.set(recordIndex, updatedRecord); // Update the specific row with the new record
             writeCSVWithHeader(appointmentOutcomeFile, recordList); // Write the list back to the CSV file
-            System.out.println("CSV file updated successfully.");
+            //System.out.println("CSV file updated successfully.");
             recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,Consultation Notes,Payment Status, Prescribed Medications "});
             CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
         } else {

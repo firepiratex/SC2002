@@ -197,7 +197,7 @@ public class AppointmentHandler implements DateAndTime {
             System.out.println("No scheduled appointments.");
         } else {
         	System.out.println("\n----Scheduled Appointments----");
-            for (Appointment eachAppointment : appointments) {
+            for (Appointment eachAppointment : patientAppointmentList) {
                 System.out.println(eachAppointment);
             }
         }  	
