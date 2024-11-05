@@ -28,12 +28,12 @@ public class BillingRecordManagement {
         for(int i = 0; i < patientDispensedList.size(); i++) {
         	System.out.println(Arrays.toString(patientDispensedList.get(i)));
         }
-        System.out.println("\n----Appointment Outcome----\n");
+        System.out.println("\n----Manage Appointment Outcome----");
         for(int i = 0; i < patientDispensedList.size(); i++) {
         	System.out.println((i+1) + ". " + Arrays.toString(patientDispensedList.get(i)));
         }
         while(true) {
-        	System.out.println("Choose an appointment to manage (0 to exit): ");
+        	System.out.print("Choose an appointment to manage (0 to exit): ");
         	if (scanner.hasNextInt()) {
         		choice = scanner.nextInt();
         		if (choice == 0) {
@@ -96,7 +96,8 @@ public class BillingRecordManagement {
     }
 
     private static String[] processPayment(double totalBillWithConsultation, String[] record, Patient patient, Scanner scanner) {
-        System.out.printf("Your total bill is $%.2f.%n", totalBillWithConsultation);
+        scanner.nextLine();
+    	System.out.printf("Your total bill is $%.2f.%n", totalBillWithConsultation);
         System.out.println("Dear " + patient.getName() + ", You have an outstanding bill of $" + totalBillWithConsultation);
         System.out.print("Please enter the amount you wish to pay or type '0' if you do not wish to pay at this moment");
 
