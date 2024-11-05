@@ -2,7 +2,6 @@ package models;
 
 import handlers.CSVHandler;
 import handlers.MedicineHandler;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -162,10 +161,10 @@ public class Pharmacist extends User {
                                 System.out.println("Invalid medication.\n");
                                 return;
                             }
-                            recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ","+ amount + " " + medicineList.get(choice2-1).getMedicineName() + "," + parts[5]});
+                            recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ","+ "Dispensed" + "," + parts[5]});
                             System.out.println("Update successfully.");
                             medicineHandler.saveMedicine(medicineList);
-                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescribed Medications, Consultation Notes"});
+                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes"});
                             CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
                             break;
                         }

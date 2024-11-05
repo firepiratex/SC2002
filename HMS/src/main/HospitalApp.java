@@ -38,7 +38,7 @@ public class HospitalApp {
             user.displayMenu();
             System.out.print("Enter option: ");
             int choice = sc.nextInt();
-            sc.nextLine();  // Consume the newline character
+            sc.nextLine(); // Consume the newline character
 
             if (user instanceof Patient) {
                 handlePatientActions((Patient) user, choice);
@@ -122,21 +122,21 @@ public class HospitalApp {
             case 8:
                 MedicalRecordManagement.viewPatientMedicalRecord(patient);
                 break;
-            case 9:  // Request medical certificate
+            case 9: // Request medical certificate
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();
                 System.out.print("Enter duration (in days): ");
                 int duration = sc.nextInt();
-                sc.nextLine();  // Consume the newline character
+                sc.nextLine(); // Consume the newline character
                 patient.requestMedicalCertificate(reason, duration);
                 break;
-            case 10:  // View medical certificates
+            case 10: // View medical certificates
                 patient.viewMedicalCertificates();
                 break;
             case 11:
                 BillingRecordManagement.displayPastOutcomes(patient);
                 break;
-            case 12:  // Logout
+            case 12: // Logout
                 System.out.println("Returning to login...");
                 break;
             default:
@@ -168,10 +168,19 @@ public class HospitalApp {
             case 7:
                 AppointmentManagement.recordAppointmentOutcome(sc, doctor);
                 break;
-            case 8:  // View all medical certificates
+            case 8: // View all medical certificates
                 MedicalCertificateHandler.viewAllCertificates();
                 break;
-            case 9:  // Approve or reject a specific medical certificate
+            case 9: // Approve or reject a specific medical certificate
+                System.out.println("---- Pending Medical Certificate Requests ----");
+                boolean hasPendingCertificates = MedicalCertificateHandler.viewPendingCertificates();
+
+                // Check if there are no pending certificates and exit if true
+                if (!hasPendingCertificates) {
+                    System.out.println("No pending medical certificates found. Returning to menu...");
+                    break;
+                }
+
                 System.out.println("Enter the Patient ID whose certificate you want to approve/reject: ");
                 String patientIdToUpdate = sc.nextLine();
                 System.out.print("Enter new status (Approved/Rejected): ");
