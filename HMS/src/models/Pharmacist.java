@@ -100,6 +100,7 @@ public class Pharmacist extends User {
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
         List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
+        List<String[]> dispensedList = CSVHandler.readCSV("src/data/Dispensed_Record.csv");
         List<String[]> pendingList = new ArrayList<>();
         List<Medicine> medicineList = medicineHandler.loadMedicine();
         int choice, choice2, amount;
@@ -161,10 +162,13 @@ public class Pharmacist extends User {
                                 System.out.println("Invalid medication.\n");
                                 return;
                             }
-                            recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ","+ "Dispensed" + "," + parts[5]});
+                            recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + "," + "Dispensed" + "," + parts[5]});
+                            dispensedList.add(new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + "Dispensed" + "," + amount + " " + medicineList.get(choice2 - 1).getMedicineName()});
                             System.out.println("Update successfully.");
                             medicineHandler.saveMedicine(medicineList);
-                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes"});
+                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescribed Status, Consultation Notes"});
+                            dispensedList.add(0, new String[]{"Doctor ID,Patient ID,Date,Prescribed Status,Medications"});
+                            CSVHandler.writeCSV("src/data/Dispensed_Record.csv", dispensedList);
                             CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
                             break;
                         }
