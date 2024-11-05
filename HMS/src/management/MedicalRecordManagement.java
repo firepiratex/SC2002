@@ -94,37 +94,10 @@ public class MedicalRecordManagement {
 
                             System.out.print("Consultation Notes: ");
                             String notes = scanner.nextLine();
-							
-							String paymentStatus = "Unpaid";
 
-
-                            List<String> medicationsWithQuantities = new ArrayList<>();
-                            String addMore;
-
-                            do {
-                                String medication;
-                                do {
-                                    System.out.print("Prescribed Medication (Medication List: Paracetamol, Ibuprofen, Amoxicillin): ");
-                                    medication = scanner.nextLine().trim();
-                                    if (!isValidMedication(medication)) {
-                                        System.out.println("Invalid medication. Please enter Paracetamol, Ibuprofen, or Amoxicillin.");
-                                    }
-                                } while (!isValidMedication(medication));
-
-                                System.out.print("Quantity of Medication: ");
-                                String quantity = scanner.nextLine();
-
-                                medicationsWithQuantities.add(medication + " (" + quantity + ")");
-
-                                System.out.print("Add another medication? (yes/no): ");
-                                addMore = scanner.nextLine().trim().toLowerCase();
-                            } while (addMore.equals("yes"));
-
-                            String medicationSummary = String.join(", ", medicationsWithQuantities);
-
-                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, notes, paymentStatus, medicationSummary});
+                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, "Pending", notes});
                             System.out.println("Update successfully.");
-                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,,Consultation Notes, Payment Status, Prescribed Medications "});
+                            recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes"});
                             CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
                             break;
                         }
