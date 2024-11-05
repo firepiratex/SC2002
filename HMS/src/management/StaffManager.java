@@ -3,6 +3,7 @@ package management;
 import java.util.List;
 import java.util.Scanner;
 
+import handlers.PasswordHash;
 import handlers.StaffHandler;
 import models.Administrator;
 import models.Doctor;
@@ -73,11 +74,10 @@ public class StaffManager {
     private void addStaffHandler(Scanner scanner) {
         String id = promptForInput("Enter staff ID: ", scanner);
         String name = promptForInput("Enter staff name: ", scanner);
-        String password = promptForInput("Enter staff password: ", scanner);
         String gender = promptForInput("Enter staff gender: ", scanner);
         int age = promptForAge("Enter staff age: ", scanner);
         String role = promptForInput("Enter staff role (Doctor, Pharmacist, Administrator): ", scanner);
-
+        String password = PasswordHash.hash("password");
         User newStaff = createStaffByRole(id, name, password, gender, age, role);
 
         if (newStaff != null) {
