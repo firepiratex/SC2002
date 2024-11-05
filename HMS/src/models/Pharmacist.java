@@ -22,15 +22,7 @@ public class Pharmacist extends User {
     public int getAge() {
         return age;
     }
-
-    // Managing prescriptions (ensure Prescription is imported)
-    public void dispensePrescription(List<Prescription> prescriptions) {
-        for (Prescription prescription : prescriptions) {
-            prescription.setStatus("Dispensed");
-            System.out.println("Prescription for " + prescription.getMedicineName() + " dispensed.");
-        }
-    }
-
+    
     public String toString() {
     	return super.toString() + " " + getAge();
     }
