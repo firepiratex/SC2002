@@ -75,7 +75,7 @@ public class Patient extends User {
         // Check if the patient has had any past appointments before requesting an MC
         if (AppointmentManagement.hasPastAppointment(this)) {
             MedicalCertificate certificate = new MedicalCertificate(getId(), getName(), reason, duration);
-            MedicalCertificateHandler.addCertificate(certificate);
+            MedicalCertificateHandler.getInstance().addCertificate(certificate);
             System.out.println("Medical certificate requested successfully.");
         } else {
             System.out.println("Error: You cannot request a medical certificate without any past appointments.");

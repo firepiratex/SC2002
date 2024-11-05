@@ -179,19 +179,7 @@ public class HospitalApp {
                 break;
             case 9: // Approve or reject a specific medical certificate
                 System.out.println("---- Pending Medical Certificate Requests ----");
-                boolean hasPendingCertificates = MedicalCertificateHandler.viewPendingCertificates();
-
-                // Check if there are no pending certificates and exit if true
-                if (!hasPendingCertificates) {
-                    System.out.println("No pending medical certificates found. Returning to menu...");
-                    break;
-                }
-
-                System.out.println("Enter the Patient ID whose certificate you want to approve/reject: ");
-                String patientIdToUpdate = sc.nextLine();
-                System.out.print("Enter new status (Approved/Rejected): ");
-                String newStatus = sc.nextLine();
-                doctor.approveOrRejectCertificate(patientIdToUpdate, newStatus, sc);
+                MedicalCertificateHandler.getInstance().updateCertificateStatus(doctor, sc);
                 break;
             case 10:
                 System.out.println("Returning to login...");

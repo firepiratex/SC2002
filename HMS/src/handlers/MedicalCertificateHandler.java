@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import models.Doctor;
 import models.MedicalCertificate;
 import models.Patient;
 
@@ -16,10 +17,12 @@ public class MedicalCertificateHandler {
     private static final String FILE_PATH = "./src/data/Medical_Certificate.csv";  // Ensure the path matches your project structure
     private List<MedicalCertificate> mcList;
     
-    public static void addCertificate(MedicalCertificate certificate) {
+    public void addCertificate(MedicalCertificate certificate) {
         List<String[]> mcCSV = CSVHandler.readCSV(FILE_PATH);
         mcCSV.add(certificate.toCSVRow());
         mcCSV.add(0, new String[]{"Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By"});
+        mcList.add(certificate);
+        saveMC();
     }
     
     private MedicalCertificateHandler() {
@@ -134,7 +137,7 @@ public class MedicalCertificateHandler {
         }
     }
 
-    public void updateCertificateStatus(String patientId, String newStatus, String doctorId, Scanner scanner) {
+    public void updateCertificateStatus(Doctor doctor, Scanner scanner) {
     	int choice;
     	for(int i = 0; i < mcList.size(); i++) {
     		System.out.println((i+1) + ". " + mcList.get(i));
@@ -146,8 +149,11 @@ public class MedicalCertificateHandler {
     			return;
     		} else if (choice >= 1 && choice <= mcList.size()) {
     			MedicalCertificate currentMC = mcList.get(choice-1);
+                System.out.print("Enter new status (Approved/Rejected): ");
+                scanner.nextLine();
+                String newStatus = scanner.nextLine();
     			currentMC.setStatus(newStatus);
-    			currentMC.setApprovedBy(doctorId);
+    			currentMC.setApprovedBy(doctor.getId());
     			currentMC.setIssueDate(LocalDate.now());
     			saveMC();
     		} else {
