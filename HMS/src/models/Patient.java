@@ -6,12 +6,16 @@ import java.util.regex.Pattern;
 import management.AppointmentManagement;  // Ensure this import is present
 
 public class Patient extends User {
-
+	
+	private String dateofBirth;
+	private String bloodType;
     private String contactInfo;
     private String contactNo;
 
     public Patient(String id, String name, String password, String dateOfBirth, String gender, String bloodType, String contactInfo, String contactNo) {
         super(id, name, password, "Patient", gender);
+        this.dateofBirth = dateOfBirth;
+        this.bloodType = bloodType;
         this.contactInfo = contactInfo;
         this.contactNo = contactNo;
     }
@@ -24,7 +28,15 @@ public class Patient extends User {
         return contactNo;
     }
 
-    public void updatePersonalInfo(String email) {
+    public String getDateofBirth() {
+		return dateofBirth;
+	}
+
+	public String getBloodType() {
+		return bloodType;
+	}
+
+	public void updatePersonalInfo(String email) {
         if (isValid(email)) {
             this.contactInfo = email;
             System.out.println("\nContact information updated successfully.\n");
@@ -47,6 +59,9 @@ public class Patient extends User {
     public void viewMedicalRecord() {
         System.out.println("Medical Record for Patient ID: " + getId());
         System.out.println("Name: " + getName());
+        System.out.println("Date of Birth: " + getDateofBirth());
+        System.out.println("Gender: " + super.getGender());
+        System.out.println("Blood Type: " + getBloodType());
         System.out.println("Contact Info: " + getContactInfo());
         System.out.println("Contact Number: " + getContactNumber());
         System.out.println("");
