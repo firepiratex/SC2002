@@ -104,8 +104,8 @@ public class MedicalRecordManagement {
 
                             System.out.print("Consultation Notes: ");
                             String notes = scanner.nextLine();
-
-                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, "Pending", notes});
+                            
+                            recordList.set(i, new String[]{parts[0], parts[1], parts[2], service, parts[4], notes});
                             System.out.println("Update successfully.");
                             recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes"});
                             CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
