@@ -12,33 +12,59 @@ public class MedicalRecordManagement {
     private static final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
 
     public static void viewPatientMedicalRecord(User user) {
+    	boolean recordFound = false;
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
-        if (recordList.isEmpty()) {
-            System.out.println("There are no existing records");
-        } else {
-            System.out.println("--------------------------------------Patient Medical Records--------------------------------------");
-            System.out.println("|- Doctor -|- Patient -|- Date -|- Type of Service -|- Consultation Notes -|- Prescription Status -|");
-        }
+        System.out.println("----Patient Medical Records----");
+        System.out.println("Doctor\tPatient\t\tDate\t\tType of Service\t\tPrescription Status\tConsultation Notes");
+        
 
         if (user.getRole().equals("Doctor")) {
             for (int i = 0; i < recordList.size(); i++) {
-                String doctorID = recordList.get(i)[0];
+            	String[] getRecord = recordList.get(i);
+                String doctorID = getRecord[0];
+                String patientID = getRecord[1];
+                String date = getRecord[2];
+                String service = getRecord[3];
+                String status = getRecord[4];
+                String notes = getRecord[5];
                 if (doctorID.equals(user.getId())) {
-                    System.out.println(Arrays.toString(recordList.get(i)));
+                	System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
+                    recordFound = true;
                 }
             }
         } else if (user.getRole().equals("Patient")) {
             for (int i = 0; i < recordList.size(); i++) {
-                String patientID = recordList.get(i)[1];
+            	String[] getRecord = recordList.get(i);
+                String doctorID = getRecord[0];
+                String patientID = getRecord[1];
+                String date = getRecord[2];
+                String service = getRecord[3];
+                String status = getRecord[4];
+                String notes = getRecord[5];
                 if (patientID.equals(user.getId())) {
-                    System.out.println(Arrays.toString(recordList.get(i)));
+                	System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
+                    recordFound = true;
                 }
             }
-        } else if (user.getRole().equals("Pharmacist")) {
+        } else if (user.getRole().equals("Pharmacist")) {	
             for (int i = 0; i < recordList.size(); i++) {
-                System.out.println(Arrays.toString(recordList.get(i)));
+            	String[] getRecord = recordList.get(i);
+                String doctorID = getRecord[0];
+                String patientID = getRecord[1];
+                String date = getRecord[2];
+                String service = getRecord[3];
+                String status = getRecord[4];
+                String notes = getRecord[5];
+                System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
+                if (recordList.size() != 0) {
+                	recordFound = true;
+                }
             }
         }
+        if (recordFound == false) {
+        	System.out.println("No record available.");
+        }
+        System.out.println("");
     }
 
     public static void updatePatientMedicalRecord(User doctor, Scanner scanner) {
