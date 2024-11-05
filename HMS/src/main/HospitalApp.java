@@ -126,7 +126,13 @@ public class HospitalApp {
                 System.out.print("Enter reason for medical certificate: ");
                 String reason = sc.nextLine();
                 System.out.print("Enter duration (in days): ");
-                int duration = sc.nextInt();
+                int duration;
+                if (sc.hasNextInt()) {
+                	duration = sc.nextInt();
+                } else {
+                	System.out.println("Invalid duration.\n");
+                	return;
+                }
                 sc.nextLine(); // Consume the newline character
                 patient.requestMedicalCertificate(reason, duration);
                 break;
