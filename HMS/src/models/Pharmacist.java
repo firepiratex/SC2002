@@ -164,11 +164,11 @@ public class Pharmacist extends User {
                                 return;
                             }
                             recordList.set(i, new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + "," + "Dispensed" + "," + parts[5]});
-                            dispensedList.add(new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + "Dispensed" + "," + amount + " " + medicineList.get(choice2 - 1).getMedicineName()});
+                            dispensedList.add(new String[] {parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + "," + "Dispensed" + "," + amount + " " + medicineList.get(choice2 - 1).getMedicineName()});
                             System.out.println("Update successfully.");
                             medicineHandler.saveMedicine(medicineList);
                             recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescribed Status, Consultation Notes"});
-                            dispensedList.add(0, new String[]{"Doctor ID,Patient ID,Date,Prescribed Status,Medications"});
+                            dispensedList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service,Prescribed Status,Medications"});
                             CSVHandler.writeCSV("src/data/Dispensed_Record.csv", dispensedList);
                             CSVHandler.writeCSV("src/data/Appointment_Outcome_Record.csv", recordList);
                             break;
