@@ -1,2 +1,3 @@
 Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By
 P1001,Alice Brown,fever,2024-11-03,1,Approved,D001
+P1001,Alice Brown,fever,2024-11-05,1,Pending,N/A

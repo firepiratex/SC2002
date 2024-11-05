@@ -56,10 +56,10 @@ public class LoginHandler {
     }
 
     private void initialLogin(User user, Scanner scanner) {
-    	boolean length = false, upperCharacter = false, specialCharacter = false, number = false;
         System.out.println("This is your first time logging in so you need "
-                + "to change your password");
+        + "to change your password");
         while (true) {
+            boolean length = false, upperCharacter = false, specialCharacter = false, number = false;
             System.out.println("----Change Password----");
             System.out.print("Enter your new password: ");
             String password = scanner.next();

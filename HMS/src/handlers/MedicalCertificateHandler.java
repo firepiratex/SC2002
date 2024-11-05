@@ -149,4 +149,32 @@ public class MedicalCertificateHandler {
             System.out.println("Error updating certificate status: " + e.getMessage());
         }
     }
+    public static boolean viewPendingCertificates() {
+        boolean found = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            boolean isFirstLine = true;
+
+            while ((line = reader.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false;  // Skip header
+                    continue;
+                }
+
+                String[] data = line.split(",");
+                if (data.length >= 7 && "Pending".equalsIgnoreCase(data[5])) {
+                    System.out.println("Patient ID: " + data[0] + ", Name: " + data[1] + ", Reason: " + data[2] +
+                            ", Duration: " + data[4] + " days, Status: " + data[5]);
+                    found = true;
+                }
+            }
+
+            /*if (!found) {
+                System.out.println("No pending medical certificates found.");
+            }*/
+        } catch (IOException e) {
+            System.out.println("Error reading from CSV file: " + e.getMessage());
+        }
+        return found;  // Return true if found, otherwise false
+    }
 }

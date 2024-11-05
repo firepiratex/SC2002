@@ -482,7 +482,8 @@ public class AppointmentHandler implements DateAndTime {
         int choice;
         for (int i = 0; i < appointments.size(); i++) {
             String doctorID = appointments.get(i).getDoctorId();
-            if (doctor.getId().equals(doctorID)) {
+            String status = appointments.get(i).getStatus();
+            if (doctor.getId().equals(doctorID) && status.equals("Pending")) {
                 doctorSchedule.add(appointments.get(i));
             }
         }
@@ -567,10 +568,10 @@ public class AppointmentHandler implements DateAndTime {
                     System.out.print("Type of service provided: ");
                     scanner.nextLine();
                     String service = scanner.nextLine();
-                    String medication = "Pending";
+                    String prescriptedStatus = "Pending";
                     System.out.print("Consultation Notes: ");
                     String notes = scanner.nextLine();
-                    recordList.add(new String[]{schedule.getDoctorId(), schedule.getPatientId(), schedule.getDate(), service, medication, notes});
+                    recordList.add(new String[]{schedule.getDoctorId(), schedule.getPatientId(), schedule.getDate(), service, prescriptedStatus, notes});
                     System.out.println("Record successfully.");
                     break;
                 } else {
@@ -584,7 +585,7 @@ public class AppointmentHandler implements DateAndTime {
         appointmentLogList.add(new String[]{schedule.getPatientId(), schedule.getDoctorId(), schedule.getStatus(), schedule.getDate(), schedule.getTime(), schedule.getOutcome()});
         appointmentLogList.add(0, new String[]{"Patient ID,Doctor ID,Status,Date,Time,Outcome"});
         CSVHandler.writeCSV(appointmentLogFile, appointmentLogList);
-        recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescribed Medications, Consultation Notes"});
+        recordList.add(0, new String[]{"Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes"});
         CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
         saveAppointment();
     }
