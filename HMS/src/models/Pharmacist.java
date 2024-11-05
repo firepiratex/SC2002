@@ -7,14 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import management.InventoryManagement;
-import management.PrescriptionManagement;
-import management.ReplenishmentManagement;
 
 public class Pharmacist extends User {
 
     private InventoryManagement inventoryManagement;
-    private PrescriptionManagement prescriptionManagement;
-    private ReplenishmentManagement replenishmentManagement;
     private int age;
 
     public Pharmacist(String id, String name, String password, String gender, int age) {
@@ -62,40 +58,10 @@ public class Pharmacist extends User {
         }
     }
 
-    // Method to update prescription status
-    public void updatePrescriptionStatus(Scanner scanner) {
-        System.out.print("Enter prescription ID to update: ");
-        String prescriptionId = scanner.nextLine();
-        System.out.print("Enter new prescription status (Filled/Unfilled): ");
-        String status = scanner.nextLine();
-        boolean updated = prescriptionManagement.updatePrescriptionStatus(prescriptionId, status);
-        if (updated) {
-            System.out.println("Prescription status updated successfully.");
-        } else {
-            System.out.println("Failed to update prescription status.");
-        }
-    }
-
     // Method to view medication inventory
     public void viewMedicationInventory() {
         System.out.println("---- Medication Inventory ----");
         inventoryManagement.viewInventory();
-    }
-
-    // Method to submit a replenishment request
-    public void submitReplenishmentRequest(Scanner scanner) {
-        System.out.print("Enter medicine name for replenishment: ");
-        String medicineName = scanner.nextLine();
-        System.out.print("Enter quantity to request: ");
-        int quantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        boolean requestSubmitted = replenishmentManagement.submitRequest(medicineName, quantity);
-        if (requestSubmitted) {
-            System.out.println("Replenishment request submitted successfully.");
-        } else {
-            System.out.println("Failed to submit replenishment request.");
-        }
     }
 
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {

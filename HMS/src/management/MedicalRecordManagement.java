@@ -13,42 +13,39 @@ public class MedicalRecordManagement {
 
     public static void viewPatientMedicalRecord(User user) {
     	boolean recordFound = false;
-        List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
-        System.out.println("----Patient Medical Records----");
-        System.out.println("Doctor\tPatient\t\tDate\t\tType of Service\t\tPrescription Status\tConsultation Notes");
+        List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);        
+        List<String[]> tempList = new ArrayList<>();
         
-
         if (user.getRole().equals("Doctor")) {
             for (int i = 0; i < recordList.size(); i++) {
             	String[] getRecord = recordList.get(i);
                 String doctorID = getRecord[0];
-                String patientID = getRecord[1];
-                String date = getRecord[2];
-                String service = getRecord[3];
-                String status = getRecord[4];
-                String notes = getRecord[5];
                 if (doctorID.equals(user.getId())) {
-                	System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
+                	tempList.add(getRecord);
                     recordFound = true;
                 }
             }
         } else if (user.getRole().equals("Patient")) {
             for (int i = 0; i < recordList.size(); i++) {
             	String[] getRecord = recordList.get(i);
-                String doctorID = getRecord[0];
                 String patientID = getRecord[1];
-                String date = getRecord[2];
-                String service = getRecord[3];
-                String status = getRecord[4];
-                String notes = getRecord[5];
                 if (patientID.equals(user.getId())) {
-                	System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
+                	tempList.add(getRecord);
                     recordFound = true;
                 }
             }
-        } else if (user.getRole().equals("Pharmacist")) {	
-            for (int i = 0; i < recordList.size(); i++) {
-            	String[] getRecord = recordList.get(i);
+        } else if (user.getRole().equals("Pharmacist")) {
+            if (recordList.size() != 0) {
+            	recordFound = true;
+            }
+        }
+        if (recordFound == false) {
+        	System.out.println("No record available.");
+        } else {
+        	System.out.println("----Patient Medical Records----");
+            System.out.println("Doctor\tPatient\t\tDate\t\tType of Service\t\tPrescription Status\tConsultation Notes");
+        	for(int i = 0; i < tempList.size(); i++) {
+        		String[] getRecord = tempList.get(i);
                 String doctorID = getRecord[0];
                 String patientID = getRecord[1];
                 String date = getRecord[2];
@@ -56,13 +53,7 @@ public class MedicalRecordManagement {
                 String status = getRecord[4];
                 String notes = getRecord[5];
                 System.out.println(doctorID + "\t" + patientID + "\t\t" + date + "\t" + service + "\t\t\t" + status + "\t\t\t" + notes);
-                if (recordList.size() != 0) {
-                	recordFound = true;
-                }
-            }
-        }
-        if (recordFound == false) {
-        	System.out.println("No record available.");
+        	}
         }
         System.out.println("");
     }
