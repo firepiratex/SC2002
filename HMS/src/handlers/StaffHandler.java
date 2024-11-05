@@ -27,7 +27,13 @@ public class StaffHandler implements AccountSaver {
         }
         return instance;
     }
-
+    
+    public List<User> getStaffList() {
+    	List<User> newList = new ArrayList<>();
+    	newList.addAll(this.staff);
+    	return newList;
+    }
+    
     // Load staff from CSV
     private void loadStaff() {
         List<String[]> data = CSVHandler.readCSV(staffFile);

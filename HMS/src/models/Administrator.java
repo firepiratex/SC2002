@@ -64,5 +64,9 @@ public class Administrator extends User implements Manageable {
     public void manageInventory() {
         inventoryManagement.viewInventory();
     }
+    
+    public String toString() {
+    	return super.toString() + " " + getAge();
+    }
 
 }

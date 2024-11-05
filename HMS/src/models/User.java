@@ -42,8 +42,9 @@ public abstract class User {
     }
     
     public String toString() {
-    	return getId();
+    	return getId() + " " + getName() + " " + getRole() + " " + getGender();
     }
+    
     public String getGender() {
         return gender;
     }

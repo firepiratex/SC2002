@@ -14,6 +14,11 @@ public class Doctor extends User implements DateAndTime {
         super(id, name, password, "Doctor", gender);
         this.age = age;
     }
+    
+    public String toString() {
+    	return super.toString() + " " + getAge();
+    }
+
 
     public void setAvailability(Scanner scanner) {
         String date, startTime, endTime;

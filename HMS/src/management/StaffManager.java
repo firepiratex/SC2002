@@ -1,6 +1,9 @@
 package management;
 
+import java.util.List;
 import java.util.Scanner;
+
+import handlers.StaffHandler;
 import models.Administrator;
 import models.Doctor;
 import models.Pharmacist;
@@ -22,7 +25,7 @@ public class StaffManager {
             System.out.println("Manage Hospital Staff:");
             System.out.println("1. Add Staff");
             System.out.println("2. Remove Staff");
-            System.out.println("3. View All Staff");
+            System.out.println("3. View Staff");
             System.out.println("4. Back to Main Menu");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -36,7 +39,26 @@ public class StaffManager {
                     removeStaffHandler(scanner);  // Handles removing a staff member
                     break;
                 case 3:
-                    admin.viewAllStaff();  // View all staff members
+                	viewStaffMenu();
+                    System.out.print("Enter your choice (0 to exit): ");
+                    if (scanner.hasNextInt()) {
+                    	choice = scanner.nextInt();
+                    	if (choice == 0) {
+                    		return;
+                    	} else if (choice >= 1 && choice <= 3) {
+                    		if (choice == 1) {
+                    			filterByRole(scanner);
+                    		} else if (choice == 2) {
+                    			filterByGender(scanner);
+                    		} else if (choice == 3) {
+                    			filterByAge();
+                    		}
+                    	} else {
+                    		System.out.println("Invalid choice.");
+                    	}
+                    } else {
+                    	System.out.println("Invalid input.");
+                    }
                     break;
                 case 4:
                     exit = true;  // Back to the main menu
@@ -98,5 +120,138 @@ public class StaffManager {
             default:
                 return null;  // Invalid role
         }
+    }
+    
+    private void viewStaffMenu() {
+    	System.out.println("----Filter Staff----");
+    	System.out.println("1. By Role");
+        System.out.println("2. By Gender");
+        System.out.println("3. By Age");
+        System.out.println("");
+    }
+    
+    private void filterByRole(Scanner scanner) {
+    	int choice;
+    	List<User> staffList = StaffHandler.getInstance().getStaffList();
+    	System.out.println("----Role(s)----");
+    	System.out.println("1. Doctor");
+    	System.out.println("2. Pharmacist");
+    	System.out.println("3. Administrator");
+    	System.out.println("0. Exit");
+    	System.out.print("\nChoose an option: ");
+    	if (scanner.hasNextInt()) {
+    		choice = scanner.nextInt();
+    		if (choice == 0) {
+    			return;
+    		} else if (choice >= 1 && choice <= 3) {
+    			if (choice == 1) {
+    				staffList.stream()
+                    .filter(user -> user.getRole().equals("Doctor"))
+                    .forEach(user -> {
+                        Doctor doctor = (Doctor) user;
+                        System.out.println(doctor);
+                    });
+    			} else if (choice == 2) {
+    				staffList.stream()
+                    .filter(user -> user.getRole().equals("Pharmacist")) 
+                    .forEach(user -> {
+                    	Pharmacist pharmacist = (Pharmacist) user;
+                    	System.out.println(pharmacist);
+                    });
+    			} else if (choice == 3) {
+    				staffList.stream()
+                    .filter(user -> user.getRole().equals("Administrator")) 
+                    .forEach(user -> {
+                    	Administrator admin = (Administrator) user;
+                    	System.out.println(admin);
+                    });
+    			}
+    		} else {
+    			System.out.println("Invalid choice.");
+    		}
+    	} else {
+    		System.out.println("Invalid input.");
+    	}
+    }
+    
+    private void filterByGender(Scanner scanner) {
+    	int choice;
+    	List<User> staffList = StaffHandler.getInstance().getStaffList();
+    	System.out.println("----Role(s)----");
+    	System.out.println("1. Male");
+    	System.out.println("2. Female");
+    	System.out.println("0. Exit");
+    	System.out.print("\nChoose an option: ");
+    	if (scanner.hasNextInt()) {
+    		choice = scanner.nextInt();
+    		if (choice == 0) {
+    			return;
+    		} else if (choice >= 1 && choice <= 2) {
+    			if (choice == 1) {
+    				staffList.stream()
+                    .filter(user -> user.getGender().equals("Male"))
+                    .forEach(user -> {
+                    	if (user.getRole().equals("Doctor")) {
+                    		Doctor doctor = (Doctor) user;
+                            System.out.println(doctor);
+                    	} else if (user.getRole().equals("Pharmacist")) {
+                    		Pharmacist pharmacist = (Pharmacist) user;
+                        	System.out.println(pharmacist);
+                    	} else {
+                    		Administrator admin = (Administrator) user;
+                        	System.out.println(admin);
+                    	}
+                    });
+    			} else if (choice == 2) {
+    				staffList.stream()
+                    .filter(user -> user.getGender().equals("Female"))
+                    .forEach(user -> {
+                    	if (user.getRole().equals("Doctor")) {
+                    		Doctor doctor = (Doctor) user;
+                            System.out.println(doctor);
+                    	} else if (user.getRole().equals("Pharmacist")) {
+                    		Pharmacist pharmacist = (Pharmacist) user;
+                        	System.out.println(pharmacist);
+                    	} else {
+                    		Administrator admin = (Administrator) user;
+                        	System.out.println(admin);
+                    	}
+                    });
+    			}
+    		} else {
+    			System.out.println("Invalid choice.");
+    		}
+    	} else {
+    		System.out.println("Invalid input.");
+    	}
+    }
+    
+    private void filterByAge() {
+    	int choice;
+    	List<User> staffList = StaffHandler.getInstance().getStaffList();
+    	staffList.stream()
+        .sorted((s1, s2) -> {
+            int age1 = 0;
+            int age2 = 0;
+
+            if (s1 instanceof Doctor) {
+                age1 = ((Doctor) s1).getAge();
+            } else if (s1 instanceof Pharmacist) {
+                age1 = ((Pharmacist) s1).getAge();
+            } else if (s1 instanceof Administrator) {
+                age1 = ((Administrator) s1).getAge();
+            }
+
+            if (s2 instanceof Doctor) {
+                age2 = ((Doctor) s2).getAge();
+            } else if (s2 instanceof Pharmacist) {
+                age2 = ((Pharmacist) s2).getAge();
+            } else if (s2 instanceof Administrator) {
+                age2 = ((Administrator) s2).getAge();
+            }
+
+            return Integer.compare(age1, age2);
+        })
+        .forEach(System.out::println);
     }
 }

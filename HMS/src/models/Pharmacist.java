@@ -31,6 +31,10 @@ public class Pharmacist extends User {
         }
     }
 
+    public String toString() {
+    	return super.toString() + " " + getAge();
+    }
+    
     @Override
     public void displayMenu() {
         System.out.println("Pharmacist Menu:");
