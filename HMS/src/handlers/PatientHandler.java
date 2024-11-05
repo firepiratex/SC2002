@@ -25,7 +25,7 @@ public class PatientHandler implements AccountSaver {
 
     public void displayPatient() {
         for (Patient eachPatient : patients) {
-            System.out.print(eachPatient + " ");
+            System.out.print(eachPatient.getId() + " ");
         }
         System.out.println();
     }
