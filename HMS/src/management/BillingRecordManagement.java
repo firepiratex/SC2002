@@ -26,11 +26,40 @@ public class BillingRecordManagement {
         }
         System.out.println("Displaying past appointment outcomes for Patient ID: " + patient.getId());
         for(int i = 0; i < patientDispensedList.size(); i++) {
-        	System.out.println(Arrays.toString(patientDispensedList.get(i)));
-        }
-        System.out.println("\n----Manage Appointment Outcome----");
-        for(int i = 0; i < patientDispensedList.size(); i++) {
-        	System.out.println((i+1) + ". " + Arrays.toString(patientDispensedList.get(i)));
+        	String[] getRecord = patientDispensedList.get(i);
+			String appointmentDate = getRecord[2];
+			String typeOfService = getRecord[3];
+			String paymentStatus = getRecord[4];
+			String[] parts = getRecord[5].split(" ");
+			String quantity = parts[0];
+			String medicine = parts[1];
+			double totalBillCost = 0.0;
+			if (paymentStatus.equals("Dispensed")) {
+				paymentStatus = "Unpaid";
+			}
+			System.out.println("========================================================================");
+
+            System.out.println((i+1) + ". Appointment on: " + appointmentDate + " with the type of service: " + typeOfService);
+            System.out.println("Payment Status: " + paymentStatus);
+
+            System.out.println("Medicine and Quantity List:");
+            System.out.println("Medicine: " + medicine + ", Quantity: " + quantity);
+            
+            double costPerUnit = 0.0;
+            if (medicine.equalsIgnoreCase("Paracetamol")) {
+                costPerUnit = 2.0; // $2 per unit for Paracetamol
+
+            } else if (medicine.equalsIgnoreCase("Ibuprofen")) {
+                costPerUnit = 5.0; // $5 per unit for Ibuprofen
+            } else if (medicine.equalsIgnoreCase("Amoxicillin")) {
+                costPerUnit = 4.0; // $4 per unit for Amoxicillin
+            }
+            totalBillCost += Integer.valueOf(quantity) * costPerUnit;
+            // Print the final bill cost
+            System.out.printf("Total Medicine Bill Cost: $%.2f%n", totalBillCost);
+
+            double totalBillWithConsultation = totalBillCost + 20;
+            System.out.printf("Total Bill Cost with Consultation Fee: $%.2f%n", totalBillWithConsultation);
         }
         while(true) {
         	System.out.print("Choose an appointment to manage (0 to exit): ");
@@ -99,7 +128,7 @@ public class BillingRecordManagement {
         scanner.nextLine();
     	System.out.printf("Your total bill is $%.2f.%n", totalBillWithConsultation);
         System.out.println("Dear " + patient.getName() + ", You have an outstanding bill of $" + totalBillWithConsultation);
-        System.out.print("Please enter the amount you wish to pay or type '0' if you do not wish to pay at this moment");
+        System.out.print("Please enter the amount you wish to pay or type '0' if you do not wish to pay at this moment: ");
 
         try {
             double paymentAmount = Double.parseDouble(scanner.nextLine().trim());
