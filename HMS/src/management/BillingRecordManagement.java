@@ -65,7 +65,7 @@ public class BillingRecordManagement {
                     } else if (medicine.equalsIgnoreCase("Ibuprofen")) {
                         costPerUnit = 5.0; // $5 per unit for Ibuprofen
                     } else if (medicine.equalsIgnoreCase("Amoxicillin")) {
-                        costPerUnit = 4.0; // $5 per unit for Amoxicillin
+                        costPerUnit = 4.0; // $4 per unit for Amoxicillin
                     }
                     totalBillCost += Integer.valueOf(quantity) * costPerUnit;
                     // Print the final bill cost
@@ -111,7 +111,6 @@ public class BillingRecordManagement {
                 System.out.println("Processing payment...");
                 System.out.printf("Payment of $%.2f has been successfully completed. Your change is $%.2f.%n", paymentAmount, change);
                 record[4] = "Paid"; // Update the payment status to "Paid"
-                //record = new String[] {record[0] + "," + record[1] + "," + record[2] + "," + record[3] + "," + record[4] + "," + record[5]};
                 return record;
             } else {
                 System.out.println("Invalid payment amount. Please enter a valid amount.");
