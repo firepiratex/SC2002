@@ -1,10 +1,14 @@
 package management;
 
 import handlers.CSVHandler;
+import handlers.PatientHandler;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import models.Patient;
 import models.User;
 
 public class MedicalRecordManagement {
@@ -87,9 +91,15 @@ public class MedicalRecordManagement {
                     for (int i = 0; i < recordList.size(); i++) {
                         String recordListString = Arrays.toString(recordList.get(i));
                         if (recordListString.equals(doctorPatientRecordString)) {
-                            parts = recordList.get(i);
+                        	parts = recordList.get(i);
+                        	System.out.print("New Blood Type (blank if no changes): ");
+                            scanner.nextLine();
+                            String bloodType = scanner.nextLine();
+                            if (!(bloodType.equals(""))) {
+                            	Patient patient = PatientHandler.getInstance().findPatientById(parts[1]);
+                            	patient.setBloodType(bloodType);
+                            }
                             System.out.print("Type of service provided: ");
-                            scanner.nextLine(); // Consume newline
                             String service = scanner.nextLine();
 
                             System.out.print("Consultation Notes: ");

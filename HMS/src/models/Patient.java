@@ -36,6 +36,10 @@ public class Patient extends User {
 		return bloodType;
 	}
 
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
+	}
+
 	public void updatePersonalInfo(String email) {
         if (isValid(email)) {
             this.contactInfo = email;
