@@ -1,14 +1,9 @@
 package management;
 
 import handlers.CSVHandler;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import models.Patient;
 
@@ -16,27 +11,29 @@ public class BillingRecordManagement {
 
     private static final String dispensedRecord = "./src/data/Dispensed_Record.csv";
 
-    public static void displayPastOutcomes(Patient patient) {
-        Scanner scanner = new Scanner(System.in);
+    public static void displayPastOutcomes(Scanner scanner, Patient patient) {
     	int choice;
     	List<String[]> dispensedList = CSVHandler.readCSV(dispensedRecord);
         List<String[]> patientDispensedList = new ArrayList<>();
-        // Display past outcomes for a specific patient
         for(int i = 0; i < dispensedList.size(); i++) {
         	if (dispensedList.get(i)[1].equals(patient.getId())) {
         		patientDispensedList.add(dispensedList.get(i));
         	}
         }
+        if (patientDispensedList.size() == 0) {
+        	System.out.println("You have no past appointment outcome record.\n");
+        	return;
+        }
         System.out.println("Displaying past appointment outcomes for Patient ID: " + patient.getId());
         for(int i = 0; i < patientDispensedList.size(); i++) {
         	System.out.println(Arrays.toString(patientDispensedList.get(i)));
         }
-        System.out.println("----");
+        System.out.println("\n----Appointment Outcome----\n");
         for(int i = 0; i < patientDispensedList.size(); i++) {
         	System.out.println((i+1) + ". " + Arrays.toString(patientDispensedList.get(i)));
         }
         while(true) {
-        	System.out.println("Enter your choice (0 to exit): ");
+        	System.out.println("Choose an appointment to manage (0 to exit): ");
         	if (scanner.hasNextInt()) {
         		choice = scanner.nextInt();
         		if (choice == 0) {
