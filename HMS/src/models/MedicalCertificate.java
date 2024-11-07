@@ -1,6 +1,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MedicalCertificate {
     private String patientId;
@@ -23,10 +24,15 @@ public class MedicalCertificate {
     }
     
     public MedicalCertificate(String patientId, String patientName, String reason, String date, int day, String status, String outcome) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     	this.patientId = patientId;
         this.patientName = patientName;
         this.reason = reason;
-        this.issueDate = LocalDate.parse(date);
+        try {
+        	this.issueDate = LocalDate.parse(date);
+        } catch (Exception e) {
+        	this.issueDate = LocalDate.parse(date, formatter);
+        }
         this.duration = day;
         this.status = status;
         this.approvedBy = outcome;

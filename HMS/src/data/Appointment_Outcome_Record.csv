@@ -1,4 +1,2 @@
-Doctor ID,Patient ID,Date,Type of Service, Prescribed Status, Consultation Notes
-D001,P1001,08/11/2024,Consultation,Dispensed,Fever
-D001,P1001,08/11/2024,Mild Flu,Dispensed,Mild Flu and fever
-D001,P1001,08/11/2024,Dengue,Dispensed,High fever of 39
+Doctor ID,Patient ID,Date,Type of Service, Prescription Status, Consultation Notes
+D001,P1001,8/11/2024,Blood Test,Dispensed,Waiting for Result

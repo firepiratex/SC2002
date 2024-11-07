@@ -2,6 +2,7 @@ package handlers;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +101,8 @@ public class MedicalCertificateHandler {
     
 
     public static void viewAllCertificates() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+    	try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             boolean isFirstLine = true;
             boolean found = false;
@@ -118,8 +120,11 @@ public class MedicalCertificateHandler {
                             data[0], data[1], data[2], Integer.parseInt(data[4])
                     );
                     certificate.setStatus(data[5]);
-                    certificate.setIssueDate(LocalDate.parse(data[3]));
-
+                    try {
+                    	certificate.setIssueDate(LocalDate.parse(data[3]));
+                    } catch (Exception e) {
+                    	certificate.setIssueDate(LocalDate.parse(data[3], formatter));
+                    }
                     System.out.println("Patient ID: " + data[0] + ", Name: " + data[1] + ", Reason: " + data[2] + 
                             ", Duration: " + data[4] + " days, Status: " + data[5] + 
                             ", Approved/Rejected By: " + (data.length > 6 ? data[6] : "N/A"));
