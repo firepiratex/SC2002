@@ -9,17 +9,26 @@ import models.Administrator;
 import models.Doctor;
 import models.Pharmacist;
 import models.User;
-
+/**
+ * This class provides functionality for administrators to manage hospital staff,
+ * including adding, removing, viewing, and filtering staff by role, gender, and age.
+ */
 public class StaffManager {
     
     private Administrator admin;  // Administrator who manages staff
-
-    // Constructor for StaffManager
+    /**
+     * Constructor for StaffManager.
+     *
+     * @param admin the administrator responsible for managing staff
+     */
     public StaffManager(Administrator admin) {
         this.admin = admin;
     }
-
-    // Manage staff menu
+    /**
+     * Displays the management menu for staff operations and handles user input.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void manageStaff(Scanner scanner) {
         boolean exit = false;
         while (!exit) {
@@ -69,8 +78,11 @@ public class StaffManager {
             }
         }
     }
-
-    // Handles adding a staff member
+    /**
+     * Prompts for and adds a new staff member.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void addStaffHandler(Scanner scanner) {
         String id = promptForInput("Enter staff ID: ", scanner);
         String name = promptForInput("Enter staff name: ", scanner);
@@ -87,28 +99,50 @@ public class StaffManager {
             System.out.println("Invalid role! Please enter Doctor, Pharmacist, or Administrator.");
         }
     }
-
-    // Handles removing a staff member
+    /**
+     * Prompts for and removes an existing staff member by ID.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void removeStaffHandler(Scanner scanner) {
         String staffId = promptForInput("Enter staff ID to remove: ", scanner);
         admin.removeStaff(staffId);
     }
-
-    // Helper method to prompt for string input
+    /**
+     * Helper method to prompt for string input.
+     *
+     * @param prompt the prompt message
+     * @param scanner a Scanner object for user input
+     * @return the input string
+     */
     private String promptForInput(String prompt, Scanner scanner) {
         System.out.print(prompt);
         return scanner.nextLine();
     }
-
-    // Helper method to prompt for integer input (age)
+    /**
+     * Helper method to prompt for integer input (age).
+     *
+     * @param prompt the prompt message
+     * @param scanner a Scanner object for user input
+     * @return the input integer
+     */
     private int promptForAge(String prompt, Scanner scanner) {
         System.out.print(prompt);
         int age = scanner.nextInt();
         scanner.nextLine();  // Consume newline
         return age;
     }
-
-    // Helper method to create staff based on role
+    /**
+     * Helper method to create a staff member based on role.
+     *
+     * @param id the staff ID
+     * @param name the staff name
+     * @param password the staff password
+     * @param gender the staff gender
+     * @param age the staff age
+     * @param role the staff role
+     * @return the created User object, or null if the role is invalid
+     */
     private User createStaffByRole(String id, String name, String password, String gender, int age, String role) {
         switch (role) {
             case "Doctor":
@@ -121,7 +155,9 @@ public class StaffManager {
                 return null;  // Invalid role
         }
     }
-    
+    /**
+     * Displays the menu for filtering staff.
+     */
     private void viewStaffMenu() {
     	System.out.println("----Filter Staff----");
     	System.out.println("1. By Role");
@@ -129,7 +165,11 @@ public class StaffManager {
         System.out.println("3. By Age");
         System.out.println("");
     }
-    
+    /**
+     * Filters and displays staff by role.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void filterByRole(Scanner scanner) {
     	int choice;
     	List<User> staffList = StaffHandler.getInstance().getStaffList();
@@ -173,7 +213,11 @@ public class StaffManager {
     		System.out.println("Invalid input.");
     	}
     }
-    
+    /**
+     * Filters and displays staff by gender.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void filterByGender(Scanner scanner) {
     	int choice;
     	List<User> staffList = StaffHandler.getInstance().getStaffList();
@@ -225,9 +269,10 @@ public class StaffManager {
     		System.out.println("Invalid input.");
     	}
     }
-    
+    /**
+     * Filters and displays staff by age in ascending order.
+     */
     private void filterByAge() {
-    	int choice;
     	List<User> staffList = StaffHandler.getInstance().getStaffList();
     	staffList.stream()
         .sorted((s1, s2) -> {

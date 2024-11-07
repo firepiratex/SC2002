@@ -10,11 +10,19 @@ import java.util.Scanner;
 
 import models.Patient;
 import models.User;
-
+/**
+ * Provides functionality to view and update patient medical records.
+ * This class handles operations such as displaying and modifying patient records.
+ */
 public class MedicalRecordManagement {
 
     private static final String appointmentOutcomeFile = "./src/data/Appointment_Outcome_Record.csv";
-
+    /**
+     * Displays the medical records for a given user. The view changes depending on whether
+     * the user is a doctor, patient, or pharmacist.
+     *
+     * @param user the User whose role determines which records to display
+     */
     public static void viewPatientMedicalRecord(User user) {
     	boolean recordFound = false;
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);        
@@ -61,7 +69,12 @@ public class MedicalRecordManagement {
         }
         System.out.println("");
     }
-
+    /**
+     * Allows a doctor to update the medical records of their patients.
+     *
+     * @param doctor  the User object representing the doctor
+     * @param scanner a Scanner object for user input
+     */
     public static void updatePatientMedicalRecord(User doctor, Scanner scanner) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
         List<String[]> doctorPatientRecord = new ArrayList<>();
@@ -122,6 +135,12 @@ public class MedicalRecordManagement {
             }
         }
     }
+    /**
+     * Validates if the provided medication is one of the allowed types.
+     *
+     * @param medication the name of the medication to validate
+     * @return true if the medication is valid, false otherwise
+     */
     private static boolean isValidMedication(String medication) {
         return medication.equalsIgnoreCase("Paracetamol") ||
                medication.equalsIgnoreCase("Ibuprofen") ||

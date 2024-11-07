@@ -14,9 +14,17 @@ import models.Doctor;
 import models.Patient;
 import models.Pharmacist;
 import models.User;
-
+/**
+ * Main entry point for the hospital management application.
+ * This class handles user login and provides user-specific functionality based on their roles.
+ */
 public class HospitalApp {
-
+	/**
+     * Main method to start the hospital application. Continuously prompts for user login and
+     * redirects to user-specific functionality if login is successful.
+     *
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
         while (true) {
             LoginHandler loginHandler = new LoginHandler();
@@ -29,7 +37,11 @@ public class HospitalApp {
             }
         }
     }
-
+    /**
+     * Handles user input and actions based on the user's role.
+     *
+     * @param user the logged-in user
+     */
     public static void handleUserInput(User user) {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
@@ -73,8 +85,12 @@ public class HospitalApp {
             }
         }
     }
-
-    // Implement patient-specific actions
+    /**
+     * Handles actions specific to patients.
+     *
+     * @param patient the logged-in patient
+     * @param choice  the option selected by the patient
+     */
     public static void handlePatientActions(Patient patient, int choice) {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
@@ -149,7 +165,12 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
         }
     }
-
+    /**
+     * Handles actions specific to doctors.
+     *
+     * @param doctor the logged-in doctor
+     * @param choice the option selected by the doctor
+     */
     public static void handleDoctorActions(Doctor doctor, int choice) {
         Scanner sc = new Scanner(System.in);
         switch (choice) {
@@ -188,8 +209,12 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
         }
     }
-
-    // Implement pharmacist-specific actions
+    /**
+     * Handles actions specific to pharmacists.
+     *
+     * @param pharmacist the logged-in pharmacist
+     * @param choice     the option selected by the pharmacist
+     */
     public static void handlePharmacistActions(Pharmacist pharmacist, int choice) {
         Scanner sc = new Scanner(System.in);
         MedicineHandler medicineHandler = new MedicineHandler();
@@ -214,7 +239,13 @@ public class HospitalApp {
                 System.out.println("Invalid option. Please try again.");
         }
     }
-
+    /**
+     * Handles actions specific to administrators.
+     *
+     * @param admin the logged-in administrator
+     * @param choice the option selected by the administrator
+     * @param sc     a {@code Scanner} object for user input
+     */
     public static void handleAdminActions(Administrator admin, int choice, Scanner sc) {
         StaffManager staffManager = new StaffManager(admin);
         InventoryManagement inventoryManagement = new InventoryManagement();

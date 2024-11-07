@@ -9,19 +9,25 @@ import java.util.List;
 import java.util.Scanner;
 import models.Medicine;
 import models.User;
-
+/**
+ * Provides functionality for managing the inventory of medicines, including viewing,
+ * updating stock levels and handling replenishment requests.
+ */
 public class InventoryManagement {
 
     private final List<Medicine> medicineList;
     private final MedicineHandler medicineHandler;
-
-    // Constructor that loads the inventory using the handler
+    /**
+     * Constructor that initializes the InventoryManagement class by loading the current
+     * inventory using MedicineHandler.
+     */
     public InventoryManagement() {
         this.medicineHandler = new MedicineHandler();
         this.medicineList = medicineHandler.loadMedicine();
     }
-
-    // View the current inventory
+    /**
+     * Displays the current inventory of medicines.
+     */
     public void viewInventory() {
         System.out.println("---- Medicine Inventory ----");
         for (Medicine eachMedicine : medicineList) {
@@ -33,7 +39,11 @@ public class InventoryManagement {
         }
         return;
     }
-
+    /**
+     * Displays the inventory management menu and handles user input for various options.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void inventoryMenu(Scanner scanner) {
         int choice;
         while (true) {
@@ -68,8 +78,11 @@ public class InventoryManagement {
             }
         }
     }
-
-    // Manage the inventory (add or take medicine)
+    /**
+     * Manages the inventory, allowing the user to add or take medicine.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void manageInventory(Scanner scanner) {
         int choice;
         while (true) {
@@ -101,8 +114,11 @@ public class InventoryManagement {
             }
         }
     }
-
-    // Add medicine to the inventory
+    /**
+     * Adds a specified quantity of a medicine to the inventory.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void addMedicine(Scanner scanner) {
         System.out.println("---- Add Medicine ----");
         System.out.print("Enter medicine name: ");
@@ -121,8 +137,11 @@ public class InventoryManagement {
         }
         System.out.println("Medicine not found.");
     }
-
-    // Take medicine from the inventory
+    /**
+     * Takes a specified quantity of a medicine from the inventory.
+     *
+     * @param scanner a Scanner object for user input
+     */
     private void takeMedicine(Scanner scanner) {
         System.out.println("---- Take Medicine ----");
         System.out.print("Enter medicine name: ");
@@ -145,8 +164,11 @@ public class InventoryManagement {
         }
         System.out.println("Medicine not found.");
     }
-
-    // Update the stock level alert
+    /**
+     * Updates the stock level alert for a specified medicine.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void manageStockLevelAlert(Scanner scanner) {
         System.out.println("---- Update Stock Level Alert ----");
 
@@ -174,7 +196,12 @@ public class InventoryManagement {
             System.out.println("Invalid choice.");
         }
     }
-
+    /**
+     * Submits a replenishment request for low-stock medicines.
+     *
+     * @param pharmacist the user submitting the request
+     * @param scanner    a Scanner object for user input
+     */
     public void submitReplenishmentRequest(User pharmacist, Scanner scanner) {
         List<String[]> requestList = CSVHandler.readCSV("src/data/Replenishment_Request.csv");
         List<String> lowMedicineStock = new ArrayList<>();
@@ -243,7 +270,11 @@ public class InventoryManagement {
             }
         }
     }
-
+    /**
+     * Manages the list of replenishment requests, by approving or rejecting.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void manageReplenishmentRequest(Scanner scanner) {
         List<String[]> requestList = CSVHandler.readCSV("./src/data/Replenishment_Request.csv");
         int choice, option;

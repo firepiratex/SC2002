@@ -8,7 +8,10 @@ import java.util.*;
 import models.Appointment;
 import models.Patient;
 import models.User;
-
+/**
+ * Handles the management of appointments in the system, including scheduling, rescheduling, viewing, recording,
+ * and canceling appointments. This class implements the DateAndTime interface for date validation.
+ */
 public class AppointmentHandler implements DateAndTime {
 
     private static AppointmentHandler instance;
@@ -24,14 +27,18 @@ public class AppointmentHandler implements DateAndTime {
     private String time;
     private String date;
     private int choice;
-    
+    /**
+     * Private constructor to enforce singleton pattern and initialize appointments and appointment logs.
+     */
     private AppointmentHandler() {
         this.timeList = new ArrayList<>();
         this.appointments = new ArrayList<>();
         this.appointmentLogList = CSVHandler.readCSV(appointmentLogFile);
         loadAppointment();
     }
-
+    /**
+     * Loads appointments from the CSV file and store the list of appointments as Appointment object.
+     */
     private void loadAppointment() {
         List<String[]> appointmentSchedule = CSVHandler.readCSV(appointmentFile);
         for (int i = 0; i < appointmentSchedule.size(); i++) {
@@ -48,7 +55,9 @@ public class AppointmentHandler implements DateAndTime {
             appointments.add(appointment);
         }
     }
-
+    /**
+     * Saves the current state of appointments to a CSV file, sorted by date and time.
+     */
     private void saveAppointment() {
         List<String[]> data = new ArrayList<>();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -78,7 +87,12 @@ public class AppointmentHandler implements DateAndTime {
         data.add(0, new String[]{"Patient ID,Doctor ID,Status,Date,Time,Outcome"});
         CSVHandler.writeCSV(appointmentFile, data);
     }
-
+    /**
+     * Returns a singleton instance of AppointmentHandler. 
+     * Initializing the default startTime and endTime, also clearing the timeList list too.
+     *
+     * @return the singleton instance
+     */
     public static AppointmentHandler getInstance() {
         if (instance == null) {
             instance = new AppointmentHandler();
@@ -89,7 +103,12 @@ public class AppointmentHandler implements DateAndTime {
         instance.appointmentLogList = CSVHandler.readCSV(appointmentLogFile);
         return instance;
     }
-
+    /**
+     * Displays available appointment slots for a given doctor on a specified date.
+     *
+     * @param doctor the doctor whose availability is being checked
+     * @param scanner a Scanner object for user input
+     */
     public void viewAvailableAppointment(User doctor, Scanner scanner) {
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
         List<String> appointmentList = new ArrayList<>();
@@ -136,7 +155,11 @@ public class AppointmentHandler implements DateAndTime {
         }
         System.out.println("\n");
     }
-
+    /**
+     * Displays the personal schedule for a given doctor, showing confirmed appointments.
+     *
+     * @param doctor the doctor whose schedule is to be viewed
+     */
     public void viewPersonalSchedule(User doctor) {
         List<Appointment> doctorSchedule = new ArrayList<>();
         for (int i = 0; i < appointments.size(); i++) {
@@ -155,7 +178,11 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-
+    /**
+     * Displays all upcoming appointments for a given doctor.
+     *
+     * @param doctor the doctor whose upcoming appointments are to be viewed
+     */
     public void viewUpcomingAppointment(User doctor) {
         List<Appointment> doctorSchedule = new ArrayList<>();
         for (int i = 0; i < appointments.size(); i++) {
@@ -173,7 +200,9 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-
+    /**
+     * Displays all appointments in the system.
+     */
     public void viewAllAppointment() {
         System.out.println("\n----All Appointments----");
         if (appointments.size() == 0) {
@@ -185,7 +214,11 @@ public class AppointmentHandler implements DateAndTime {
         }
         System.out.println("");
     }
-    
+    /**
+     * Displays scheduled appointments for a given patient.
+     *
+     * @param patient the patient whose scheduled appointments are to be viewed
+     */
     public void viewScheduledAppointment(Patient patient) {
     	List<Appointment> patientAppointmentList = new ArrayList<>();
     	for(int i = 0; i < appointments.size(); i++) {
@@ -203,7 +236,13 @@ public class AppointmentHandler implements DateAndTime {
         }  	
     	System.out.println("");
     }
-
+    /**
+     * Sets a new appointment for a doctor and patient on a chosen date and time.
+     *
+     * @param doctor   the doctor for the appointment
+     * @param patient  the patient for the appointment
+     * @param scanner  a Scanner object for user input
+     */
     public void setAppointment(User doctor, Patient patient, Scanner scanner) {
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
         List<String> appointmentList = new ArrayList<>();
@@ -282,7 +321,14 @@ public class AppointmentHandler implements DateAndTime {
         appointments.add(new Appointment(patient.getId(), doctor.getId(), "Pending", date, time, "-"));
         saveAppointment();
     }
-
+    /**
+     * Sets a new appointment and removing the old appointment for a doctor and patient on a chosen date and time.
+     *
+     * @param doctor   				the doctor for the appointment
+     * @param patient  				the patient for the appointment
+     * @param scanner  				a Scanner object for user input
+     * @param existingAppointment 	the old Appointment object that will be changed
+     */
     public void setAppointment(User doctor, Patient patient, Scanner scanner, Appointment existingAppointment) {
         String[] row;
         List<String[]> doctorSchedule = CSVHandler.readCSV(doctorFile);
@@ -368,7 +414,12 @@ public class AppointmentHandler implements DateAndTime {
         CSVHandler.writeCSV(appointmentLogFile, appointmentLogList);
         saveAppointment();
     }
-
+    /**
+     * Reschedules an existing appointment for a patient with a chosen doctor.
+     *
+     * @param patient the patient whose appointment is to be rescheduled
+     * @param scanner a Scanner object for user input
+     */
     public void rescheduleAppointment(Patient patient, Scanner scanner) {
         int choice, choice2, size;
         User doctor;
@@ -425,7 +476,12 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-
+    /**
+     * Cancels an existing appointment for a patient.
+     *
+     * @param patient the patient whose appointment is to be canceled
+     * @param scanner a Scanner object for user input
+     */
     public void cancelAppointment(Patient patient, Scanner scanner) {
         int choice;
         String doctorID, status;
@@ -474,7 +530,12 @@ public class AppointmentHandler implements DateAndTime {
             }
         }
     }
-
+    /**
+     * Manages pending appointments for a doctor by allowing them to accept or decline them.
+     *
+     * @param scanner a Scanner object for user input
+     * @param doctor  the doctor managing their appointments
+     */
     public void manageAppointment(Scanner scanner, User doctor) {
         List<String[]> appointmentLogList = CSVHandler.readCSV(appointmentLogFile);
         List<Appointment> doctorSchedule = new ArrayList<>();
@@ -533,7 +594,12 @@ public class AppointmentHandler implements DateAndTime {
         CSVHandler.writeCSV(appointmentLogFile, appointmentLogList);
         saveAppointment();
     }
-
+    /**
+     * Records the outcome of a completed appointment for a doctor.
+     *
+     * @param scanner a Scanner object for user input
+     * @param doctor  the doctor recording the appointment outcome
+     */
     public void recordAppointmentOutcome(Scanner scanner, User doctor) {
         List<String[]> recordList = CSVHandler.readCSV(appointmentOutcomeFile);
         List<Appointment> doctorSchedule = new ArrayList<>();
@@ -589,7 +655,12 @@ public class AppointmentHandler implements DateAndTime {
         CSVHandler.writeCSV(appointmentOutcomeFile, recordList);
         saveAppointment();
     }
-
+    /**
+     * Saves the availability of a doctor to a CSV file and checking if it clashes with the current schedule.
+     *
+     * @param line an array representing the doctor's new availability data
+     * @return true if saved successfully, else false if there is a time conflict
+     */
     public boolean saveDoctorAvailability(String[] line) {
         Boolean duplicateTime = false;
         List<String[]> data = CSVHandler.readCSV(doctorFile);
@@ -625,7 +696,12 @@ public class AppointmentHandler implements DateAndTime {
             return true;
         }
     }
-
+    /**
+     * Retrieves a list of appointments for a specific patient by their ID.
+     *
+     * @param patientId the ID of the patient
+     * @return a list of Appointment objects for the patient
+     */
     public List<Appointment> getAppointmentsForPatient(String patientId) {
         List<Appointment> patientAppointments = new ArrayList<>();
         

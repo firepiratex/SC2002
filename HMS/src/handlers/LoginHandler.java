@@ -3,9 +3,16 @@ package handlers;
 import java.util.Scanner;
 import models.Patient;
 import models.User;
-
+/**
+ * Handles user login and authentication for the hospital management system.
+ * Provides methods to authenticate users and facilitate initial password changes.
+ */
 public class LoginHandler {
-
+	/**
+     * Initiates the login process for a user. Authenticates the user and handles initial password change if necessary.
+     * 
+     * @return the authenticated User object if login is successful; null otherwise
+     */
     public User login() {
         PatientHandler.getInstance().displayPatient();
         StaffHandler.getInstance().displayStaff();
@@ -39,8 +46,13 @@ public class LoginHandler {
         }
         return user;
     }
-
-
+    /**
+     * Authenticates a user based on their ID and password.
+     *
+     * @param id       the user ID
+     * @param password the user password
+     * @return the User object if authentication is successful, null otherwise
+     */
     private User authenticate(String id, String password) {
         Patient patient = PatientHandler.getInstance().findPatientById(id);
         if (patient != null && patient.validatePassword(password)) {
@@ -54,7 +66,12 @@ public class LoginHandler {
 
         return null;
     }
-
+    /**
+     * Handles the initial login process where the user is required to change their password.
+     *
+     * @param user     the user who is logging in for the first time
+     * @param scanner  a Scanner object for user input
+     */
     private void initialLogin(User user, Scanner scanner) {
         System.out.println("This is your first time logging in so you need "
         + "to change your password");

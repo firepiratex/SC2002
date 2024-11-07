@@ -6,7 +6,10 @@ import models.Administrator;
 import models.Doctor;
 import models.Pharmacist;
 import models.User;
-
+/**
+ * Handles operations related to managing staff data, such as loading, saving, adding, and removing staff members.
+ * Implements the AccountSaver interface to facilitate account saving functionality.
+ */
 public class StaffHandler implements AccountSaver {
 
     private static StaffHandler instance;
@@ -14,27 +17,39 @@ public class StaffHandler implements AccountSaver {
     private List<User> doctor;
     private final String staffFile = "./src/data/Staff_List.csv";
     private final String staffTXTFile = "./src/data/Staff_Account.txt";
-
+    /**
+     * Private constructor that initializes the StaffHandler and loads staff data.
+     */
     private StaffHandler() {
         this.staff = new ArrayList<>();
         this.doctor = new ArrayList<>();
         loadStaff();  // Load staff data when initializing
     }
-
+    /**
+     * Returns the singleton instance of StaffHandler.
+     *
+     * @return the singleton instance
+     */
     public static StaffHandler getInstance() {
         if (instance == null) {
             instance = new StaffHandler();
         }
         return instance;
     }
-    
+    /**
+     * Retrieves a list of all staff members.
+     *
+     * @return a list of all staff members
+     */
     public List<User> getStaffList() {
     	List<User> newList = new ArrayList<>();
     	newList.addAll(this.staff);
     	return newList;
     }
-    
-    // Load staff from CSV
+    /**
+     * Loads staff data from the CSV file and the text file.
+     * Initializes the {@code staff} and {@code doctor} lists.
+     */
     private void loadStaff() {
         List<String[]> data = CSVHandler.readCSV(staffFile);
         List<String[]> data2 = TextHandler.readTXT(staffTXTFile);
@@ -72,7 +87,10 @@ public class StaffHandler implements AccountSaver {
             }
         }
     }
-
+    /**
+     * Saves the account details of all staff members to the text file.
+     */
+    @Override
     public void saveAccount() {
         List<String[]> data = new ArrayList<>();
         for (User staff : staff) {
@@ -81,7 +99,9 @@ public class StaffHandler implements AccountSaver {
         }
         TextHandler.writeTXT(staffTXTFile, data);
     }
-
+    /**
+     * Saves the current staff list to the CSV file.
+     */
     public void saveStaffsList() {
         List<String[]> data = new ArrayList<>();
         data.add(new String[]{"Staff ID", "Name", "Role", "Gender", "Age"});
@@ -105,17 +125,29 @@ public class StaffHandler implements AccountSaver {
         saveAccount();
         CSVHandler.writeCSV(staffFile, data);
     }
-
+    /**
+     * Adds a new staff member to the list and updates the staff data file.
+     *
+     * @param newStaff the new staff member to add
+     */
     public void addStaff(User newStaff) {
         staff.add(newStaff);
         saveStaffsList();
     }
-
+    /**
+     * Removes a staff member from the list based on their ID.
+     *
+     * @param staffId the ID of the staff member to remove
+     */
     public void removeStaff(String staffId) {
         staff.removeIf(user -> user.getId().equals(staffId));
     }
-
-    // Find a staff member by ID
+    /**
+     * Finds and returns a staff member by their ID.
+     *
+     * @param id the ID of the staff member to find
+     * @return the User object if found, or null if not found
+     */
     public User findStaffById(String id) {
         for (User user : staff) {
             if (user.getId().equals(id)) {
@@ -124,15 +156,20 @@ public class StaffHandler implements AccountSaver {
         }
         return null;
     }
-
-    // Display all staff members
+    /**
+     * Displays the IDs of all staff members in the system.
+     */
     public void displayStaff() {
         for (User user : staff) {
             System.out.print(user.getId() + " ");
         }
         System.out.println();
     }
-
+    /**
+     * Displays a list of available doctors.
+     *
+     * @return the number of available doctors
+     */
     public int displayDoctor() {
         System.out.println("----Available Doctors----");
         for (int index = 0; index < doctor.size(); index++) {
@@ -140,7 +177,12 @@ public class StaffHandler implements AccountSaver {
         }
         return doctor.size();
     }
-
+    /**
+     * Retrieves a doctor from the list based on their position in the list.
+     *
+     * @param choice the index of the doctor to retrieve
+     * @return the User object representing the doctor, or null if not found
+     */
     public User getStaff(int choice) {
         if (doctor.get(choice) == null) {
             return null;

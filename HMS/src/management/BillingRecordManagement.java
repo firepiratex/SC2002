@@ -2,15 +2,25 @@ package management;
 
 import handlers.CSVHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import models.Patient;
-
+/**
+ * Provides methods to manage and display billing records, including viewing past appointment outcomes
+ * and handling payment processes for patients.
+ */
 public class BillingRecordManagement {
 
     private static final String dispensedRecord = "./src/data/Dispensed_Record.csv";
-
+    // Private constructor to prevent instantiation
+    private BillingRecordManagement() {
+    }
+    /**
+     * Displays past appointment outcomes for a given patient, including payment status and bill details.
+     *
+     * @param scanner a Scanner object for user input
+     * @param patient the patient who is viewing the outcomes and whether they want to manage/view the bill
+     */
     public static void displayPastOutcomes(Scanner scanner, Patient patient) {
     	int choice;
     	List<String[]> dispensedList = CSVHandler.readCSV(dispensedRecord);
@@ -24,6 +34,7 @@ public class BillingRecordManagement {
         	System.out.println("You have no past appointment outcome record.\n");
         	return;
         }
+     // Display each appointment record with billing details
         System.out.println("Displaying past appointment outcomes for Patient ID: " + patient.getId());
         for(int i = 0; i < patientDispensedList.size(); i++) {
         	String[] getRecord = patientDispensedList.get(i);
@@ -123,7 +134,15 @@ public class BillingRecordManagement {
         	}
         }
     }
-
+    /**
+     * Processes the payment for the given patient appointment, updating the record if paid.
+     *
+     * @param totalBillWithConsultation the total amount due for the appointment
+     * @param record                    the record of the appointment
+     * @param patient                   the patient making the payment
+     * @param scanner                   a Scanner object for user input
+     * @return the updated record if payment is successful, or null if unsuccessful
+     */
     private static String[] processPayment(double totalBillWithConsultation, String[] record, Patient patient, Scanner scanner) {
         scanner.nextLine();
     	System.out.printf("Your total bill is $%.2f.%n", totalBillWithConsultation);

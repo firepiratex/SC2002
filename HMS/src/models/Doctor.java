@@ -5,21 +5,41 @@ import handlers.MedicalCertificateHandler;
 import interfaces.DateAndTime;
 import java.time.LocalTime;
 import java.util.Scanner;
-
+/**
+ * Represents a doctor in the system who can manage their schedule and view appointments,
+ * and handle patient medical records and certificates. This class extends to User
+ * and implements DateAndTime for date and time-related functionalities.
+ */
 public class Doctor extends User implements DateAndTime {
 
     private int age;
-
+    /**
+     * Constructs a Doctor object with specified attributes.
+     *
+     * @param id       the unique identifier of the doctor
+     * @param name     the name of the doctor
+     * @param password the password for the doctor's account
+     * @param gender   the gender of the doctor
+     * @param age      the age of the doctor
+     */
     public Doctor(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Doctor", gender);
         this.age = age;
     }
-    
+    /**
+     * Returns a string representation of the doctor, including basic user information and age.
+     *
+     * @return a string representation of the doctor
+     */
+    @Override
     public String toString() {
     	return super.toString() + " " + getAge();
     }
-
-
+    /**
+     * Allows the doctor to set their availability for appointments on a specified date.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void setAvailability(Scanner scanner) {
         String date, startTime, endTime;
         while (true) {
@@ -57,23 +77,37 @@ public class Doctor extends User implements DateAndTime {
             System.out.println("Doctor's availability set for " + date + " from " + startTime + " to " + endTime);
         }
     }
-
+    /**
+     * Views the upcoming appointments for the doctor.
+     */
     public void viewUpcomingAppointments() {
         AppointmentHandler.getInstance().viewUpcomingAppointment(this);
     }
-    
+    /**
+     * Views the doctor's personal schedule of confirmed appointments.
+     */
     public void viewPersonalSchedule() {
     	AppointmentHandler.getInstance().viewPersonalSchedule(this);
     }
-
+    /**
+     * Retrieves the age of the doctor.
+     *
+     * @return the age of the doctor
+     */
     public int getAge() {
         return age;
     }
-
+    /**
+     * Views the medical certificates of a specified patient.
+     *
+     * @param patient the patient whose medical certificates are to be viewed
+     */
     public void viewPatientCertificates(Patient patient) {
         MedicalCertificateHandler.viewCertificatesForPatient(patient);
     }    
-
+    /**
+     * Displays the menu options available to the doctor.
+     */
     @Override
     public void displayMenu() {
         System.out.println("Doctor Menu:");

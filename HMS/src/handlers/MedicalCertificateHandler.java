@@ -3,20 +3,26 @@ package handlers;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import models.Doctor;
 import models.MedicalCertificate;
 import models.Patient;
-
+/**
+ * Handles the operations related to managing medical certificates,
+ * including loading, saving, viewing, and updating their statuses.
+ */
 public class MedicalCertificateHandler {
 	
 	private static MedicalCertificateHandler instance; 
     private static final String FILE_PATH = "./src/data/Medical_Certificate.csv";  // Ensure the path matches your project structure
     private List<MedicalCertificate> mcList;
-    
+    /**
+     * Adds a new medical certificate to the list and saves it to the CSV file.
+     *
+     * @param certificate the MedicalCertificate object to add
+     */
     public void addCertificate(MedicalCertificate certificate) {
         List<String[]> mcCSV = CSVHandler.readCSV(FILE_PATH);
         mcCSV.add(certificate.toCSVRow());
@@ -24,19 +30,27 @@ public class MedicalCertificateHandler {
         mcList.add(certificate);
         saveMC();
     }
-    
+    /**
+     * Private constructor to initialize the MedicalCertificateHandler by loading existing data.
+     */
     private MedicalCertificateHandler() {
         this.mcList = new ArrayList<>();
         loadMC();  // Load staff data when initializing
     }
-
+    /**
+     * Returns the singleton instance of the MedicalCertificateHandler.
+     *
+     * @return the singleton instance
+     */
     public static MedicalCertificateHandler getInstance() {
         if (instance == null) {
             instance = new MedicalCertificateHandler();
         }
         return instance;
     }
-    
+    /**
+     * Loads the medical certificates from the CSV file into the list.
+     */
     private void loadMC() {
     	List<String[]> mcCSV = CSVHandler.readCSV(FILE_PATH);
     	for(int i = 0; i < mcCSV.size(); i++) {
@@ -53,7 +67,9 @@ public class MedicalCertificateHandler {
     		mcList.add(mc);
     	}
     }
-    
+    /**
+     * Saves the list of medical certificates to the CSV file.
+     */
     private void saveMC() {
     	List<String[]> data = new ArrayList<>();
     	for(MedicalCertificate mc : mcList) {
@@ -63,7 +79,11 @@ public class MedicalCertificateHandler {
     	data.add(0, new String[]{"Patient ID,Patient Name,Reason,Date,Days,Status,Approved/Rejected By"});
     	CSVHandler.writeCSV(FILE_PATH, data);
     }
-    
+    /**
+     * Displays all medical certificates for a specific patient.
+     *
+     * @param patient the Patient whose certificates are to be displayed
+     */
     public static void viewCertificatesForPatient(Patient patient) {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -98,7 +118,9 @@ public class MedicalCertificateHandler {
         }
     }
     
-
+    /**
+     * Displays all medical certificates in the system.
+     */
     public static void viewAllCertificates() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -136,7 +158,12 @@ public class MedicalCertificateHandler {
             System.out.println("Error parsing medical certificate data: " + e.getMessage());
         }
     }
-
+    /**
+     * Updates the status of a medical certificate based on user input.
+     *
+     * @param doctor  the Doctor updating the status
+     * @param scanner a Scanner object for user input
+     */
     public void updateCertificateStatus(Doctor doctor, Scanner scanner) {
     	int choice;
     	for(int i = 0; i < mcList.size(); i++) {
@@ -163,7 +190,11 @@ public class MedicalCertificateHandler {
     		System.out.println("Invalid input.");
     	}
     }
-    
+    /**
+     * Displays pending medical certificates.
+     *
+     * @return true if pending certificates are found, false otherwise
+     */
     public static boolean viewPendingCertificates() {
         boolean found = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {

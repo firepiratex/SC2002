@@ -7,26 +7,48 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import management.InventoryManagement;
-
+/**
+ * Represents a pharmacist in the hospital management system.
+ * Provides functionality to manage prescriptions, view/manage appointment outcomes prescription, and interact with the medication inventory.
+ */
 public class Pharmacist extends User {
 
     private InventoryManagement inventoryManagement;
     private int age;
-
+    /**
+     * Constructs a Pharmacist object with the specified details.
+     *
+     * @param id       the ID of the pharmacist
+     * @param name     the name of the pharmacist
+     * @param password the password of the pharmacist
+     * @param gender   the gender of the pharmacist
+     * @param age      the age of the pharmacist
+     */
     public Pharmacist(String id, String name, String password, String gender, int age) {
         super(id, name, password, "Pharmacist", gender);
         this.age = age;
         new MedicineHandler();
     }
-
+    /**
+     * Returns the age of the pharmacist.
+     *
+     * @return the age
+     */
     public int getAge() {
         return age;
     }
-    
+    /**
+     * Returns a string representation of the pharmacist, including age.
+     *
+     * @return a string representation of the pharmacist
+     */
+    @Override
     public String toString() {
     	return super.toString() + " " + getAge();
     }
-    
+    /**
+     * Displays the menu options available to the pharmacist.
+     */
     @Override
     public void displayMenu() {
         System.out.println("Pharmacist Menu:");
@@ -36,8 +58,11 @@ public class Pharmacist extends User {
         System.out.println("4. Submit Replenishment Request");
         System.out.println("5. Logout");
     }
-
-    // Method to view appointment outcome record
+    /**
+     * Views the appointment outcome records, showing only pending records.
+     *
+     * @param scanner a Scanner object for user input
+     */
     public void viewAppointmentOutcomeRecord(Scanner scanner) {
         List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
 
@@ -53,13 +78,19 @@ public class Pharmacist extends User {
         	System.out.println("");
         }
     }
-
-    // Method to view medication inventory
+    /**
+     * Views the medication inventory.
+     */
     public void viewMedicationInventory() {
         System.out.println("---- Medication Inventory ----");
         inventoryManagement.viewInventory();
     }
-
+    /**
+     * Manages the prescription by updating prescription status and inventory based on user input.
+     *
+     * @param scanner         a Scanner object for user input
+     * @param medicineHandler an instance of MedicineHandler for handling medicine data
+     */
     public static void managePrescription(Scanner scanner, MedicineHandler medicineHandler) {
         List<String[]> recordList = CSVHandler.readCSV("src/data/Appointment_Outcome_Record.csv");
         List<String[]> dispensedList = CSVHandler.readCSV("src/data/Dispensed_Record.csv");
