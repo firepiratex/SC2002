@@ -14,8 +14,9 @@ This is a project for SC2002 (Object-Oriented Design & Programming) which is a *
 * Display of stock-levels and alerts for medicines
 * Schedule duty for Doctors.
 ## Additional Features
+* Password Complexity by adding at least 8 characters which contains special characters, uppercase letters and also numbers.
 * Password Hashing using SHA-256. Users can feel safe knowing that their passwords are safe in our database.
-* Patients will be able to request and see their Medical Certificate from their Doctors. Doctors are able to receive request to issue Medical Certificate to patients.
+* Patients will be able to request and see their Medical Certificate from their Doctors. Doctors are also able to receive request to issue Medical Certificate to patients.
 * Patients will be able to see their billing information, price of the medicine and their consultation fee.
 ## Lessons Learned
 We learn to appreciate the Object-Oriented concepts together with SOLID design principles. By designing using SOLID, whenever changes needed to be made in a project, we could easily do so with minimal impact. We learn about how to divide and conquer a task efficiently. From the sheer amount of code we have to contribute, we also became more fluent and confident in Java programming, which would benefit us in future programming courses.
