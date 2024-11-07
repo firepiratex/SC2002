@@ -1,1 +1,2 @@
-
+Patient ID,Doctor ID,Status,Date,Time,Outcome
+P1001,D001,Confirmed,08/11/2024,09:00,Refer to Record
