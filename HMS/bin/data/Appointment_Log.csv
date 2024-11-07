@@ -5,3 +5,9 @@ P1001,D001,Canceled(Patient),08/11/2024,10:00,-
 P1001,D001,Pending,08/11/2024,09:00,-
 P1001,D001,Confirmed,08/11/2024,09:00,-
 P1001,D001,Confirmed,08/11/2024,09:00,Refer to Record
+P1001,D001,Pending,08/11/2024,10:00,-
+P1001,D001,Confirmed,08/11/2024,10:00,-
+P1001,D001,Confirmed,08/11/2024,10:00,Refer to Record
+P1001,D001,Pending,08/11/2024,11:00,-
+P1001,D001,Confirmed,08/11/2024,11:00,-
+P1001,D001,Confirmed,08/11/2024,11:00,Refer to Record

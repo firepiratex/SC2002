@@ -1,2 +1,4 @@
 Doctor ID,Patient ID,Date,Type of Service,Prescribed Status,Medications
 D001,P1001,08/11/2024,Consultation,Paid,2 Paracetamol
+D001,P1001,08/11/2024,Mild Flu,Dispensed,10 Paracetamol
+D001,P1001,08/11/2024,Dengue,Dispensed,80 Paracetamol
