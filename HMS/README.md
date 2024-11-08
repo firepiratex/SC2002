@@ -16,6 +16,8 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 ## Run
 
 The jar file for this project is under `SC2002/HMS/HMS.jar`.
+
 There is a script file called `HMS.bat`.
+
 This script helps you to change to the current directory and run the `java -jar HMS.jar` command to execute the jar file.
 
